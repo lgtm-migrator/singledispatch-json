@@ -21,7 +21,7 @@ copyright = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.0.0"
+VERSION = "0.0.1"
 
 modname = "sdjson"
 entry_points = None
