@@ -40,7 +40,7 @@ Creating and registering a custom encoder is as easy as:
 >>>
 
 In this case, `MyClass` can be made JSON-serializable simply by calling
-`dict()` on it. If your class requires more complicated logic
+``dict()`` on it. If your class requires more complicated logic
 to make it JSON-serializable, do that here.
 
 Then, to dump the object to a string:
@@ -60,7 +60,7 @@ Or to dump to a file:
 ...
 >>>
 
-`sdjson` also provides access to ``load``, ``loads`, ``JSONDecoder``,
+``sdjson`` also provides access to ``load``, ``loads``, ``JSONDecoder``,
 ``JSONDecodeError``, and ``JSONEncoder`` from the ``json`` module,
 allowing you to use ``sdjson`` as a drop-in replacement
 for ``json``.
@@ -72,4 +72,9 @@ itself to get the stock functionality.
 >>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
 >>>
 
-.. note:: This module does not currently support custom decoders, but might in the future.
+Note: This module does not currently support custom decoders, but might in the future.
+
+TODO
+######
+
+1. Write tests with pytest. Add appropriate sections to .travis.yml and setup.py
