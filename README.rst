@@ -2,11 +2,11 @@
 sdjson
 ****************
 
-.. image:: https://travis-ci.com/domdfcoding/sdjson.svg?branch=master
-    :target: https://travis-ci.com/domdfcoding/sdjson
+.. image:: https://travis-ci.com/domdfcoding/singledispatch-json.svg?branch=master
+    :target: https://travis-ci.com/domdfcoding/singledispatch-json
     :alt: Build Status
-.. image:: https://readthedocs.org/projects/sdjson/badge/?version=latest
-    :target: https://sdjson.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/singledispatch-json/badge/?version=latest
+    :target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 .. image:: https://img.shields.io/pypi/v/sdjson.svg
     :target: https://pypi.org/project/sdjson/
