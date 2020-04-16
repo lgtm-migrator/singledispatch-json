@@ -41,7 +41,7 @@ Or to dump to a file:
 `sdjson` also provides access to :func:`load <python:json.load>`,
 :func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
 :class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
-from the `json` module, allowing you to use sdjson as a drop-in replacement
+from the :mod:`~python:json` module, allowing you to use sdjson as a drop-in replacement
 for :mod:`~python:json`.
 
 If you wish to dump an object without using the custom encoders, you can pass
@@ -60,7 +60,7 @@ TODO: This module does not currently support custom decoders, but might in the f
 #  Copyright © 2013 Trey Hunner
 #  He said "Feel free to use it however you like." So I have.
 #
-#  Also based off the `json` module (version 2.0.9) by Bob Ippolito from Python 3.7
+#  Also based on the `json` module (version 2.0.9) by Bob Ippolito from Python 3.7
 #  Licensed under the Python Software Foundation License Version 2.
 #  Copyright © 2001-2020 Python Software Foundation. All rights reserved.
 #  Copyright © 2000 BeOpen.com . All rights reserved.
@@ -165,20 +165,30 @@ def dumps(
 # We have to do it this way to sort out the docstrings for sphinx without
 #  modifying the original docstrings.
 @sphinxify_json_docstring()
-@is_documented_by(json.load)
+@append_docstring_from(json.load)
 def load(*args, **kwargs):
+	"""
+	This is just the :func:`load <python:json.load>` function from Python's :mod:`~python:json` module.
+	"""
 	return json.load(*args, **kwargs)
 
 
 @sphinxify_json_docstring()
-@is_documented_by(json.loads)
+@append_docstring_from(json.loads)
 def loads(*args, **kwargs):
+	"""
+	This is just the :func:`loads <python:json.loads>` function from Python's :mod:`~python:json` module.
+	"""
 	return json.loads(*args, **kwargs)
 
 
 @sphinxify_json_docstring()
-@is_documented_by(json.JSONEncoder)
+@append_docstring_from(json.JSONEncoder)
 class JSONEncoder(json.JSONEncoder):
+	"""
+	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
+	"""
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 	
@@ -199,8 +209,12 @@ class JSONEncoder(json.JSONEncoder):
 	
 	
 @sphinxify_json_docstring()
-@is_documented_by(json.JSONDecoder)
+@append_docstring_from(json.JSONDecoder)
 class JSONDecoder(json.JSONDecoder):
+	"""
+	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
+	"""
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 	
@@ -216,10 +230,12 @@ class JSONDecoder(json.JSONDecoder):
 		
 		
 @sphinxify_json_docstring()
-@is_documented_by(json.JSONDecodeError)
+@append_docstring_from(json.JSONDecodeError)
 class JSONDecodeError(json.JSONDecodeError):
-	pass
-	
+	"""
+	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
+	"""
+
 
 # Custom encoder for sdjson
 class _CustomEncoder(JSONEncoder):
