@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #########################################################
-# No need to change anything in this file, except to    #
-# replace `package_name` with the actual name of        #
-# your package.                                         #
+# No need to change anything in this file               #
 #########################################################
 
 import os
@@ -16,7 +14,7 @@ sys.path.append(os.path.abspath('..'))
 
 from sphinx.locale import _
 
-from package_name import __author__, __version__, __copyright__
+from sdjson import __author__, __version__, __copyright__
 from __pkginfo__ import github_username, modname
 
 github_url = f"https://github.com/{github_username}/{modname}"
@@ -54,6 +52,7 @@ pygments_style = 'default'
 intersphinx_mapping = {  # Is this where those mystery links are specified?
 		'rtd': ('https://docs.readthedocs.io/en/latest/', None),
 		'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
+		'python': ('https://docs.python.org/3/', None),
 		}
 
 html_theme = 'sphinx_rtd_theme'

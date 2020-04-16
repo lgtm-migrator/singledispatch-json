@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """Setup script"""
 
-from __pkginfo__ import \
-    (
-    author, author_email, install_requires,
-    license, long_description, classifiers,
-    entry_points, modname, py_modules,
-    short_desc, VERSION, web,
-    )
+from __pkginfo__ import (
+	author, author_email, install_requires,
+	license, long_description, classifiers,
+	entry_points, modname, py_modules,
+	short_desc, VERSION, web,
+	)
 
 from setuptools import setup, find_packages
 

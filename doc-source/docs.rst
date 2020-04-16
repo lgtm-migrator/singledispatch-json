@@ -1,20 +1,9 @@
 **************************
-:mod:`package_name`
+API Reference
 **************************
 
-.. contents:: Table of Contents
+:mod:`sdjson`
+=================
 
-.. automodule:: package_name
+.. automodule:: sdjson
     :members:
-    :private-members:
-    :special-members:
-
-===================================
-:mod:`package_name.__init__`
-===================================
-
-
-.. automodule:: package_name.__init__
-    :members:
-    :private-members:
-    :special-members:
