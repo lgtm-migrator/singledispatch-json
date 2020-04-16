@@ -42,7 +42,12 @@ short_desc = (
 author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
-web = github_url = f"https://github.com/{github_username}/{modname}"
+web = github_url = f"https://github.com/{github_username}/singledispatch-json"
+project_urls = {
+		"Documentation": "https://singledispatch-json.readthedocs.io",  # TODO: Make this link match the package version
+		"Issue Tracker": f"{github_url}/issues",
+		"Source Code": github_url,
+		}
 
 # Get info from files; set: long_description
 if pathlib.Path.cwd().name == "doc-source":

@@ -5,7 +5,7 @@ from __pkginfo__ import (
 	author, author_email, install_requires,
 	license, long_description, classifiers,
 	entry_points, modname, py_modules,
-	short_desc, VERSION, web,
+	short_desc, VERSION, web, project_urls,
 	)
 
 from setuptools import setup, find_packages
@@ -23,4 +23,5 @@ setup(
 		packages=find_packages(exclude=("tests",)),
 		py_modules=py_modules,
 		url=web,
+		project_urls=project_urls,
 		version=VERSION)
