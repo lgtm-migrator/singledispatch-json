@@ -24,7 +24,7 @@ sdjson
 Custom JSON Encoder for Python utilising functools.singledispatch to support custom encoders
 for both Python's built-in classes and user-created classes, without as much legwork.
 
-Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's :mod:`~python:json` module.
+Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
 
 |
 
@@ -40,7 +40,7 @@ Creating and registering a custom encoder is as easy as:
 >>>
 
 In this case, `MyClass` can be made JSON-serializable simply by calling
-:class:`dict <python:dict>` on it. If your class requires more complicated logic
+`dict()` on it. If your class requires more complicated logic
 to make it JSON-serializable, do that here.
 
 Then, to dump the object to a string:
@@ -60,15 +60,14 @@ Or to dump to a file:
 ...
 >>>
 
-`sdjson` also provides access to :func:`load <python:json.load>`,
-:func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
-:class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
-from the :mod:`~python:json` module, allowing you to use sdjson as a drop-in replacement
-for :mod:`~python:json`.
+`sdjson` also provides access to ``load``, ``loads`, ``JSONDecoder``,
+``JSONDecodeError``, and ``JSONEncoder`` from the ``json`` module,
+allowing you to use ``sdjson`` as a drop-in replacement
+for ``json``.
 
-If you wish to dump an object without using the custom encoders, you can pass
-a different :class:`~python:json.JSONEncoder` subclass, or indeed
-:class:`~python:json.JSONEncoder` itself to get the stock functionality.
+If you wish to dump an object without using the custom encoders, you
+can pass a different ``JSONEncoder`` subclass, or indeed ``JSONEncoder``
+itself to get the stock functionality.
 
 >>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
 >>>

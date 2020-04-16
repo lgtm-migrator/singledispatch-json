@@ -33,7 +33,11 @@ py_modules         = [modname]
 
 license = 'LGPL3+'
 
-short_desc = 'description goes here'
+short_desc = (
+	'Custom JSON Encoder for Python utilising functools.singledispatch to support '
+	'custom encoders for both Python\'s built-in classes and user-created classes, '
+	'without as much legwork.'
+	)
 
 author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"

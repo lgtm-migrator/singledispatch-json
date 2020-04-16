@@ -41,7 +41,7 @@ Or to dump to a file:
 `sdjson` also provides access to :func:`load <python:json.load>`,
 :func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
 :class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
-from the :mod:`~python:json` module, allowing you to use sdjson as a drop-in replacement
+from the :mod:`~python:json` module, allowing you to use ``sdjson`` as a drop-in replacement
 for :mod:`~python:json`.
 
 If you wish to dump an object without using the custom encoders, you can pass
