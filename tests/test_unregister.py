@@ -21,8 +21,7 @@ def test_unregister():
 	sdjson.unregister_encoder(Decimal)
 	
 	# We should now get an error
-	with pytest.raises(TypeError) as e:
+	with pytest.raises(TypeError, match="Object of type [']*Decimal[']* is not JSON serializable") as e:
 		sdjson.dumps(Decimal(2))
 	assert e.type is TypeError
-	assert str(e.value) == 'Object of type Decimal is not JSON serializable'
 

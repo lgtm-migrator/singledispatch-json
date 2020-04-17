@@ -96,14 +96,20 @@ def test_invalid_input_type():
 
 
 def test_string_with_utf8_bom():
+	import sys
+	
 	# see #18958
 	bom_json = "[1,2,3]".encode('utf-8-sig').decode('utf-8')
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.loads(bom_json)
-	assert 'BOM' in str(e)
+	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+		assert 'BOM' in str(e)
+	
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.json.load(StringIO(bom_json))
-	assert 'BOM' in str(e)
+	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+		assert 'BOM' in str(e)
+
 	# make sure that the BOM is not detected in the middle of a string
 	bom_in_str = '"{}"'.format(''.encode('utf-8-sig').decode('utf-8'))
 	assert sdjson.loads(bom_in_str) == '\ufeff'

@@ -98,14 +98,22 @@ def test_failures():
 
 
 def test_non_string_keys_dict():
+	import sys
+	
 	data = {'a': 1, (1, 2): 2}
-	with pytest.raises(TypeError, match='keys must be str, int, float, bool or None, not tuple'):
+	
+	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+		match_string = "keys must be str, int, float, bool or None, not tuple"
+	else:
+		match_string = "keys must be a string"
+
+	with pytest.raises(TypeError, match=match_string):
 		sdjson.dumps(data)
 
 
 def test_not_serializable():
 	import sys
-	with pytest.raises(TypeError, match="Object of type ?[']module?['] is not JSON serializable"):
+	with pytest.raises(TypeError, match="Object of type [']*module[']* is not JSON serializable"):
 		sdjson.dumps(sys)
 
 
