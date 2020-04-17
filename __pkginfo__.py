@@ -21,7 +21,7 @@ copyright = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-VERSION = "0.1.3"
+VERSION = "0.2.0"
 
 modname = "sdjson"
 entry_points = None
@@ -31,7 +31,7 @@ py_modules         = [modname]
 #		'sdjson=sdjson:main',
 #	]}
 
-license = 'LGPL3+'
+license = 'LGPLv3+'
 
 short_desc = (
 	'Custom JSON Encoder for Python utilising functools.singledispatch to support '

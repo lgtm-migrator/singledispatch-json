@@ -39,7 +39,7 @@ Creating and registering a custom encoder is as easy as:
 ...     return dict(obj)
 >>>
 
-In this case, `MyClass` can be made JSON-serializable simply by calling
+In this case, ``MyClass`` can be made JSON-serializable simply by calling
 ``dict()`` on it. If your class requires more complicated logic
 to make it JSON-serializable, do that here.
 
