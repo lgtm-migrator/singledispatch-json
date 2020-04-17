@@ -4,8 +4,12 @@ python:
 - '3.6'
 - '3.7'
 - '3.8'
+before_script:
+  - pip install pytest coverage pytest-cov coveralls
 script:
-- echo "skipping tests"
+- pytest --cov=sdjson sdjson
+after_success:
+  - coveralls
 deploy:
   provider: pypi
   user: DomDF
