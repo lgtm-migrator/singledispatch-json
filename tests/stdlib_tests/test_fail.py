@@ -102,6 +102,7 @@ def test_non_string_keys_dict():
 	
 	data = {'a': 1, (1, 2): 2}
 	
+	# TODO:
 	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
 		match_string = "keys must be str, int, float, bool or None, not tuple"
 	else:

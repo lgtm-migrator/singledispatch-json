@@ -102,12 +102,14 @@ def test_string_with_utf8_bom():
 	bom_json = "[1,2,3]".encode('utf-8-sig').decode('utf-8')
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.loads(bom_json)
-	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+	# TODO:
+	if sys.version_info.major >= 3 and sys.version_info.minor == 7:
 		assert 'BOM' in str(e)
 	
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.json.load(StringIO(bom_json))
-	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+	# TODO:
+	if sys.version_info.major >= 3 and sys.version_info.minor == 7:
 		assert 'BOM' in str(e)
 
 	# make sure that the BOM is not detected in the middle of a string
