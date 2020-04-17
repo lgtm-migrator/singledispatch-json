@@ -7,7 +7,7 @@ python:
 before_script:
   - pip install pytest coverage pytest-cov coveralls
 script:
-- pytest --cov=sdjson sdjson
+- pytest --cov=sdjson tests/
 after_success:
   - coveralls
 deploy:
