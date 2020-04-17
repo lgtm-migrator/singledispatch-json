@@ -70,16 +70,16 @@ def test_fraction_str():
 	sdjson.encoders.unregister(Fraction)
 
 
-def test_datetime_float():
-	# Create and register a custom encoder for datetime that turns it into a float
-	@sdjson.encoders.register(datetime)
-	def encode_datetime_float(obj):
-		return obj.astimezone(pytz.utc).timestamp()
-	
-	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "-777883200.0"
-	
-	# Cleanup
-	sdjson.encoders.unregister(datetime)
+# def test_datetime_float():
+# 	# Create and register a custom encoder for datetime that turns it into a float
+# 	@sdjson.encoders.register(datetime)
+# 	def encode_datetime_float(obj):
+# 		return obj.astimezone(pytz.utc).timestamp()
+#
+# 	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "-777883200.0"
+#
+# 	# Cleanup
+# 	sdjson.encoders.unregister(datetime)
 
 
 def test_datetime_str():
