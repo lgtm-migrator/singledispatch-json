@@ -9,6 +9,7 @@ from fractions import Fraction
 
 # 3rd party
 import pytz
+from domdf_python_tools.dates import datetime_to_utc_timestamp
 
 # this package
 import sdjson
@@ -70,16 +71,16 @@ def test_fraction_str():
 	sdjson.encoders.unregister(Fraction)
 
 
-# def test_datetime_float():
-# 	# Create and register a custom encoder for datetime that turns it into a float
-# 	@sdjson.encoders.register(datetime)
-# 	def encode_datetime_float(obj):
-# 		return obj.astimezone(pytz.utc).timestamp()
-#
-# 	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "-777883200.0"
-#
-# 	# Cleanup
-# 	sdjson.encoders.unregister(datetime)
+def test_datetime_float():
+	# Create and register a custom encoder for datetime that turns it into a float
+	@sdjson.encoders.register(datetime)
+	def encode_datetime_float(obj):
+		return datetime_to_utc_timestamp(obj)
+
+	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "-777876000.0"
+
+	# Cleanup
+	sdjson.encoders.unregister(datetime)
 
 
 def test_datetime_str():
@@ -105,20 +106,20 @@ def test_datetime_tuple():
 	# Cleanup
 	sdjson.encoders.unregister(datetime)
 
-#
-# def test_timedelta_float():
-# 	# Create and register a custom encoder for timedelta that turns it into a float
-# 	@sdjson.encoders.register(timedelta)
-# 	def encode_timedelta_float(obj):
-# 		return obj.total_seconds()
-#
-# 	start_date = datetime(1945, 5, 8, 19, 20).astimezone(pytz.utc)
-# 	end_date = datetime(2020, 5, 8, 9, 0).astimezone(pytz.utc)
-# 	delta = end_date - start_date
-# 	assert sdjson.dumps(delta) == "2366808000.0"
-#
-# 	# Cleanup
-# 	sdjson.encoders.unregister(timedelta)
+
+def test_timedelta_float():
+	# Create and register a custom encoder for timedelta that turns it into a float
+	@sdjson.encoders.register(timedelta)
+	def encode_timedelta_float(obj):
+		return obj.total_seconds()
+
+	start_date = datetime(1945, 5, 8, 19, 20).replace(tzinfo=pytz.utc)
+	end_date = datetime(2020, 5, 8, 9, 0).replace(tzinfo=pytz.utc)
+	delta = end_date - start_date
+	assert sdjson.dumps(delta) == "2366804400.0"
+
+	# Cleanup
+	sdjson.encoders.unregister(timedelta)
 
 
 # def test_date_float():
@@ -130,7 +131,7 @@ def test_datetime_tuple():
 # 	assert sdjson.dumps(date(1945, 5, 8)) == "-777952800.0"
 #
 # 	# Cleanup
-# 	sdjson.encoders.unregister(datetime)
+# 	sdjson.encoders.unregister(date)
 
 
 def test_date_str():
