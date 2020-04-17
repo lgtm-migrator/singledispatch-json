@@ -72,9 +72,24 @@ itself to get the stock functionality.
 >>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
 >>>
 
-Note: This module does not currently support custom decoders, but might in the future.
+|
+
+When you've finished, if you want to unregister the encoder you can call:
+
+>>> sdjson.encoders.unregister(MyClass)
+>>>
+
+to remove the encoder for ``MyClass``. If you want to replace the encoder with a
+different one it is not necessary to call this function: the
+``@sdjson.encoders.register`` decorator will replace any existing decorator for
+the given class.
+
+
+Note that this module cannot be used to create custom encoders for any object
+``json`` already knows about; that is: ``dict``, ``list``, ``tuple``, ``str``,
+``int``, ``float``, ``bool``, and ``None``.
 
 TODO
 ######
 
-1. Write tests with pytest. Add appropriate sections to .travis.yml and setup.py
+1. Add support for custom decoders.

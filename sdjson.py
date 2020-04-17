@@ -12,7 +12,7 @@ Creating and registering a custom encoder is as easy as:
 
 >>> import sdjson
 >>>
->>> @sdjson.dump.register(MyClass)
+>>> @sdjson.encoders.register(MyClass)
 >>> def encode_myclass(obj):
 ...     return dict(obj)
 >>>
@@ -51,7 +51,23 @@ a different :class:`~python:json.JSONEncoder` subclass, or indeed
 >>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
 >>>
 
+|
+
+When you've finished, if you want to unregister the encoder you can call:
+
+>>> sdjson.encoders.unregister(MyClass)
+>>>
+
+to remove the encoder for ``MyClass``. If you want to replace the encoder with a
+different one it is not necessary to call this function: the
+``@sdjson.encoders.register`` decorator will replace any existing decorator for
+the given class.
+
+
+
 TODO: This module does not currently support custom decoders, but might in the future.
+
+
 """
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -83,8 +99,13 @@ TODO: This module does not currently support custom decoders, but might in the f
 #  MA 02110-1301, USA.
 #
 
+# TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
 
-__all__ = ["load", "loads", "JSONDecoder", "JSONDecodeError", "JSONEncoder", "dump", "dumps"]
+__all__ = [
+		"load", "loads", "JSONDecoder", "JSONDecodeError",
+		"dump", "dumps", "JSONEncoder",
+		"encoders",	"register_encoder", "unregister_encoder",
+		]
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
@@ -99,6 +120,31 @@ from functools import singledispatch
 
 # 3rd party
 from domdf_python_tools.doctools import is_documented_by, append_docstring_from, make_sphinx_links
+
+
+def allow_unregister(func):
+	"""
+	Decorator to allow removal of custom encoders with ``<sdjson.encoders.unregister(<type>)``,
+	where <type> is the custom type you wish to remove the encoder for.
+	
+	From https://stackoverflow.com/a/25951784/3092681
+	Copyright © 2014 Martijn Pieters
+	https://stackoverflow.com/users/100297/martijn-pieters
+	Licensed under CC BY-SA 4.0
+	"""
+	
+	# build a dictionary mapping names to closure cells
+	closure = dict(zip(func.register.__code__.co_freevars,
+					   func.register.__closure__))
+	registry = closure['registry'].cell_contents
+	dispatch_cache = closure['dispatch_cache'].cell_contents
+	
+	def unregister(cls):
+		del registry[cls]
+		dispatch_cache.clear()
+		
+	func.unregister = unregister
+	return func
 
 
 def sphinxify_json_docstring():
@@ -118,7 +164,17 @@ def sphinxify_json_docstring():
 	return wrapper
 
 
+@allow_unregister
 @singledispatch
+class _Encoders:
+	pass
+
+
+encoders = _Encoders
+register_encoder = _Encoders.register
+unregister_encoder = _Encoders.unregister
+
+
 @sphinxify_json_docstring()
 @append_docstring_from(json.dump)
 def dump(obj, fp, **kwargs):
@@ -126,8 +182,8 @@ def dump(obj, fp, **kwargs):
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@dump.register(<type>)`` decorator.
 	"""
-	
-	iterable = json.dumps(obj, **kwargs)
+
+	iterable = dumps(obj, **kwargs)
 	
 	for chunk in iterable:
 		fp.write(chunk)
@@ -204,8 +260,8 @@ class JSONEncoder(json.JSONEncoder):
 	
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.iterencode)
-	def iterencode(self, o):
-		return super().iterencode(o)
+	def iterencode(self, o, _one_shot=False):
+		return super().iterencode(o, _one_shot)
 	
 	
 @sphinxify_json_docstring()
@@ -228,19 +284,14 @@ class JSONDecoder(json.JSONDecoder):
 	def raw_decode(self, *args, **kwargs):
 		return super().raw_decode(*args, **kwargs)
 		
-		
-@sphinxify_json_docstring()
-@append_docstring_from(json.JSONDecodeError)
-class JSONDecodeError(json.JSONDecodeError):
-	"""
-	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
-	"""
+	
+JSONDecodeError = json.JSONDecodeError
 
 
 # Custom encoder for sdjson
 class _CustomEncoder(JSONEncoder):
 	def default(self, o):
-		for type_, handler in dump.registry.items():
+		for type_, handler in encoders.registry.items():
 			if isinstance(o, type_) and type_ is not object:
 				return handler(o)
 		return super().default(o)
