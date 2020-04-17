@@ -105,7 +105,7 @@ def test_non_string_keys_dict():
 
 def test_not_serializable():
 	import sys
-	with pytest.raises(TypeError, match='Object of type module is not JSON serializable'):
+	with pytest.raises(TypeError, match="Object of type ?[']module?['] is not JSON serializable"):
 		sdjson.dumps(sys)
 
 
