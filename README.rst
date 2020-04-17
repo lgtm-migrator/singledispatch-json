@@ -14,8 +14,8 @@ sdjson
 .. image:: https://img.shields.io/pypi/pyversions/sdjson.svg
     :target: https://pypi.org/project/sdjson/
     :alt: PyPI - Python Version
-.. image:: https://coveralls.io/repos/github/domdfcoding/sdjson/badge.svg?branch=master
-    :target: https://coveralls.io/github/domdfcoding/sdjson?branch=master
+.. image:: https://coveralls.io/repos/github/domdfcoding/singledispatch-json/badge.svg?branch=master
+    :target: https://coveralls.io/github/domdfcoding/singledispatch-json?branch=master
     :alt: Coverage
 .. image:: https://img.shields.io/pypi/l/sdjson
     :alt: PyPI - License
