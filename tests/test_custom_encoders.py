@@ -112,8 +112,8 @@ def test_timedelta_float():
 	def encode_timedelta_float(obj):
 		return obj.total_seconds()
 	
-	start_date = timedelta(1945, 5, 8, 19, 20)
-	end_date = timedelta(2020, 5, 8, 9, 0)
+	start_date = datetime(1945, 5, 8, 19, 20).astimezone(pytz.utc)
+	end_date = datetime(2020, 5, 8, 9, 0).astimezone(pytz.utc)
 	delta = end_date - start_date
 	assert sdjson.dumps(delta) == "6478799.99"
 	
@@ -125,7 +125,7 @@ def test_date_float():
 	# Create and register a custom encoder for date that turns it into a float
 	@sdjson.encoders.register(datetime)
 	def encode_date_float(obj):
-		return obj.timestamp()
+		return obj.astimezone(pytz.utc).timestamp()
 	
 	assert sdjson.dumps(datetime(1945, 5, 8)) == "-777952800.0"
 	
