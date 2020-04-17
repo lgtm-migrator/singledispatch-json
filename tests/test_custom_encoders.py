@@ -105,20 +105,20 @@ def test_datetime_tuple():
 	# Cleanup
 	sdjson.encoders.unregister(datetime)
 
-
-def test_timedelta_float():
-	# Create and register a custom encoder for timedelta that turns it into a float
-	@sdjson.encoders.register(timedelta)
-	def encode_timedelta_float(obj):
-		return obj.total_seconds()
-	
-	start_date = datetime(1945, 5, 8, 19, 20).astimezone(pytz.utc)
-	end_date = datetime(2020, 5, 8, 9, 0).astimezone(pytz.utc)
-	delta = end_date - start_date
-	assert sdjson.dumps(delta) == "2366808000.0"
-	
-	# Cleanup
-	sdjson.encoders.unregister(timedelta)
+#
+# def test_timedelta_float():
+# 	# Create and register a custom encoder for timedelta that turns it into a float
+# 	@sdjson.encoders.register(timedelta)
+# 	def encode_timedelta_float(obj):
+# 		return obj.total_seconds()
+#
+# 	start_date = datetime(1945, 5, 8, 19, 20).astimezone(pytz.utc)
+# 	end_date = datetime(2020, 5, 8, 9, 0).astimezone(pytz.utc)
+# 	delta = end_date - start_date
+# 	assert sdjson.dumps(delta) == "2366808000.0"
+#
+# 	# Cleanup
+# 	sdjson.encoders.unregister(timedelta)
 
 
 # def test_date_float():
