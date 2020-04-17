@@ -17,7 +17,7 @@ sdjson
 .. image:: https://coveralls.io/repos/github/domdfcoding/singledispatch-json/badge.svg?branch=master
     :target: https://coveralls.io/github/domdfcoding/singledispatch-json?branch=master
     :alt: Coverage
-.. image:: https://img.shields.io/pypi/l/sdjson
+.. image:: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
     :alt: PyPI - License
     :target: https://github.com/domdfcoding/singledispatch-json/blob/master/LICENSE
 
