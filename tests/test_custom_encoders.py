@@ -9,7 +9,6 @@ from fractions import Fraction
 
 # 3rd party
 import pytz
-from domdf_python_tools.dates import datetime_to_utc_timestamp
 
 # this package
 import sdjson
@@ -75,9 +74,9 @@ def test_datetime_float():
 	# Create and register a custom encoder for datetime that turns it into a float
 	@sdjson.encoders.register(datetime)
 	def encode_datetime_float(obj):
-		return datetime_to_utc_timestamp(obj)
+		return obj.timestamp()
 
-	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "-777876000.0"
+	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20, tzinfo=pytz.UTC)) == "-777876000.0"
 
 	# Cleanup
 	sdjson.encoders.unregister(datetime)
