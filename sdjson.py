@@ -17,7 +17,7 @@ Creating and registering a custom encoder is as easy as:
 ...     return dict(obj)
 >>>
 
-In this case, `MyClass` can be made JSON-serializable simply by calling
+In this case, ``MyClass`` can be made JSON-serializable simply by calling
 :class:`dict <python:dict>` on it. If your class requires more complicated logic
 to make it JSON-serializable, do that here.
 
@@ -38,7 +38,7 @@ Or to dump to a file:
 ...
 >>>
 
-`sdjson` also provides access to :func:`load <python:json.load>`,
+``sdjson`` also provides access to :func:`load <python:json.load>`,
 :func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
 :class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
 from the :mod:`~python:json` module, allowing you to use ``sdjson`` as a drop-in replacement
@@ -64,10 +64,7 @@ different one it is not necessary to call this function: the
 the given class.
 
 
-
 TODO: This module does not currently support custom decoders, but might in the future.
-
-
 """
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
