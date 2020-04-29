@@ -21,7 +21,7 @@ sdjson
     :alt: PyPI - License
     :target: https://github.com/domdfcoding/singledispatch-json/blob/master/LICENSE
 
-Custom JSON Encoder for Python utilising :class:`python:functools.singledispatch`` to support custom encoders
+Custom JSON Encoder for Python utilising `python:functools.singledispatch` to support custom encoders
 for both Python's built-in classes and user-created classes, without as much legwork.
 
 Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
