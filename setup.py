@@ -24,4 +24,7 @@ setup(
 		py_modules=py_modules,
 		url=web,
 		project_urls=project_urls,
-		version=VERSION)
+		version=VERSION,
+		python_requires=">=3.6",
+		include_package_data=True,
+		)
