@@ -47,6 +47,6 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
     :maxdepth: 3
     :caption: Documentation
 
-    docs
+    API Reference<docs>
     Source
     Building
