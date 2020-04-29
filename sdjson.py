@@ -177,7 +177,7 @@ unregister_encoder = _Encoders.unregister
 def dump(obj, fp, **kwargs):
 	"""
 	Serialize custom Python classes to JSON.
-	Custom classes can be registered using the ``@dump.register(<type>)`` decorator.
+	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
 	"""
 
 	iterable = dumps(obj, **kwargs)
@@ -195,7 +195,7 @@ def dumps(
 		):
 	"""
 	Serialize custom Python classes to JSON.
-	Custom classes can be registered using the ``@dump.register(<type>)`` decorator.
+	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
 	"""
 	
 	if (
@@ -287,11 +287,11 @@ JSONDecodeError = json.JSONDecodeError
 
 # Custom encoder for sdjson
 class _CustomEncoder(JSONEncoder):
-	def default(self, o):
+	def default(self, obj):
 		for type_, handler in encoders.registry.items():
-			if isinstance(o, type_) and type_ is not object:
-				return handler(o)
-		return super().default(o)
+			if isinstance(obj, type_) and type_ is not object:
+				return handler(obj)
+		return super().default(obj)
 
 
 _default_encoder = _CustomEncoder(

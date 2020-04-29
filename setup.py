@@ -20,7 +20,7 @@ setup(
 		license=license,
 		long_description=long_description,
 		name=modname,
-		packages=find_packages(exclude=("tests",)),
+		# packages=find_packages(exclude=("tests",)),
 		py_modules=py_modules,
 		url=web,
 		project_urls=project_urls,
