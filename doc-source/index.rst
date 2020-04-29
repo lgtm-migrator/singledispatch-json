@@ -34,9 +34,10 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
         $ pip install |pkgname|
 
 
-`Browse the Source Code <_modules/index.html>`__.
+View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
 |browse_github|
+
 
 .. toctree::
    :hidden:
