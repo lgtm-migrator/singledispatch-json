@@ -211,11 +211,12 @@ def test_extra_data(data, msg, idx):
 	__test_invalid_input(data, msg, idx)
 
 
-@pytest.mark.parametrize("data, line, col, idx", [('!', 1, 1, 0),
-			(' !', 1, 2, 1),
-			('\n!', 2, 1, 1),
-			('\n  \n\n     !', 4, 6, 10),
-			])
+@pytest.mark.parametrize("data, line, col, idx", [
+		('!', 1, 1, 0),
+		(' !', 1, 2, 1),
+		('\n!', 2, 1, 1),
+		('\n  \n\n     !', 4, 6, 10),
+		])
 def test_linecol(data, line, col, idx):
 
 	with pytest.raises(sdjson.JSONDecodeError) as err:

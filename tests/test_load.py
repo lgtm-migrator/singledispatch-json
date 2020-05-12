@@ -79,8 +79,9 @@ def test_dict_failure():
 
 
 def test_dict():
-	assert write_then_read({"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}) == \
-		   {"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
+	assert write_then_read(
+			{"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
+			) == {"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
 
 
 def test_list():

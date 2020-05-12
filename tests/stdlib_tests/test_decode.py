@@ -31,25 +31,18 @@ def test_empty_objects():
 
 def test_object_pairs_hook():
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
-	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
-		 ("qrt", 5), ("pad", 6), ("hoy", 7)]
+	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4), ("qrt", 5), ("pad", 6), ("hoy", 7)]
 	assert sdjson.loads(s) == eval(s)
 	assert sdjson.loads(s, object_pairs_hook=lambda x: x) == p
-	assert sdjson.load(StringIO(s),
-							object_pairs_hook=lambda x: x) == p
+	assert sdjson.load(StringIO(s), bject_pairs_hook=lambda x: x) == p
 	od = sdjson.loads(s, object_pairs_hook=OrderedDict)
 	assert od == OrderedDict(p)
 	assert type(od) == OrderedDict
 	# the object_pairs_hook takes priority over the object_hook
-	assert sdjson.loads(s, object_pairs_hook=OrderedDict,
-						object_hook=lambda x: None) == \
-		   OrderedDict(p)
+	assert sdjson.loads(s, object_pairs_hook=OrderedDict, object_hook=lambda x: None) == OrderedDict(p)
 	# check that empty object literals work (see #17368)
-	assert sdjson.loads('{}', object_pairs_hook=OrderedDict) == \
-		   OrderedDict()
-	assert sdjson.loads('{"empty": {}}',
-						object_pairs_hook=OrderedDict) == \
-		   OrderedDict([('empty', OrderedDict())])
+	assert sdjson.loads('{}', object_pairs_hook=OrderedDict) == OrderedDict()
+	assert sdjson.loads('{"empty": {}}', object_pairs_hook=OrderedDict) == OrderedDict([('empty', OrderedDict())])
 
 
 def test_decoder_optimizations():

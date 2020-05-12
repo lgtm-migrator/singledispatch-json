@@ -17,8 +17,9 @@ def test_scanstring():
 
 	assert scanstring('"\\u007b"', 1, True) == ('{', 8)
 
-	assert scanstring('"A JSON payload should be an object or array, not a string."', 1, True) \
-		   == ('A JSON payload should be an object or array, not a string.', 60)
+	assert scanstring(
+			'"A JSON payload should be an object or array, not a string."', 1, True
+			) == ('A JSON payload should be an object or array, not a string.', 60)
 
 	assert scanstring('["Unclosed array"', 2, True) == ('Unclosed array', 17)
 
@@ -32,17 +33,19 @@ def test_scanstring():
 
 	assert scanstring('{"Extra comma": true,}', 2, True) == ('Extra comma', 14)
 
-	assert scanstring('{"Extra value after close": true} "misplaced quoted value"', 2, True) \
-		   == ('Extra value after close', 26)
+	assert scanstring(
+			'{"Extra value after close": true} "misplaced quoted value"', 2, True
+			) == ('Extra value after close', 26)
 
 	assert scanstring('{"Illegal expression": 1 + 2}', 2, True) == ('Illegal expression', 21)
 
 	assert scanstring('{"Illegal invocation": alert()}', 2, True) == ('Illegal invocation', 21)
 
-	assert scanstring('{"Numbers cannot have leading zeroes": 013}', 2, True) == ('Numbers cannot have leading zeroes', 37)
+	assert scanstring(
+			'{"Numbers cannot have leading zeroes": 013}', 2, True
+			) == ('Numbers cannot have leading zeroes', 37)
 
-	assert scanstring('{"Numbers cannot be hex": 0x14}', 2, True) == \
-		   ('Numbers cannot be hex', 24)
+	assert scanstring('{"Numbers cannot be hex": 0x14}', 2, True) == ('Numbers cannot be hex', 24)
 
 	assert scanstring('[[[[[[[[[[[[[[[[[[[["Too deep"]]]]]]]]]]]]]]]]]]]]', 21, True) == ('Too deep', 30)
 

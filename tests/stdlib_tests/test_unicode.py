@@ -98,8 +98,10 @@ def test_bytes_decode():
 
 def test_object_pairs_hook_with_unicode():
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
-	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
-		 ("qrt", 5), ("pad", 6), ("hoy", 7)]
+	p = [
+			("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
+			("qrt", 5), ("pad", 6), ("hoy", 7)
+			]
 	assert sdjson.loads(s) == eval(s)
 	assert sdjson.loads(s, object_pairs_hook=lambda x: x) == p
 	od = sdjson.loads(s, object_pairs_hook=OrderedDict)

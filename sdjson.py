@@ -101,7 +101,7 @@ TODO: This module does not currently support custom decoders, but might in the f
 __all__ = [
 		"load", "loads", "JSONDecoder", "JSONDecodeError",
 		"dump", "dumps", "JSONEncoder",
-		"encoders",	"register_encoder", "unregister_encoder",
+		"encoders", "register_encoder", "unregister_encoder",
 		]
 
 __author__ = "Dominic Davis-Foster"
@@ -131,8 +131,9 @@ def allow_unregister(func):
 	"""
 
 	# build a dictionary mapping names to closure cells
-	closure = dict(zip(func.register.__code__.co_freevars,
-					   func.register.__closure__))
+	closure = dict(zip(
+			func.register.__code__.co_freevars,
+			func.register.__closure__))
 	registry = closure['registry'].cell_contents
 	dispatch_cache = closure['dispatch_cache'].cell_contents
 

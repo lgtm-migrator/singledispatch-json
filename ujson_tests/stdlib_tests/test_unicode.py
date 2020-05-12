@@ -98,11 +98,14 @@ def test_bytes_decode():
 	assert sd_ujson.loads(b'\x007') == 7
 	assert sd_ujson.loads(b'57') == 57
 
+
 @pytest.mark.xfail
 def test_object_pairs_hook_with_unicode():
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
-	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
-		 ("qrt", 5), ("pad", 6), ("hoy", 7)]
+	p = [
+			("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
+			("qrt", 5), ("pad", 6), ("hoy", 7),
+			]
 	assert sd_ujson.loads(s) == eval(s)
 	assert sd_ujson.loads(s, object_pairs_hook=lambda x: x) == p
 	od = sd_ujson.loads(s, object_pairs_hook=OrderedDict)
