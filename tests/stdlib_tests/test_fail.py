@@ -1,11 +1,12 @@
+# stdlib
 import platform
+import re
 
 # 3rd party
 import pytest
 
 # this package
 import sdjson
-
 
 # 2007-10-05
 JSONDOCS = [
@@ -142,7 +143,10 @@ def __test_invalid_input(data, msg, idx):
 	assert err.value.pos == idx
 	assert err.value.lineno == 1
 	assert err.value.colno == idx + 1
-	assert str(err.value) == f'{msg}: line 1 column {idx + 1:d} (char {idx:d})'
+	if pypy:
+		assert re.match(rf'{msg}.*: line 1 column {idx + 1:d} \(char {idx:d}\)', str(err.value))
+	else:
+		assert re.match(rf'{msg}: line 1 column {idx + 1:d} \(char {idx:d}\)', str(err.value))
 
 
 @pytest.mark.parametrize("data, msg, idx", [
