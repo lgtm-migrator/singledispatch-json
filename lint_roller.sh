@@ -23,8 +23,10 @@ if [ -z "$(git status --porcelain --untracked-files=no)" ] || [ "$1" == "-f" ]; 
   for error in "${errors[@]}"
   do
     echo "Correcting $error"
-    autopep8 --in-place --select "$error" -a --recursive sdjson/
-    >&2 flake8 --select "$error" sdjson/
+
+    autopep8 --in-place --select "$error" -a --recursive sdjson.py
+    >&2 flake8 --select "$error" sdjson.py
+
     autopep8 --in-place --select "$error" -a --recursive tests/
     >&2 flake8 --select "$error" tests/
 
@@ -32,7 +34,9 @@ if [ -z "$(git status --porcelain --untracked-files=no)" ] || [ "$1" == "-f" ]; 
 
   for warning in "${warnings[@]}"; do
     echo "Searching for $warning"
-    >&2 flake8 --select "$warning" sdjson/
+
+    >&2 flake8 --select "$warning" sdjson.py
+
     >&2 flake8 --select "$warning" tests/
   done
 
