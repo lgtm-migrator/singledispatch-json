@@ -135,7 +135,10 @@ unterminated_array = "Unterminated array starting at" if pypy else "Expecting ',
 def __test_invalid_input(data, msg, idx):
 	with pytest.raises(sdjson.JSONDecodeError) as err:
 		sdjson.loads(data)
-	assert err.value.msg == msg
+	if pypy:
+		assert err.value.msg.startswith(msg)  # Fix for varying messages between PyPy versions
+	else:
+		assert err.value.msg == msg
 	assert err.value.pos == idx
 	assert err.value.lineno == 1
 	assert err.value.colno == idx + 1

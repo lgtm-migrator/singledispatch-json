@@ -1,5 +1,6 @@
 # stdlib
 import decimal
+import platform
 from collections import OrderedDict
 from io import StringIO
 
@@ -66,6 +67,7 @@ def check_keys_reuse(source, loads):
 	assert b == d
 
 
+@pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Strange behaviour with PyPy")
 def test_keys_reuse():
 	s = '[{"a_key": 1, "b_\xe9": 2}, {"a_key": 3, "b_\xe9": 4}]'
 	check_keys_reuse(s, sdjson.loads)
