@@ -26,12 +26,12 @@ for both Python's built-in classes and user-created classes, without as much leg
 
 Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
 
-|pkgname2| can be installed with pip:
+``sdjson`` can be installed with pip:
 
 
 .. parsed-literal::
 
-        $ pip install |pkgname|
+        $ pip install sdjson
 
 
 View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.

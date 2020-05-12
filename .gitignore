@@ -1,3 +1,5 @@
+# This file is managed by `git_helper`. Don't edit it directly
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -136,4 +138,5 @@ fabric.properties
 .idea
 build
 *.egg-info
-*/__pycache__
+**/__pycache__
+**/conda
