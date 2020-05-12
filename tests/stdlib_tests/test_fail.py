@@ -1,3 +1,5 @@
+import platform
+
 # 3rd party
 import pytest
 
@@ -103,7 +105,9 @@ def test_non_string_keys_dict():
 	data = {'a': 1, (1, 2): 2}
 
 	# TODO:
-	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
+	if platform.python_implementation() == "PyPy":
+		match_string = r"key \(1, 2\) is not a string"
+	elif sys.version_info.major >= 3 and sys.version_info.minor > 6:
 		match_string = "keys must be str, int, float, bool or None, not tuple"
 	else:
 		match_string = "keys must be a string"
@@ -118,108 +122,105 @@ def test_not_serializable():
 		sdjson.dumps(sys)
 
 
-def test_truncated_input():
-	test_cases = [
-			('', 'Expecting value', 0),
-			('[', 'Expecting value', 1),
-			('[42', "Expecting ',' delimiter", 3),
-			('[42,', 'Expecting value', 4),
+pypy = platform.python_implementation() == "PyPy"
+
+unexpected_right_brace = "Unexpected '}'" if pypy else 'Expecting value'
+missing_colon = "No ':' found at" if pypy else "Expecting ':' delimiter"
+unexpected_colon = "Unexpected ':' when decoding array" if pypy else "Expecting ',' delimiter"
+property_name_string = "Key name must be string at char" if pypy else 'Expecting property name enclosed in double quotes'
+empty_string = "Unexpected '\x00'" if pypy else 'Expecting value'
+unterminated_array = "Unterminated array starting at" if pypy else "Expecting ',' delimiter"
+
+
+def __test_invalid_input(data, msg, idx):
+	with pytest.raises(sdjson.JSONDecodeError) as err:
+		sdjson.loads(data)
+	assert err.value.msg == msg
+	assert err.value.pos == idx
+	assert err.value.lineno == 1
+	assert err.value.colno == idx + 1
+	assert str(err.value) == f'{msg}: line 1 column {idx + 1:d} (char {idx:d})'
+
+
+@pytest.mark.parametrize("data, msg, idx", [
+			('', empty_string, 0),
+			('[', empty_string, 1),
+			('[42', unterminated_array, 1 if pypy else 3),
+			('[42,', empty_string, 4),
 			('["', 'Unterminated string starting at', 1),
 			('["spam', 'Unterminated string starting at', 1),
-			('["spam"', "Expecting ',' delimiter", 7),
-			('["spam",', 'Expecting value', 8),
-			('{', 'Expecting property name enclosed in double quotes', 1),
+			('["spam"', unterminated_array, 1 if pypy else 7),
+			('["spam",', empty_string, 8),
+			('{', property_name_string, 1),
 			('{"', 'Unterminated string starting at', 1),
 			('{"spam', 'Unterminated string starting at', 1),
-			('{"spam"', "Expecting ':' delimiter", 7),
-			('{"spam":', 'Expecting value', 8),
-			('{"spam":42', "Expecting ',' delimiter", 10),
-			('{"spam":42,', 'Expecting property name enclosed in double quotes', 11),
-			]
-	test_cases += [
+			('{"spam"', missing_colon, 7),
+			('{"spam":', empty_string, 8),
+			('{"spam":42', "Unterminated object starting at" if pypy else "Expecting ',' delimiter", 1 if pypy else 10),
+			('{"spam":42,', property_name_string, 11),
 			('"', 'Unterminated string starting at', 0),
 			('"spam', 'Unterminated string starting at', 0),
-			]
-	for data, msg, idx in test_cases:
-		with pytest.raises(sdjson.JSONDecodeError) as err:
-			sdjson.loads(data)
-
-		assert err.value.msg == msg
-		assert err.value.pos == idx
-		assert err.value.lineno == 1
-		assert err.value.colno == idx + 1
-		assert str(err.value) == f'{msg}: line 1 column {idx + 1:d} (char {idx:d})'
+			])
+def test_truncated_input(data, msg, idx):
+	__test_invalid_input(data, msg, idx)
 
 
-def test_unexpected_data():
-	test_cases = [
-			('[,', 'Expecting value', 1),
-			('{"spam":[}', 'Expecting value', 9),
-			('[42:', "Expecting ',' delimiter", 3),
-			('[42 "spam"', "Expecting ',' delimiter", 4),
-			('[42,]', 'Expecting value', 4),
-			('{"spam":[42}', "Expecting ',' delimiter", 11),
+@pytest.mark.parametrize("data, msg, idx", [
+			('[,', "Unexpected ','" if pypy else 'Expecting value', 1),
+			('{"spam":[}', unexpected_right_brace, 9),
+			('[42:', unexpected_colon, 3),
+			('[42 "spam"', "Unexpected '\"' when decoding array" if pypy else "Expecting ',' delimiter", 4),
+			('[42,]', "Unexpected ']'" if pypy else 'Expecting value', 4),
+			('{"spam":[42}', "Unexpected '}' when decoding array" if pypy else "Expecting ',' delimiter", 11),
 			('["]', 'Unterminated string starting at', 1),
-			('["spam":', "Expecting ',' delimiter", 7),
-			('["spam",]', 'Expecting value', 8),
-			('{:', 'Expecting property name enclosed in double quotes', 1),
-			('{,', 'Expecting property name enclosed in double quotes', 1),
-			('{42', 'Expecting property name enclosed in double quotes', 1),
-			('[{]', 'Expecting property name enclosed in double quotes', 2),
-			('{"spam",', "Expecting ':' delimiter", 7),
-			('{"spam"}', "Expecting ':' delimiter", 7),
-			('[{"spam"]', "Expecting ':' delimiter", 8),
-			('{"spam":}', 'Expecting value', 8),
-			('[{"spam":]', 'Expecting value', 9),
-			('{"spam":42 "ham"', "Expecting ',' delimiter", 11),
-			('[{"spam":42]', "Expecting ',' delimiter", 11),
-			('{"spam":42,}', 'Expecting property name enclosed in double quotes', 11),
-			]
-	for data, msg, idx in test_cases:
-		with pytest.raises(sdjson.JSONDecodeError) as err:
-			sdjson.loads(data)
-		assert err.value.msg == msg
-		assert err.value.pos == idx
-		assert err.value.lineno == 1
-		assert err.value.colno == idx + 1
-		assert str(err.value) == f'{msg}: line 1 column {idx + 1:d} (char {idx:d})'
+			('["spam":', unexpected_colon, 7),
+			('["spam",]', "Unexpected ']'" if pypy else 'Expecting value', 8),
+			('{:', property_name_string, 1),
+			('{,', property_name_string, 1),
+			('{42', property_name_string, 1),
+			('[{]', property_name_string, 2),
+			('{"spam",', missing_colon, 7),
+			('{"spam"}', missing_colon, 7),
+			('[{"spam"]', missing_colon, 8),
+			('{"spam":}', unexpected_right_brace, 8),
+			('[{"spam":]', "Unexpected ']'" if pypy else 'Expecting value', 9),
+			('{"spam":42 "ham"', "Unexpected '\"' when decoding object" if pypy else "Expecting ',' delimiter", 11),
+			('[{"spam":42]', "Unexpected ']' when decoding object" if pypy else "Expecting ',' delimiter", 11),
+			('{"spam":42,}', property_name_string, 11),
+			])
+def test_unexpected_data(data, msg, idx):
+	__test_invalid_input(data, msg, idx)
 
 
-def test_extra_data():
-	test_cases = [
+@pytest.mark.parametrize("data, msg, idx", [
 			('[]]', 'Extra data', 2),
 			('{}}', 'Extra data', 2),
 			('[],[]', 'Extra data', 2),
 			('{},{}', 'Extra data', 2),
-			]
-	test_cases += [
 			('42,"spam"', 'Extra data', 2),
 			('"spam",42', 'Extra data', 6),
-			]
-	for data, msg, idx in test_cases:
-		with pytest.raises(sdjson.JSONDecodeError) as err:
-			sdjson.loads(data)
-
-		assert err.value.msg == msg
-		assert err.value.pos == idx
-		assert err.value.lineno == 1
-		assert err.value.colno == idx + 1
-		assert str(err.value) == f'{msg}: line 1 column {idx + 1:d} (char {idx:d})'
+			])
+def test_extra_data(data, msg, idx):
+	__test_invalid_input(data, msg, idx)
 
 
-def test_linecol():
-	test_cases = [
-			('!', 1, 1, 0),
+@pytest.mark.parametrize("data, line, col, idx", [('!', 1, 1, 0),
 			(' !', 1, 2, 1),
 			('\n!', 2, 1, 1),
 			('\n  \n\n     !', 4, 6, 10),
-			]
-	for data, line, col, idx in test_cases:
-		with pytest.raises(sdjson.JSONDecodeError) as err:
-			sdjson.loads(data)
+			])
+def test_linecol(data, line, col, idx):
 
-		assert err.value.msg == 'Expecting value'
-		assert err.value.pos == idx
-		assert err.value.lineno == line
-		assert err.value.colno == col
-		assert str(err.value) == f'Expecting value: line {line} column {col:d} (char {idx:d})'
+	with pytest.raises(sdjson.JSONDecodeError) as err:
+		sdjson.loads(data)
+
+	if platform.python_implementation() == "PyPy":
+		match = "Unexpected '!'"
+	else:
+		match = 'Expecting value'
+
+	assert err.value.msg == match
+	assert err.value.pos == idx
+	assert err.value.lineno == line
+	assert err.value.colno == col
+	assert str(err.value) == f'{match}: line {line} column {col:d} (char {idx:d})'
