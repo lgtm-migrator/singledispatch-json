@@ -226,7 +226,10 @@ def test_linecol(data, line, col, idx):
 	else:
 		match = 'Expecting value'
 
-	assert err.value.msg == match
+	if pypy:
+		assert err.value.msg.startswith(match)  # Fix for varying messages between PyPy versions
+	else:
+		assert err.value.msg == match
 	assert err.value.pos == idx
 	assert err.value.lineno == line
 	assert err.value.colno == col
