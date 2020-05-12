@@ -2,9 +2,11 @@
 sdjson
 ****************
 
-.. image:: https://travis-ci.com/domdfcoding/singledispatch-json.svg?branch=master
+.. start shields
+
+.. image:: https://img.shields.io/travis/com/domdfcoding/singledispatch-json/master?logo=travis
     :target: https://travis-ci.com/domdfcoding/singledispatch-json
-    :alt: Build Status
+    :alt: Travis Build Status
 .. image:: https://readthedocs.org/projects/singledispatch-json/badge/?version=latest
     :target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
@@ -14,12 +16,39 @@ sdjson
 .. image:: https://img.shields.io/pypi/pyversions/sdjson.svg
     :target: https://pypi.org/project/sdjson/
     :alt: PyPI - Python Version
+.. image:: https://img.shields.io/pypi/wheel/sdjson
+    :target: https://pypi.org/project/sdjson/
+    :alt: PyPI - Wheel
+.. image:: https://img.shields.io/pypi/implementation/sdjson
+    :target: https://pypi.org/project/sdjson/
+    :alt: PyPI - Implementation
+.. image:: https://img.shields.io/conda/v/domdfcoding/sdjson
+    :alt: Conda
+    :target: https://anaconda.org/domdfcoding/sdjson
+.. image:: https://img.shields.io/conda/pn/domdfcoding/sdjson?label=conda%7Cplatform
+    :alt: Conda Platform
+    :target: https://anaconda.org/domdfcoding/sdjson
 .. image:: https://coveralls.io/repos/github/domdfcoding/singledispatch-json/badge.svg?branch=master
     :target: https://coveralls.io/github/domdfcoding/singledispatch-json?branch=master
     :alt: Coverage
-.. image:: https://img.shields.io/badge/License-LGPL%20v3-blue.svg
-    :alt: PyPI - License
+.. image:: https://img.shields.io/github/license/domdfcoding/singledispatch-json
+    :alt: License
     :target: https://github.com/domdfcoding/singledispatch-json/blob/master/LICENSE
+.. image:: https://img.shields.io/github/languages/top/domdfcoding/singledispatch-json
+    :alt: GitHub top language
+.. image:: https://img.shields.io/github/commits-since/domdfcoding/singledispatch-json/v0.2.5
+    :target: https://github.com/domdfcoding/singledispatch-json/pulse
+    :alt: GitHub commits since tagged version
+.. image:: https://img.shields.io/github/last-commit/domdfcoding/singledispatch-json
+    :target: https://github.com/domdfcoding/singledispatch-json/commit/master
+    :alt: GitHub last commit
+.. image:: https://img.shields.io/maintenance/yes/2020
+    :alt: Maintenance
+.. image:: https://img.shields.io/codefactor/grade/github/domdfcoding/singledispatch-json
+    :target: https://www.codefactor.io/repository/github/domdfcoding/singledispatch-json
+    :alt: CodeFactor Grade
+
+.. end shields
 
 Custom JSON Encoder for Python utilising ``functools.singledispatch`` to support custom encoders
 for both Python's built-in classes and user-created classes, without as much legwork.
