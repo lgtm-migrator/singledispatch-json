@@ -19,7 +19,6 @@ def test_dumps():
 	assert sd_ujson.dumps({}) == '{}'
 
 
-@pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Failing on PyPy3.6-7.1.1")
 def test_dump_skipkeys():
 	v = {b'invalid_key': False, 'valid_key': True}
 	with pytest.raises(TypeError):

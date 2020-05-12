@@ -1,4 +1,5 @@
 # stdlib
+import platform
 from io import StringIO
 
 # 3rd party
@@ -18,6 +19,7 @@ def test_dumps():
 	assert sdjson.dumps({}) == '{}'
 
 
+@pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Failing on PyPy3.6-7.1.1")
 def test_dump_skipkeys():
 	v = {b'invalid_key': False, 'valid_key': True}
 	with pytest.raises(TypeError):
@@ -31,11 +33,11 @@ def test_dump_skipkeys():
 
 def test_encode_truefalse():
 	assert sdjson.dumps(
-			{True: False, False: True}, sort_keys=True) == \
-		   '{"false": true, "true": false}'
+			{True: False, False: True}, sort_keys=True) == (
+				'{"false": true, "true": false}')
 	assert sdjson.dumps(
-			{2: 3.0, 4.0: 5, False: 1, 6: True}, sort_keys=True) == \
-		   '{"false": 1, "2": 3.0, "4.0": 5, "6": true}'
+			{2: 3.0, 4.0: 5, False: 1, 6: True}, sort_keys=True) == (
+				'{"false": 1, "2": 3.0, "4.0": 5, "6": true}')
 
 
 # Issue 16228: Crash on encoding resized list
@@ -45,8 +47,7 @@ def test_encode_mutated():
 	def crasher(obj):
 		del a[-1]
 
-	assert sdjson.dumps(a, default=crasher) == \
-		   '[null, null, null, null, null]'
+	assert sdjson.dumps(a, default=crasher) == '[null, null, null, null, null]'
 
 
 # Issue 24094

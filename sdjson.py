@@ -123,23 +123,23 @@ def allow_unregister(func):
 	"""
 	Decorator to allow removal of custom encoders with ``<sdjson.encoders.unregister(<type>)``,
 	where <type> is the custom type you wish to remove the encoder for.
-	
+
 	From https://stackoverflow.com/a/25951784/3092681
 	Copyright © 2014 Martijn Pieters
 	https://stackoverflow.com/users/100297/martijn-pieters
 	Licensed under CC BY-SA 4.0
 	"""
-	
+
 	# build a dictionary mapping names to closure cells
 	closure = dict(zip(func.register.__code__.co_freevars,
 					   func.register.__closure__))
 	registry = closure['registry'].cell_contents
 	dispatch_cache = closure['dispatch_cache'].cell_contents
-	
+
 	def unregister(cls):
 		del registry[cls]
 		dispatch_cache.clear()
-		
+
 	func.unregister = unregister
 	return func
 
@@ -148,16 +148,16 @@ def sphinxify_json_docstring():
 	"""
 	Turn references in the docstring to :class:`~python:json.JSONEncoder` into proper links.
 	"""
-	
+
 	def wrapper(target):
 		# To save having the `sphinxify_docstring` decorator too
 		target.__doc__ = make_sphinx_links(target.__doc__)
-		
+
 		target.__doc__ = target.__doc__.replace("``JSONEncoder``", ":class:`~python:json.JSONEncoder`")
 		target.__doc__ = target.__doc__.replace("``.default()``", ":meth:`~python:json.JSONEncoder.default`")
 
 		return target
-	
+
 	return wrapper
 
 
@@ -181,7 +181,7 @@ def dump(obj, fp, **kwargs):
 	"""
 
 	iterable = dumps(obj, **kwargs)
-	
+
 	for chunk in iterable:
 		fp.write(chunk)
 
@@ -197,7 +197,7 @@ def dumps(
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
 	"""
-	
+
 	if (
 			not skipkeys and ensure_ascii
 			and check_circular and allow_nan
@@ -241,47 +241,47 @@ class JSONEncoder(json.JSONEncoder):
 	"""
 	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
 	"""
-	
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-	
+
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.default)
 	def default(self, o):
 		return super().default(o)
-		
+
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.encode)
 	def encode(self, o):
 		return super().encode(o)
-	
+
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.iterencode)
 	def iterencode(self, o, _one_shot=False):
 		return super().iterencode(o, _one_shot)
-	
-	
+
+
 @sphinxify_json_docstring()
 @append_docstring_from(json.JSONDecoder)
 class JSONDecoder(json.JSONDecoder):
 	"""
 	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
 	"""
-	
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-	
+
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONDecoder.decode)
 	def decode(self, *args, **kwargs):
 		return super().decode(*args, **kwargs)
-		
+
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONDecoder.raw_decode)
 	def raw_decode(self, *args, **kwargs):
 		return super().raw_decode(*args, **kwargs)
-		
-	
+
+
 JSONDecodeError = json.JSONDecodeError
 
 

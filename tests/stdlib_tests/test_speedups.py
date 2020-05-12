@@ -10,7 +10,7 @@ import pytest
 
 class BadBool:
 	def __bool__(self):
-		1/0
+		1 / 0
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
@@ -71,7 +71,7 @@ def test_bad_str_encoder():
 		enc({'spam': 42}, 4)
 
 	def bad_encoder2(*args):
-		1/0
+		1 / 0
 
 	enc = json.encoder.c_make_encoder(
 			None, lambda obj: str(obj),
