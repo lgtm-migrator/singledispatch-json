@@ -64,7 +64,7 @@ def test_parse_pass_1():
     1e00,2e+00,2e-00
     ,"rosebud"]
     '''
-    
+
     # test in/out equivalence and parsing
     res = sdjson.loads(JSON)
     out = sdjson.dumps(res)
@@ -76,7 +76,7 @@ def test_parse_pass_2():
     JSON = r'''
     [[[[[[[[[[[[[[[[[[["Not too deep"]]]]]]]]]]]]]]]]]]]
     '''
-    
+
     # test in/out equivalence and parsing
     res = sdjson.loads(JSON)
     out = sdjson.dumps(res)
@@ -93,7 +93,7 @@ def test_parse_pass_3():
         }
     }
     '''
-    
+
     # test in/out equivalence and parsing
     res = sdjson.loads(JSON)
     out = sdjson.dumps(res)

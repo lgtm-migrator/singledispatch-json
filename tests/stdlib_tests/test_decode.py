@@ -97,7 +97,7 @@ def test_invalid_input_type():
 
 def test_string_with_utf8_bom():
 	import sys
-	
+
 	# see #18958
 	bom_json = "[1,2,3]".encode('utf-8-sig').decode('utf-8')
 	with pytest.raises(sdjson.JSONDecodeError) as e:
@@ -105,7 +105,7 @@ def test_string_with_utf8_bom():
 	# TODO:
 	if sys.version_info.major >= 3 and sys.version_info.minor == 7:
 		assert 'BOM' in str(e)
-	
+
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.load(StringIO(bom_json))
 	# TODO:

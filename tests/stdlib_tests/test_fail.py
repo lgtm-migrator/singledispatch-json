@@ -99,9 +99,9 @@ def test_failures():
 
 def test_non_string_keys_dict():
 	import sys
-	
+
 	data = {'a': 1, (1, 2): 2}
-	
+
 	# TODO:
 	if sys.version_info.major >= 3 and sys.version_info.minor > 6:
 		match_string = "keys must be str, int, float, bool or None, not tuple"
@@ -143,7 +143,7 @@ def test_truncated_input():
 	for data, msg, idx in test_cases:
 		with pytest.raises(sdjson.JSONDecodeError) as err:
 			sdjson.loads(data)
-			
+
 		assert err.value.msg == msg
 		assert err.value.pos == idx
 		assert err.value.lineno == 1
@@ -199,7 +199,7 @@ def test_extra_data():
 	for data, msg, idx in test_cases:
 		with pytest.raises(sdjson.JSONDecodeError) as err:
 			sdjson.loads(data)
-			
+
 		assert err.value.msg == msg
 		assert err.value.pos == idx
 		assert err.value.lineno == 1

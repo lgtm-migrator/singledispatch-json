@@ -13,20 +13,20 @@ import sdjson
 class CustomClassBase:
 	def __str__(self):
 		return self.__repr__()
-	
+
 	def __iter__(self):
 		for key, value in self.__dict__().items():
 			yield key, value
-	
+
 	def __getstate__(self):
 		return self.__dict__()
-	
+
 	def __setstate__(self, state):
 		self.__init__(**state)
-	
+
 	def __copy__(self):
 		return self.__class__(**self.__dict__())
-	
+
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()
 
@@ -36,10 +36,10 @@ class Character(CustomClassBase):
 		self.name = str(name)
 		self.actor = str(actor)
 		self.armed = bool(armed)
-	
+
 	def __repr__(self):
 		return f"Character: {self.name} ({self.actor})"
-	
+
 	def __dict__(self):
 		return dict(name=self.name, actor=self.actor, armed=self.armed)
 
@@ -47,15 +47,15 @@ class Character(CustomClassBase):
 class Cheese(CustomClassBase):
 	def __init__(self, name, properties=None):
 		self.name = name
-		
+
 		if properties:
 			self.properties = properties
 		else:
 			self.properties = []
-	
+
 	def __repr__(self):
 		return f"Cheese({self.name})"
-	
+
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -67,35 +67,35 @@ class Shop(CustomClassBase):
 	"""
 	Custom class to encode to JSON
 	"""
-	
+
 	def __init__(
 			self, name, address, open=True, staff=None, customers=None, current_stock=None, music=False, dancing=False,
 			):
-		
+
 		self.name = str(name)
 		self.address = str(address)
 		self.open = bool(open)
 		self.music = bool(music)
 		self.dancing = bool(dancing)
-		
+
 		if staff:
 			self.staff = staff
 		else:
 			self.staff = []
-		
+
 		if customers:
 			self.customers = customers
 		else:
 			self.customers = []
-		
+
 		if current_stock:
 			self.current_stock = current_stock
 		else:
 			self.current_stock = []
-	
+
 	def __repr__(self):
 		return f"{self.name} ({'Open' if self.open else 'closed'})"
-	
+
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -116,15 +116,15 @@ def test_custom_class():
 	@sdjson.encoders.register(Character)
 	def encode_character(obj):
 		return dict(obj)
-	
+
 	@sdjson.encoders.register(Cheese)
 	def encode_cheese(obj):
 		return dict(obj)
-	
+
 	@sdjson.encoders.register(Shop)
 	def encode_shop(obj):
 		return dict(obj)
-	
+
 	# Create instances of classes
 	runny_camembert = Cheese("Camembert", ["Very runny"])
 	shopkeeper = Character("Mr Wensleydale", "Michael Palin")
@@ -140,7 +140,7 @@ England""",
 			music=False,
 			dancing=False,
 			)
-	
+
 	expected_json = (
 			'{"name": "The National Cheese Emporium", "address": "12 Some Street\\n'
 			'Some Town\\nEngland", "open": true, "music": false, "dancing": false, '
@@ -148,18 +148,18 @@ England""",
 			'"customers": [{"name": "The Customer", "actor": "John Cleese", "armed": false}], '
 			'"current_stock": [{"name": "Camembert", "properties": ["Very runny"]}]}'
 			)
-	
+
 	with TemporaryDirectory() as tmpdir:
 		tmpfile = pathlib.Path(tmpdir) / "output.json"
-		
+
 		with open(tmpfile, "w") as fp:
 			sdjson.dump(cheese_shop, fp)
-		
+
 		with open(tmpfile, "r") as fp:
 			assert fp.read() == expected_json
-		
+
 	assert sdjson.dumps(cheese_shop) == expected_json
-		
+
 	# Cleanup
 	sdjson.unregister_encoder(Character)
 	sdjson.unregister_encoder(Cheese)

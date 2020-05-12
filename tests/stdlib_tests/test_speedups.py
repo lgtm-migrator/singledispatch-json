@@ -30,7 +30,7 @@ def test_make_scanner():
 def test_bad_bool_args_1():
 	def test(value):
 		json.decoder.JSONDecoder(strict=BadBool()).decode(value)
-		
+
 	with pytest.raises(ZeroDivisionError):
 		test('""')
 	with pytest.raises(ZeroDivisionError):
@@ -52,25 +52,25 @@ def test_bad_str_encoder():
 	# c_make_encoder() receives a bad encoder() argument.
 	def bad_encoder1(*args):
 		return None
-	
+
 	enc = json.encoder.c_make_encoder(
 			None, lambda obj: str(obj),
 			bad_encoder1, None, ': ', ', ',
 			False, False, False)
-	
+
 	with pytest.raises(TypeError):
 		enc('spam', 4)
 	with pytest.raises(TypeError):
 		enc({'spam': 42}, 4)
-	
+
 	def bad_encoder2(*args):
 		1/0
-		
+
 	enc = json.encoder.c_make_encoder(
 			None, lambda obj: str(obj),
 			bad_encoder2, None, ': ', ', ',
 			False, False, False)
-	
+
 	with pytest.raises(ZeroDivisionError):
 		enc('spam', 4)
 
@@ -78,7 +78,7 @@ def test_bad_str_encoder():
 def test_bad_bool_args_2():
 	def test(name):
 		json.encoder.JSONEncoder(**{name: BadBool()}).encode({'a': 1})
-		
+
 	with pytest.raises(ZeroDivisionError):
 		test('skipkeys')
 	with pytest.raises(ZeroDivisionError):

@@ -33,7 +33,6 @@ def test_separators():
       }
     ]""")
 
-
     d1 = sdjson.dumps(h)
     d2 = sdjson.dumps(h, indent=2, sort_keys=True, separators=(' ,', ' : '))
 
@@ -53,4 +52,3 @@ def test_illegal_separators():
         sdjson.dumps(h, separators=(', ', b': '))
     with pytest.raises(TypeError):
         sdjson.dumps(h, separators=(b', ', b': '))
-

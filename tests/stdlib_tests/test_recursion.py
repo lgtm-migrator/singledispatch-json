@@ -51,7 +51,7 @@ def test_dictrecursion():
 def test_defaultrecursion():
 	class RecursiveJSONEncoder(sdjson.JSONEncoder):
 		recurse = False
-		
+
 		def default(self, o):
 			if o is JSONTestObject:
 				if self.recurse:
@@ -59,7 +59,7 @@ def test_defaultrecursion():
 				else:
 					return 'JSONTestObject'
 			return sdjson.JSONEncoder.default(o)
-	
+
 	enc = RecursiveJSONEncoder()
 	assert enc.encode(JSONTestObject) == '"JSONTestObject"'
 	enc.recurse = True
@@ -99,6 +99,6 @@ def test_endless_recursion():
 		def default(self, o):
 			"""If check_circular is False, this will keep adding another list."""
 			return [o]
-	
+
 	with pytest.raises(RecursionError):
 		EndlessJSONEncoder(check_circular=False).encode(5j)

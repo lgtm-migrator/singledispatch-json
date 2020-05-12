@@ -22,7 +22,7 @@ def test_dump_skipkeys():
 	v = {b'invalid_key': False, 'valid_key': True}
 	with pytest.raises(TypeError):
 		sdjson.dumps(v)
-	
+
 	s = sdjson.dumps(v, skipkeys=True)
 	o = sdjson.loads(s)
 	assert 'valid_key' in o
@@ -41,10 +41,10 @@ def test_encode_truefalse():
 # Issue 16228: Crash on encoding resized list
 def test_encode_mutated():
 	a = [object()] * 10
-	
+
 	def crasher(obj):
 		del a[-1]
-	
+
 	assert sdjson.dumps(a, default=crasher) == \
 		   '[null, null, null, null, null]'
 
@@ -54,15 +54,15 @@ def test_encode_evil_dict():
 	class D(dict):
 		def keys(self):
 			return L
-	
+
 	class X:
 		def __hash__(self):
 			del L[0]
 			return 1337
-		
+
 		def __lt__(self, o):
 			return 0
-	
+
 	L = [X() for i in range(1122)]
 	d = D()
 	d[1337] = "true.dat"
