@@ -34,7 +34,7 @@ def test_object_pairs_hook():
 	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4), ("qrt", 5), ("pad", 6), ("hoy", 7)]
 	assert sdjson.loads(s) == eval(s)
 	assert sdjson.loads(s, object_pairs_hook=lambda x: x) == p
-	assert sdjson.load(StringIO(s), bject_pairs_hook=lambda x: x) == p
+	assert sdjson.load(StringIO(s), object_pairs_hook=lambda x: x) == p
 	od = sdjson.loads(s, object_pairs_hook=OrderedDict)
 	assert od == OrderedDict(p)
 	assert type(od) == OrderedDict
