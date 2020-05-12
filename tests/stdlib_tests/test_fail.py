@@ -233,4 +233,7 @@ def test_linecol(data, line, col, idx):
 	assert err.value.pos == idx
 	assert err.value.lineno == line
 	assert err.value.colno == col
-	assert str(err.value) == f'{match}: line {line} column {col:d} (char {idx:d})'
+	if pypy:
+		assert re.match(rf'{match}.*: line {line} column {col:d} \(char {idx:d}\)', str(err.value))
+	else:
+		assert re.match(rf'{match}: line {line} column {col:d} \(char {idx:d}\)', str(err.value))
