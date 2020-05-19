@@ -28,4 +28,3 @@ def test_unregister():
 	# We should now get a float again
 	assert sd_ujson.dumps(Decimal(2)) == "2.0"
 	assert isinstance(sd_ujson.dumps(Decimal(2)), str)
-
