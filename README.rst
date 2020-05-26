@@ -2,7 +2,7 @@
 sdjson
 ****************
 
-.. start shields
+.. start shields 
 
 .. list-table::
 	:stub-columns: 1
