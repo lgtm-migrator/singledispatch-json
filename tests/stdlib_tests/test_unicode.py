@@ -70,12 +70,12 @@ def test_bytes_encode():
 
 def test_bytes_decode():
 	for encoding, bom in [
-			('utf-8', codecs.BOM_UTF8),
-			('utf-16be', codecs.BOM_UTF16_BE),
-			('utf-16le', codecs.BOM_UTF16_LE),
-			('utf-32be', codecs.BOM_UTF32_BE),
-			('utf-32le', codecs.BOM_UTF32_LE),
-			]:
+		('utf-8', codecs.BOM_UTF8),
+		('utf-16be', codecs.BOM_UTF16_BE),
+		('utf-16le', codecs.BOM_UTF16_LE),
+		('utf-32be', codecs.BOM_UTF32_BE),
+		('utf-32le', codecs.BOM_UTF32_LE),
+		]:
 		data = ["a\xb5\u20ac\U0001d120"]
 		encoded = sdjson.dumps(data).encode(encoding)
 		assert sdjson.loads(bom + encoded) == data

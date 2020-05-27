@@ -32,7 +32,8 @@ def test_dump_skipkeys():
 
 
 @pytest.mark.parametrize(
-		"data, expects", [
+		"data, expects",
+		[
 				({True: False, False: True}, '{"false": true, "true": false}'),
 				({2: 3.0, 4.0: 5, False: 1, 6: True}, '{"false": 1, "2": 3.0, "4.0": 5, "6": true}'),
 				]

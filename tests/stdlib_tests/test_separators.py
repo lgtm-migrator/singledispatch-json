@@ -9,8 +9,16 @@ import sdjson
 
 
 def test_separators():
-	h = [['blorpie'], ['whoops'], [], 'd-shtaeou', 'd-nthiouh', 'i-vhbjkhnth', {'nifty': 87},
-			{'field': 'yes', 'morefield': False}]
+	h = [
+			['blorpie'],
+			['whoops'],
+			[],
+			'd-shtaeou',
+			'd-nthiouh',
+			'i-vhbjkhnth',
+			{'nifty': 87},
+			{'field': 'yes', 'morefield': False},
+			]
 
 	expect = textwrap.dedent(
 			"""\
