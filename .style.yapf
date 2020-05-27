@@ -117,7 +117,7 @@ dedent_closing_brackets=False
 disable_ending_comma_heuristic=False
 
 # Place each dictionary entry onto its own line.
-each_dict_entry_on_separate_line=True
+each_dict_entry_on_separate_line=False
 
 # Require multiline dictionary even if it would normally fit on one line.
 # For example:

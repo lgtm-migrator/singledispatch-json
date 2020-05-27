@@ -3,8 +3,8 @@ import sdjson
 
 
 def test_parse_pass_1():
-    # from http://json.org/JSON_checker/test/pass1.json
-    JSON = r'''
+	# from http://json.org/JSON_checker/test/pass1.json
+	JSON = r'''
     [
         "JSON Test Pattern pass1",
         {"object with 1 member":["array with 1 element"]},
@@ -65,27 +65,27 @@ def test_parse_pass_1():
     ,"rosebud"]
     '''
 
-    # test in/out equivalence and parsing
-    res = sdjson.loads(JSON)
-    out = sdjson.dumps(res)
-    assert res == sdjson.loads(out)
+	# test in/out equivalence and parsing
+	res = sdjson.loads(JSON)
+	out = sdjson.dumps(res)
+	assert res == sdjson.loads(out)
 
 
 def test_parse_pass_2():
-    # from http://json.org/JSON_checker/test/pass2.json
-    JSON = r'''
+	# from http://json.org/JSON_checker/test/pass2.json
+	JSON = r'''
     [[[[[[[[[[[[[[[[[[["Not too deep"]]]]]]]]]]]]]]]]]]]
     '''
 
-    # test in/out equivalence and parsing
-    res = sdjson.loads(JSON)
-    out = sdjson.dumps(res)
-    assert res == sdjson.loads(out)
+	# test in/out equivalence and parsing
+	res = sdjson.loads(JSON)
+	out = sdjson.dumps(res)
+	assert res == sdjson.loads(out)
 
 
 def test_parse_pass_3():
-    # from http://json.org/JSON_checker/test/pass3.json
-    JSON = r'''
+	# from http://json.org/JSON_checker/test/pass3.json
+	JSON = r'''
     {
         "JSON Test Pattern pass3": {
             "The outermost value": "must be an object or array.",
@@ -94,7 +94,7 @@ def test_parse_pass_3():
     }
     '''
 
-    # test in/out equivalence and parsing
-    res = sdjson.loads(JSON)
-    out = sdjson.dumps(res)
-    assert res == sdjson.loads(out)
+	# test in/out equivalence and parsing
+	res = sdjson.loads(JSON)
+	out = sdjson.dumps(res)
+	assert res == sdjson.loads(out)

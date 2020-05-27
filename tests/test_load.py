@@ -79,13 +79,13 @@ def test_dict_failure():
 
 
 def test_dict():
-	assert write_then_read(
-			{"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
-			) == {"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
+	data = {"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
+	assert write_then_read(data) == data
 
 
 def test_list():
-	assert write_then_read([True, False, 1, 2.5, "spam"]) == [True, False, 1, 2.5, "spam"]
+	data = [True, False, 1, 2.5, "spam"]
+	assert write_then_read(data) == data
 
 
 @pytest.mark.xfail

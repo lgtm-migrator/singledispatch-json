@@ -49,6 +49,7 @@ def test_dictrecursion():
 
 
 def test_defaultrecursion():
+
 	class RecursiveJSONEncoder(sdjson.JSONEncoder):
 		recurse = False
 
@@ -96,6 +97,7 @@ def test_highly_nested_objects_encoding():
 def test_endless_recursion():
 	# See #12051
 	class EndlessJSONEncoder(sdjson.JSONEncoder):
+
 		def default(self, o):
 			"""If check_circular is False, this will keep adding another list."""
 			return [o]

@@ -8,9 +8,9 @@ import pytest
 # this package
 import sdjson
 
-
 # test_encoding1 and test_encoding2 from 2.x are irrelevant (only str
 # is supported as input, not bytes).
+
 
 def test_encoding3():
 	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
@@ -98,17 +98,11 @@ def test_bytes_decode():
 
 def test_object_pairs_hook_with_unicode():
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
-	p = [
-			("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4),
-			("qrt", 5), ("pad", 6), ("hoy", 7)
-			]
+	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4), ("qrt", 5), ("pad", 6), ("hoy", 7)]
 	assert sdjson.loads(s) == eval(s)
 	assert sdjson.loads(s, object_pairs_hook=lambda x: x) == p
 	od = sdjson.loads(s, object_pairs_hook=OrderedDict)
 	assert od == OrderedDict(p)
 	assert type(od) == OrderedDict
 	# the object_pairs_hook takes priority over the object_hook
-	assert sdjson.loads(
-			s, object_pairs_hook=OrderedDict,
-			object_hook=lambda x: None
-			) == OrderedDict(p)
+	assert sdjson.loads(s, object_pairs_hook=OrderedDict, object_hook=lambda x: None) == OrderedDict(p)

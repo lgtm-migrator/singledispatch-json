@@ -5,7 +5,6 @@ from math import isnan
 # this package
 import sdjson
 
-
 SMALL = 1
 BIG = 1 << 32
 HUGE = 1 << 64
@@ -81,9 +80,16 @@ def test_dict_keys():
 	e, p, t = FloatNum
 	i, j, n = WierdNum
 	d = {
-			s: 'tiny', b: 'large', h: 'larger', r: 'largest',
-			e: "Euler's number", p: 'pi', t: 'tau',
-			i: 'Infinity', j: '-Infinity', n: 'NaN',
+			s: 'tiny',
+			b: 'large',
+			h: 'larger',
+			r: 'largest',
+			e: "Euler's number",
+			p: 'pi',
+			t: 'tau',
+			i: 'Infinity',
+			j: '-Infinity',
+			n: 'NaN',
 			}
 	nd = sdjson.loads(sdjson.dumps(d))
 	assert nd[str(SMALL)] == 'tiny'

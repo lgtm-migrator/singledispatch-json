@@ -11,6 +11,7 @@ import sdjson
 
 
 class CustomClassBase:
+
 	def __str__(self):
 		return self.__repr__()
 
@@ -32,6 +33,7 @@ class CustomClassBase:
 
 
 class Character(CustomClassBase):
+
 	def __init__(self, name, actor, armed=False):
 		self.name = str(name)
 		self.actor = str(actor)
@@ -45,6 +47,7 @@ class Character(CustomClassBase):
 
 
 class Cheese(CustomClassBase):
+
 	def __init__(self, name, properties=None):
 		self.name = name
 
@@ -69,7 +72,15 @@ class Shop(CustomClassBase):
 	"""
 
 	def __init__(
-			self, name, address, open=True, staff=None, customers=None, current_stock=None, music=False, dancing=False,
+			self,
+			name,
+			address,
+			open=True,
+			staff=None,
+			customers=None,
+			current_stock=None,
+			music=False,
+			dancing=False,
 			):
 
 		self.name = str(name)

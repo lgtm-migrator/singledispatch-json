@@ -31,13 +31,14 @@ def test_dump_skipkeys():
 	assert b'invalid_key' not in o
 
 
-def test_encode_truefalse():
-	assert sdjson.dumps(
-			{True: False, False: True}, sort_keys=True) == (
-				'{"false": true, "true": false}')
-	assert sdjson.dumps(
-			{2: 3.0, 4.0: 5, False: 1, 6: True}, sort_keys=True) == (
-				'{"false": 1, "2": 3.0, "4.0": 5, "6": true}')
+@pytest.mark.parametrize(
+		"data, expects", [
+				({True: False, False: True}, '{"false": true, "true": false}'),
+				({2: 3.0, 4.0: 5, False: 1, 6: True}, '{"false": 1, "2": 3.0, "4.0": 5, "6": true}'),
+				]
+		)
+def test_encode_truefalse(data, expects):
+	assert sdjson.dumps(data, sort_keys=True) == expects
 
 
 # Issue 16228: Crash on encoding resized list
@@ -52,11 +53,14 @@ def test_encode_mutated():
 
 # Issue 24094
 def test_encode_evil_dict():
+
 	class D(dict):
+
 		def keys(self):
 			return L
 
 	class X:
+
 		def __hash__(self):
 			del L[0]
 			return 1337

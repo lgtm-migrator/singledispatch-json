@@ -9,6 +9,7 @@ import pytest
 
 
 class BadBool:
+
 	def __bool__(self):
 		1 / 0
 
@@ -33,6 +34,7 @@ def test_make_scanner():
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
 def test_bad_bool_args_1():
+
 	def test(value):
 		json.decoder.JSONDecoder(strict=BadBool()).decode(value)
 
@@ -50,7 +52,8 @@ def test_make_encoder():
 		json.encoder.c_make_encoder(
 				(True, False),
 				b"\xCD\x7D\x3D\x4E\x12\x4C\xF9\x79\xD7\x52\xBA\x82\xF2\x27\x4A\x7D\xA0\xCA\x75",
-				None)
+				None,
+				)
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
@@ -60,10 +63,7 @@ def test_bad_str_encoder():
 	def bad_encoder1(*args):
 		return None
 
-	enc = json.encoder.c_make_encoder(
-			None, lambda obj: str(obj),
-			bad_encoder1, None, ': ', ', ',
-			False, False, False)
+	enc = json.encoder.c_make_encoder(None, lambda obj: str(obj), bad_encoder1, None, ': ', ', ', False, False, False)
 
 	with pytest.raises(TypeError):
 		enc('spam', 4)
@@ -73,10 +73,7 @@ def test_bad_str_encoder():
 	def bad_encoder2(*args):
 		1 / 0
 
-	enc = json.encoder.c_make_encoder(
-			None, lambda obj: str(obj),
-			bad_encoder2, None, ': ', ', ',
-			False, False, False)
+	enc = json.encoder.c_make_encoder(None, lambda obj: str(obj), bad_encoder2, None, ': ', ', ', False, False, False)
 
 	with pytest.raises(ZeroDivisionError):
 		enc('spam', 4)
@@ -84,6 +81,7 @@ def test_bad_str_encoder():
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
 def test_bad_bool_args_2():
+
 	def test(name):
 		json.encoder.JSONEncoder(**{name: BadBool()}).encode({'a': 1})
 
