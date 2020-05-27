@@ -99,9 +99,16 @@ TODO: This module does not currently support custom decoders, but might in the f
 # TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
 
 __all__ = [
-		"load", "loads", "JSONDecoder", "JSONDecodeError",
-		"dump", "dumps", "JSONEncoder",
-		"encoders", "register_encoder", "unregister_encoder",
+		"load",
+		"loads",
+		"JSONDecoder",
+		"JSONDecodeError",
+		"dump",
+		"dumps",
+		"JSONEncoder",
+		"encoders",
+		"register_encoder",
+		"unregister_encoder",
 		]
 
 __author__ = "Dominic Davis-Foster"
@@ -131,9 +138,7 @@ def allow_unregister(func):
 	"""
 
 	# build a dictionary mapping names to closure cells
-	closure = dict(zip(
-			func.register.__code__.co_freevars,
-			func.register.__closure__))
+	closure = dict(zip(func.register.__code__.co_freevars, func.register.__closure__))
 	registry = closure['registry'].cell_contents
 	dispatch_cache = closure['dispatch_cache'].cell_contents
 
@@ -190,9 +195,18 @@ def dump(obj, fp, **kwargs):
 @sphinxify_json_docstring()
 @append_docstring_from(json.dumps)
 def dumps(
-		obj, *, skipkeys=False, ensure_ascii=True, check_circular=True,
-		allow_nan=True, cls=None, indent=None, separators=None,
-		default=None, sort_keys=False, **kw,
+		obj,
+		*,
+		skipkeys=False,
+		ensure_ascii=True,
+		check_circular=True,
+		allow_nan=True,
+		cls=None,
+		indent=None,
+		separators=None,
+		default=None,
+		sort_keys=False,
+		**kw,
 		):
 	"""
 	Serialize custom Python classes to JSON.
@@ -200,19 +214,23 @@ def dumps(
 	"""
 
 	if (
-			not skipkeys and ensure_ascii
-			and check_circular and allow_nan
-			and cls is None and indent is None
-			and separators is None and default is None
-			and not sort_keys and not kw):
+			not skipkeys and ensure_ascii and check_circular and allow_nan and cls is None and indent is None
+			and separators is None and default is None and not sort_keys and not kw
+			):
 		return _default_encoder.encode(obj)
 	if cls is None:
 		cls = _CustomEncoder
 	return cls(
-			skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-			check_circular=check_circular, allow_nan=allow_nan, indent=indent,
-			separators=separators, default=default, sort_keys=sort_keys,
-			**kw).encode(obj)
+			skipkeys=skipkeys,
+			ensure_ascii=ensure_ascii,
+			check_circular=check_circular,
+			allow_nan=allow_nan,
+			indent=indent,
+			separators=separators,
+			default=default,
+			sort_keys=sort_keys,
+			**kw
+			).encode(obj)
 
 
 # Provide access to remaining objects from json module.
@@ -288,6 +306,7 @@ JSONDecodeError = json.JSONDecodeError
 
 # Custom encoder for sdjson
 class _CustomEncoder(JSONEncoder):
+
 	def default(self, obj):
 		for type_, handler in encoders.registry.items():
 			if isinstance(obj, type_) and type_ is not object:
