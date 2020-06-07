@@ -18,7 +18,7 @@ sdjson
 	  - |conda-version| |conda-platform|
 	* - Other
 	  - |license| |language| |commits-since| |commits-latest| |maintained| 
-	
+
 .. |docs| image:: https://readthedocs.org/projects/singledispatch-json/badge/?version=latest
 	:target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
@@ -26,7 +26,7 @@ sdjson
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/singledispatch-json/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/singledispatch-json
 	:alt: Travis Build Status
-	
+
 .. |requires| image:: https://requires.io/github/domdfcoding/singledispatch-json/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/singledispatch-json/requirements/?branch=master
 	:alt: Requirements Status
