@@ -1,4 +1,7 @@
+# stdlib
 from decimal import Decimal
+
+# this package
 import sdjson
 
 

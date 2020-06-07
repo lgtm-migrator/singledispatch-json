@@ -5,7 +5,7 @@ import json
 import sys
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 import sdjson

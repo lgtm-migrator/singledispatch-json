@@ -5,7 +5,7 @@ from collections import OrderedDict
 from io import StringIO
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 import sdjson

@@ -1,4 +1,7 @@
+# stdlib
 from fractions import Fraction
+
+# this package
 import sdjson
 
 

@@ -3,7 +3,7 @@ import platform
 import re
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 # this package
 import sdjson

@@ -121,9 +121,10 @@ __email__ = "dominic@davis-foster.co.uk"
 # stdlib
 import json
 from functools import singledispatch
+from typing import Callable
 
 # 3rd party
-from domdf_python_tools.doctools import is_documented_by, append_docstring_from, make_sphinx_links
+from domdf_python_tools.doctools import append_docstring_from, is_documented_by, make_sphinx_links
 
 
 def allow_unregister(func):
@@ -170,12 +171,13 @@ def sphinxify_json_docstring():
 @allow_unregister
 @singledispatch
 class _Encoders:
-	pass
+	register: Callable
+	unregister: Callable
 
 
 encoders = _Encoders
-register_encoder = _Encoders.register
-unregister_encoder = _Encoders.unregister
+register_encoder = _Encoders.register  # type: ignore
+unregister_encoder = _Encoders.unregister  # type: ignore
 
 
 @sphinxify_json_docstring()

@@ -5,7 +5,7 @@ import json
 import platform
 
 # 3rd party
-import pytest
+import pytest  # type: ignore
 
 
 class BadBool:
