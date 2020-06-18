@@ -14,10 +14,6 @@ conda_channels:
 
 python_deploy_version: 3.6
 
-
-py_modules: ['sdjson']
-
-
 # Additional lines for .gitignore
 #additional_ignore:
 #  -

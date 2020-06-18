@@ -27,13 +27,13 @@ def test_encoding4():
 def test_encoding5():
 	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
 	j = sdjson.dumps(u, ensure_ascii=False)
-	assert j == '"{0}"'.format(u)
+	assert j == f'"{u}"'
 
 
 def test_encoding6():
 	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
 	j = sdjson.dumps([u], ensure_ascii=False)
-	assert j == '["{0}"]'.format(u)
+	assert j == f'["{u}"]'
 
 
 def test_big_unicode_encode():
@@ -51,7 +51,7 @@ def test_big_unicode_decode():
 def test_unicode_decode():
 	for i in range(0, 0xd7ff):
 		u = chr(i)
-		s = '"\\u{0:04x}"'.format(i)
+		s = f'"\\u{i:04x}"'
 		assert sdjson.loads(s) == u
 
 

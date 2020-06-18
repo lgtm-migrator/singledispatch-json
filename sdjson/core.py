@@ -1,7 +1,6 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
-#  sdjson.py
+#  __init__.pyi
 #  Scroll down for license info
 """
 JSON encoder utilising functools.singledispatch to support custom encoders
@@ -69,17 +68,6 @@ TODO: This module does not currently support custom decoders, but might in the f
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/
-#  Copyright © 2013 Trey Hunner
-#  He said "Feel free to use it however you like." So I have.
-#
-#  Also based on the `json` module (version 2.0.9) by Bob Ippolito from Python 3.7
-#  Licensed under the Python Software Foundation License Version 2.
-#  Copyright © 2001-2020 Python Software Foundation. All rights reserved.
-#  Copyright © 2000 BeOpen.com . All rights reserved.
-#  Copyright © 1995-2000 Corporation for National Research Initiatives . All rights reserved.
-#  Copyright © 1991-1995 Stichting Mathematisch Centrum . All rights reserved.
-#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU Lesser General Public License as published by
 #  the Free Software Foundation; either version 3 of the License, or
@@ -95,13 +83,26 @@ TODO: This module does not currently support custom decoders, but might in the f
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+#  Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/
+#  Copyright © 2013 Trey Hunner
+#  He said "Feel free to use it however you like." So I have.
+#
+#  Also based on the `json` module (version 2.0.9) by Bob Ippolito from Python 3.7
+#  Licensed under the Python Software Foundation License Version 2.
+#  Copyright © 2001-2020 Python Software Foundation. All rights reserved.
+#  Copyright © 2000 BeOpen.com . All rights reserved.
+#  Copyright © 1995-2000 Corporation for National Research Initiatives . All rights reserved.
+#  Copyright © 1991-1995 Stichting Mathematisch Centrum . All rights reserved.
+#
+#  Type annotations from Typeshed
+#  https://github.com/python/typeshed
+#  Apache 2.0 Licensed
+#
 
 # stdlib
 import json
-# TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
-import sys
 from functools import singledispatch
-from typing import IO, Any, Callable, Dict, List, Optional, Tuple, Type, Union, overload
+from typing import IO, Any, Callable, Iterator, Optional, Tuple, Type, Union
 
 # 3rd party
 from domdf_python_tools.doctools import append_docstring_from, is_documented_by, make_sphinx_links
@@ -126,7 +127,7 @@ __license__ = "LGPLv3+"
 __version__ = "0.2.5"
 __email__ = "dominic@davis-foster.co.uk"
 
-
+# TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
 
 
 def allow_unregister(func) -> Callable:
@@ -153,7 +154,7 @@ def allow_unregister(func) -> Callable:
 	return func
 
 
-def sphinxify_json_docstring():
+def sphinxify_json_docstring() -> Callable:
 	"""
 	Turn references in the docstring to :class:`~python:json.JSONEncoder` into proper links.
 	"""
@@ -181,24 +182,10 @@ encoders = _Encoders
 register_encoder = _Encoders.register  # type: ignore
 unregister_encoder = _Encoders.unregister  # type: ignore
 
-@overload
-def dump(obj: Any,
-		 fp: IO[str],
-		 *,
-		 skipkeys: bool = ...,
-		 ensure_ascii: bool = ...,
-		 check_circular: bool = ...,
-		 allow_nan: bool = ...,
-		 cls: Optional[Type[json.JSONEncoder]] = ...,
-		 indent: Union[None, int, str] = ...,
-		 separators: Optional[Tuple[str, str]] = ...,
-		 default: Optional[Callable[[Any], Any]] = ...,
-		 sort_keys: bool = ...,
-		 **kwds: Any) -> None: ...
 
 @sphinxify_json_docstring()
 @append_docstring_from(json.dump)
-def dump(obj, fp, **kwargs):
+def dump(obj: Any, fp: IO, **kwargs: Any):  # TODO
 	"""
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
@@ -213,7 +200,7 @@ def dump(obj, fp, **kwargs):
 @sphinxify_json_docstring()
 @append_docstring_from(json.dumps)
 def dumps(
-		obj,
+		obj: Any,
 		*,
 		skipkeys: bool = False,
 		ensure_ascii: bool = True,
@@ -224,7 +211,7 @@ def dumps(
 		separators: Optional[Tuple[str, str]] = None,
 		default: Optional[Callable[[Any], Any]] = None,
 		sort_keys: bool = False,
-		**kw,
+		**kwargs: Any,
 		):
 	"""
 	Serialize custom Python classes to JSON.
@@ -233,7 +220,7 @@ def dumps(
 
 	if (
 			not skipkeys and ensure_ascii and check_circular and allow_nan and cls is None and indent is None
-			and separators is None and default is None and not sort_keys and not kw
+			and separators is None and default is None and not sort_keys and not kwargs
 			):
 		return _default_encoder.encode(obj)
 	if cls is None:
@@ -247,35 +234,10 @@ def dumps(
 			separators=separators,
 			default=default,
 			sort_keys=sort_keys,
-			**kw
+			**kwargs
 			).encode(obj)
 
 
-if sys.version_info >= (3, 6):
-	_LoadsString = Union[str, bytes]
-else:
-	_LoadsString = str
-@overload
-def loads(s: _LoadsString,
-		  *,
-		  cls: Optional[Type[json.JSONDecoder]] = ...,
-		  object_hook: Optional[Callable[[Dict[Any, Any]], Any]] = ...,
-		  parse_float: Optional[Callable[[str], Any]] = ...,
-		  parse_int: Optional[Callable[[str], Any]] = ...,
-		  parse_constant: Optional[Callable[[str], Any]] = ...,
-		  object_pairs_hook: Optional[Callable[[List[Tuple[Any, Any]]], Any]] = ...,
-		  **kwds: Any) -> Any: ...
-
-@overload
-def load(fp,
-		 *,
-		 cls: Optional[Type[json.JSONDecoder]] = ...,
-		 object_hook: Optional[Callable[[Dict[Any, Any]], Any]] = ...,
-		 parse_float: Optional[Callable[[str], Any]] = ...,
-		 parse_int: Optional[Callable[[str], Any]] = ...,
-		 parse_constant: Optional[Callable[[str], Any]] = ...,
-		 object_pairs_hook: Optional[Callable[[List[Tuple[Any, Any]]], Any]] = ...,
-		 **kwds: Any) -> Any: ...
 # Provide access to remaining objects from json module.
 # We have to do it this way to sort out the docstrings for sphinx without
 #  modifying the original docstrings.
@@ -309,17 +271,17 @@ class JSONEncoder(json.JSONEncoder):
 
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.default)
-	def default(self, o):
+	def default(self, o: Any) -> Any:
 		return super().default(o)
 
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.encode)
-	def encode(self, o):
+	def encode(self, o: Any) -> Any:
 		return super().encode(o)
 
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONEncoder.iterencode)
-	def iterencode(self, o, _one_shot=False):
+	def iterencode(self, o: Any, _one_shot: bool = False) -> Iterator[str]:
 		return super().iterencode(o, _one_shot)
 
 

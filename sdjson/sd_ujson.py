@@ -1,5 +1,4 @@
 #  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
 #
 #  sd_ujson.py
 #  Scroll down for license info
@@ -99,9 +98,13 @@ TODO: This module does not currently support custom decoders, but might in the f
 # TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
 
 __all__ = [
-		"load", "loads",
-		"dump", "dumps",
-		"encoders",	"register_encoder", "unregister_encoder",
+		"load",
+		"loads",
+		"dump",
+		"dumps",
+		"encoders",
+		"register_encoder",
+		"unregister_encoder",
 		]
 
 __author__ = "Dominic Davis-Foster"
@@ -119,7 +122,8 @@ import ujson  # must be the internet archive fork https://pypi.org/project/ujson
 from domdf_python_tools.doctools import append_docstring_from
 
 # this package
-from sdjson import encoders, register_encoder, sphinxify_json_docstring, unregister_encoder
+from sdjson import encoders, register_encoder, unregister_encoder
+from sdjson.core import sphinxify_json_docstring
 
 
 @sphinxify_json_docstring()
@@ -131,7 +135,7 @@ def dump(obj, fp, **kwargs):
 	"""
 
 	iterable = dumps(obj, **kwargs)
-	
+
 	for chunk in iterable:
 		fp.write(chunk)
 
@@ -142,12 +146,13 @@ def _ujson_hook(obj):
 		if isinstance(obj, type_) and type_ is not object:
 			return handler(obj)
 	return obj
-	
+
 
 @sphinxify_json_docstring()
 @append_docstring_from(json.dumps)
 def dumps(
-		obj, *,
+		obj,
+		*,
 		# skipkeys=False,
 		ensure_ascii=True,
 		# check_circular=True,
@@ -166,10 +171,10 @@ def dumps(
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
 	"""
-	
+
 	if default:
 		pre_encode_hook = default
-	
+
 	if indent is None:
 		_indent = 0
 	elif indent == '\t':
@@ -177,7 +182,7 @@ def dumps(
 		_indent = 4
 	else:
 		_indent = indent
-	
+
 	output = ujson.dumps(
 			obj,
 			ensure_ascii=ensure_ascii,
@@ -187,7 +192,7 @@ def dumps(
 			pre_encode_hook=pre_encode_hook,
 			**kw,
 			)
-	
+
 	return output
 
 

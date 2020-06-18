@@ -20,7 +20,7 @@ def write_then_read(obj):
 		with open(tmpfile, "w") as fp:
 			sdjson.dump(obj, fp)
 
-		with open(tmpfile, "r") as fp:
+		with open(tmpfile) as fp:
 			return sdjson.load(fp)
 
 

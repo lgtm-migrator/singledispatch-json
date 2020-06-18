@@ -11,8 +11,9 @@ import sdjson
 
 
 def test_multiple_files():
-	from .glossia import thorn
-	from .glossia import talon
+
+	# this package
+	from .glossia import talon, thorn
 
 	# Test that we get the expected output when encoding a Decimal
 	assert sdjson.dumps(Decimal(1)) == '"1"'

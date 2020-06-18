@@ -97,10 +97,14 @@ def test_failures():
 		except sdjson.JSONDecodeError:
 			pass
 		else:
-			pytest.fail("Expected failure for fail{0}.json: {1!r}".format(idx, doc))
+			pytest.fail(f"Expected failure for fail{idx}.json: {doc!r}")
 
 
 def test_non_string_keys_dict():
+	
+	
+	
+	# stdlib
 	import sys
 
 	data = {'a': 1, (1, 2): 2}
@@ -118,6 +122,10 @@ def test_non_string_keys_dict():
 
 
 def test_not_serializable():
+	
+	
+	
+	# stdlib
 	import sys
 	with pytest.raises(TypeError, match="Object of type [']*module[']* is not JSON serializable"):
 		sdjson.dumps(sys)

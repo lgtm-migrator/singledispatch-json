@@ -91,6 +91,8 @@ def test_invalid_input_type():
 
 
 def test_string_with_utf8_bom():
+
+	# stdlib
 	import sys
 
 	# see #18958

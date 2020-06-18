@@ -16,8 +16,7 @@ class CustomClassBase:
 		return self.__repr__()
 
 	def __iter__(self):
-		for key, value in self.__dict__().items():
-			yield key, value
+		yield from self.__dict__().items()
 
 	def __getstate__(self):
 		return self.__dict__()
@@ -166,7 +165,7 @@ England""",
 		with open(tmpfile, "w") as fp:
 			sdjson.dump(cheese_shop, fp)
 
-		with open(tmpfile, "r") as fp:
+		with open(tmpfile) as fp:
 			assert fp.read() == expected_json
 
 	assert sdjson.dumps(cheese_shop) == expected_json
