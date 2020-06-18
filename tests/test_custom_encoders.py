@@ -86,9 +86,9 @@ def test_datetime_str():
 	# Create and register a custom encoder for datetime that turns it into a str
 	@sdjson.encoders.register(datetime)
 	def encode_datetime_str(obj):
-		return f"{obj:%Y/%-m/%-d %H:%M}"
+		return f"{obj:%Y/%m/%d %H:%M}"
 
-	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == '"1945/5/8 19:20"'
+	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == '"1945/05/08 19:20"'
 
 	# Cleanup
 	sdjson.encoders.unregister(datetime)
@@ -137,9 +137,9 @@ def test_date_str():
 	# Create and register a custom encoder for date that turns it into a str
 	@sdjson.encoders.register(date)
 	def encode_date_str(obj):
-		return f"{obj:%Y/%-m/%-d}"
+		return f"{obj:%Y/%m/%d}"
 
-	assert sdjson.dumps(date(1945, 5, 8)) == '"1945/5/8"'
+	assert sdjson.dumps(date(1945, 5, 8)) == '"1945/05/08"'
 
 	# Cleanup
 	sdjson.encoders.unregister(date)

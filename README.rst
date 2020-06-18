@@ -1,6 +1,15 @@
-****************
+=======
 sdjson
-****************
+=======
+
+.. start short_desc
+
+**Custom JSON Encoder for Python utilising functools.singledispatch to support custom encoders for both Python's built-in classes and user-created classes, without as much legwork.**
+
+
+Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
+
+.. end short_desc
 
 .. start shields 
 
@@ -96,11 +105,6 @@ sdjson
 	:alt: Maintenance
 
 .. end shields
-
-Custom JSON Encoder for Python utilising ``functools.singledispatch`` to support custom encoders
-for both Python's built-in classes and user-created classes, without as much legwork.
-
-Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
 
 |
 
