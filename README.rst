@@ -93,7 +93,7 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/singledispatch-json
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/singledispatch-json/v0.2.5
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/singledispatch-json/v0.2.6
 	:target: https://github.com/domdfcoding/singledispatch-json/pulse
 	:alt: GitHub commits since tagged version
 
