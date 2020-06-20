@@ -17,7 +17,7 @@ def write_then_read(obj):
 	with TemporaryDirectory() as tmpdir:
 		tmpfile = pathlib.Path(tmpdir) / "output.json"
 
-		with open(tmpfile, "w") as fp:
+		with open(tmpfile, 'w') as fp:
 			sdjson.dump(obj, fp)
 
 		with open(tmpfile) as fp:

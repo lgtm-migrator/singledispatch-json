@@ -8,14 +8,14 @@ import sdjson
 
 def test_indent():
 	h = [
-			['blorpie'],
-			['whoops'],
+			["blorpie"],
+			["whoops"],
 			[],
-			'd-shtaeou',
-			'd-nthiouh',
-			'i-vhbjkhnth',
-			{'nifty': 87},
-			{'field': 'yes', 'morefield': False},
+			"d-shtaeou",
+			"d-nthiouh",
+			"i-vhbjkhnth",
+			{"nifty": 87},
+			{"field": "yes", "morefield": False},
 			]
 
 	expect = textwrap.dedent(
@@ -42,8 +42,8 @@ def test_indent():
 			)
 
 	d1 = sdjson.dumps(h)
-	d2 = sdjson.dumps(h, indent=2, sort_keys=True, separators=(',', ': '))
-	d3 = sdjson.dumps(h, indent='\t', sort_keys=True, separators=(',', ': '))
+	d2 = sdjson.dumps(h, indent=2, sort_keys=True, separators=(',', ": "))
+	d3 = sdjson.dumps(h, indent='\t', sort_keys=True, separators=(',', ": "))
 	d4 = sdjson.dumps(h, indent=2, sort_keys=True)
 	d5 = sdjson.dumps(h, indent='\t', sort_keys=True)
 

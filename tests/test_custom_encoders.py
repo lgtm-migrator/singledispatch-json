@@ -100,7 +100,7 @@ def test_datetime_tuple():
 	def encode_datetime_tuple(obj):
 		return obj.timetuple()
 
-	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == '[1945, 5, 8, 19, 20, 0, 1, 128, -1]'
+	assert sdjson.dumps(datetime(1945, 5, 8, 19, 20)) == "[1945, 5, 8, 19, 20, 0, 1, 128, -1]"
 
 	# Cleanup
 	sdjson.encoders.unregister(datetime)
@@ -151,7 +151,7 @@ def test_date_tuple():
 	def encode_date_tuple(obj):
 		return obj.timetuple()
 
-	assert sdjson.dumps(date(1945, 5, 8)) == '[1945, 5, 8, 0, 0, 0, 1, 128, -1]'
+	assert sdjson.dumps(date(1945, 5, 8)) == "[1945, 5, 8, 0, 0, 0, 1, 128, -1]"
 
 	# Cleanup
 	sdjson.encoders.unregister(date)
@@ -190,7 +190,7 @@ def test_time_tuple():
 	def encode_time_tuple(obj):
 		return obj.hour, obj.minute, obj.second
 
-	assert sdjson.dumps(time(9, 10, 11)) == '[9, 10, 11]'
+	assert sdjson.dumps(time(9, 10, 11)) == "[9, 10, 11]"
 
 	# Cleanup
 	sdjson.encoders.unregister(time)

@@ -42,7 +42,7 @@ def test_bad_bool_args_1():
 	with pytest.raises(ZeroDivisionError):
 		test('""')
 	with pytest.raises(ZeroDivisionError):
-		test('{}')
+		test("{}")
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
@@ -65,23 +65,23 @@ def test_bad_str_encoder():
 		return None
 
 	enc = json.encoder.c_make_encoder(
-			None, lambda obj: str(obj), bad_encoder1, None, ': ', ', ', False, False, False
+			None, lambda obj: str(obj), bad_encoder1, None, ": ", ", ", False, False, False
 			)
 
 	with pytest.raises(TypeError):
-		enc('spam', 4)
+		enc("spam", 4)
 	with pytest.raises(TypeError):
-		enc({'spam': 42}, 4)
+		enc(dict(spam=42), 4)
 
 	def bad_encoder2(*args):
 		1 / 0
 
 	enc = json.encoder.c_make_encoder(
-			None, lambda obj: str(obj), bad_encoder2, None, ': ', ', ', False, False, False
+			None, lambda obj: str(obj), bad_encoder2, None, ": ", ", ", False, False, False
 			)
 
 	with pytest.raises(ZeroDivisionError):
-		enc('spam', 4)
+		enc("spam", 4)
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Unsupported on PyPy")
@@ -91,15 +91,15 @@ def test_bad_bool_args_2():
 		json.encoder.JSONEncoder(**{name: BadBool()}).encode({'a': 1})
 
 	with pytest.raises(ZeroDivisionError):
-		test('skipkeys')
+		test("skipkeys")
 	with pytest.raises(ZeroDivisionError):
-		test('ensure_ascii')
+		test("ensure_ascii")
 	with pytest.raises(ZeroDivisionError):
-		test('check_circular')
+		test("check_circular")
 	with pytest.raises(ZeroDivisionError):
-		test('allow_nan')
+		test("allow_nan")
 	with pytest.raises(ZeroDivisionError):
-		test('sort_keys')
+		test("sort_keys")
 
 
 def test_unsortable_keys():

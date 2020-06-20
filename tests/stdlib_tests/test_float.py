@@ -21,12 +21,12 @@ def test_ints():
 
 
 def test_out_of_range():
-	assert sdjson.loads('[23456789012E666]') == [float('inf')]
-	assert sdjson.loads('[-23456789012E666]') == [float('-inf')]
+	assert sdjson.loads("[23456789012E666]") == [float("inf")]
+	assert sdjson.loads("[-23456789012E666]") == [float("-inf")]
 
 
 def test_allow_nan():
-	for val in (float('inf'), float('-inf'), float('nan')):
+	for val in (float("inf"), float("-inf"), float("nan")):
 		out = sdjson.dumps([val])
 		if val == val:  # inf
 			assert sdjson.loads(out) == [val]

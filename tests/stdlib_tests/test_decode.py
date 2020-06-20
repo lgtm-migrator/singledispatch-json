@@ -12,9 +12,9 @@ import sdjson
 
 
 def test_decimal():
-	rval = sdjson.loads('1.1', parse_float=decimal.Decimal)
+	rval = sdjson.loads("1.1", parse_float=decimal.Decimal)
 	assert isinstance(rval, decimal.Decimal)
-	assert rval == decimal.Decimal('1.1')
+	assert rval == decimal.Decimal("1.1")
 
 
 def test_float():
@@ -24,9 +24,9 @@ def test_float():
 
 
 def test_empty_objects():
-	assert sdjson.loads('{}') == {}
-	assert sdjson.loads('[]') == []
-	assert sdjson.loads('""') == ""
+	assert sdjson.loads("{}") == {}
+	assert sdjson.loads("[]") == []
+	assert sdjson.loads('""') == ''
 
 
 def test_object_pairs_hook():
@@ -41,8 +41,8 @@ def test_object_pairs_hook():
 	# the object_pairs_hook takes priority over the object_hook
 	assert sdjson.loads(s, object_pairs_hook=OrderedDict, object_hook=lambda x: None) == OrderedDict(p)
 	# check that empty object literals work (see #17368)
-	assert sdjson.loads('{}', object_pairs_hook=OrderedDict) == OrderedDict()
-	assert sdjson.loads('{"empty": {}}', object_pairs_hook=OrderedDict) == OrderedDict([('empty', OrderedDict())])
+	assert sdjson.loads("{}", object_pairs_hook=OrderedDict) == OrderedDict()
+	assert sdjson.loads('{"empty": {}}', object_pairs_hook=OrderedDict) == OrderedDict([("empty", OrderedDict())])
 
 
 def test_decoder_optimizations():
@@ -50,7 +50,7 @@ def test_decoder_optimizations():
 	# the whitespace regex, so this test is designed to try and
 	# exercise the uncommon cases. The array cases are already covered.
 	rval = sdjson.loads('{   "key"    :    "value"    ,  "k":"v"    }')
-	assert rval == {"key": "value", "k": "v"}
+	assert rval == {"key": "value", 'k': 'v'}
 
 
 def check_keys_reuse(source, loads):
@@ -70,21 +70,21 @@ def test_keys_reuse():
 
 
 def test_extra_data():
-	s = '[1, 2, 3]5'
-	msg = 'Extra data'
+	s = "[1, 2, 3]5"
+	msg = "Extra data"
 	with pytest.raises(sdjson.JSONDecodeError, match=msg):
 		sdjson.loads(s)
 
 
 def test_invalid_escape():
 	s = '["abc\\y"]'
-	msg = 'escape'
+	msg = "escape"
 	with pytest.raises(sdjson.JSONDecodeError, match=msg):
 		sdjson.loads(s)
 
 
 def test_invalid_input_type():
-	msg = 'the JSON object must be str'
+	msg = "the JSON object must be str"
 	for value in [1, 3.14, [], {}, None]:
 		with pytest.raises(TypeError, match=msg):
 			sdjson.loads(value)
@@ -96,23 +96,23 @@ def test_string_with_utf8_bom():
 	import sys
 
 	# see #18958
-	bom_json = "[1,2,3]".encode('utf-8-sig').decode('utf-8')
+	bom_json = "[1,2,3]".encode("utf-8-sig").decode("utf-8")
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.loads(bom_json)
 	# TODO:
 	if sys.version_info.major >= 3 and sys.version_info.minor == 7:
-		assert 'BOM' in str(e)
+		assert "BOM" in str(e)
 
 	with pytest.raises(sdjson.JSONDecodeError) as e:
 		sdjson.load(StringIO(bom_json))
 	# TODO:
 	if sys.version_info.major >= 3 and sys.version_info.minor == 7:
-		assert 'BOM' in str(e)
+		assert "BOM" in str(e)
 
 	# make sure that the BOM is not detected in the middle of a string
-	bom_in_str = '"{}"'.format(''.encode('utf-8-sig').decode('utf-8'))
-	assert sdjson.loads(bom_in_str) == '\ufeff'
-	assert sdjson.load(StringIO(bom_in_str)) == '\ufeff'
+	bom_in_str = '"{}"'.format(''.encode("utf-8-sig").decode("utf-8"))
+	assert sdjson.loads(bom_in_str) == "\ufeff"
+	assert sdjson.load(StringIO(bom_in_str)) == "\ufeff"
 
 
 def test_negative_index():

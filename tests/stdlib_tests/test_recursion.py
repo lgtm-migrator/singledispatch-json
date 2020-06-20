@@ -43,7 +43,7 @@ def test_dictrecursion():
 	else:
 		pytest.fail("didn't raise ValueError on dict recursion")
 	x = {}
-	y = {"a": x, "b": x}
+	y = {'a': x, 'b': x}
 	# ensure that the marker is cleared
 	sdjson.dumps(x)
 
@@ -78,7 +78,7 @@ def test_highly_nested_objects_decoding():
 	with pytest.raises(RecursionError):
 		sdjson.loads('{"a":' * 100000 + '1' + '}' * 100000)
 	with pytest.raises(RecursionError):
-		sdjson.loads('{"a":' * 100000 + '[1]' + '}' * 100000)
+		sdjson.loads('{"a":' * 100000 + "[1]" + '}' * 100000)
 	with pytest.raises(RecursionError):
 		sdjson.loads('[' * 100000 + '1' + ']' * 100000)
 

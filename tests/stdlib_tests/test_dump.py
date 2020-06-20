@@ -12,23 +12,23 @@ import sdjson
 def test_dump():
 	sio = StringIO()
 	sdjson.dump({}, sio)
-	assert sio.getvalue() == '{}'
+	assert sio.getvalue() == "{}"
 
 
 def test_dumps():
-	assert sdjson.dumps({}) == '{}'
+	assert sdjson.dumps({}) == "{}"
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Failing on PyPy3.6-7.1.1")
 def test_dump_skipkeys():
-	v = {b'invalid_key': False, 'valid_key': True}
+	v = {b"invalid_key": False, "valid_key": True}
 	with pytest.raises(TypeError):
 		sdjson.dumps(v)
 
 	s = sdjson.dumps(v, skipkeys=True)
 	o = sdjson.loads(s)
-	assert 'valid_key' in o
-	assert b'invalid_key' not in o
+	assert "valid_key" in o
+	assert b"invalid_key" not in o
 
 
 @pytest.mark.parametrize(
@@ -49,7 +49,7 @@ def test_encode_mutated():
 	def crasher(obj):
 		del a[-1]
 
-	assert sdjson.dumps(a, default=crasher) == '[null, null, null, null, null]'
+	assert sdjson.dumps(a, default=crasher) == "[null, null, null, null, null]"
 
 
 # Issue 24094

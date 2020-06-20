@@ -13,37 +13,37 @@ import sdjson
 
 
 def test_encoding3():
-	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
+	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps(u)
 	assert j == '"\\u03b1\\u03a9"'
 
 
 def test_encoding4():
-	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
+	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps([u])
 	assert j == '["\\u03b1\\u03a9"]'
 
 
 def test_encoding5():
-	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
+	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps(u, ensure_ascii=False)
 	assert j == f'"{u}"'
 
 
 def test_encoding6():
-	u = '\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}'
+	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps([u], ensure_ascii=False)
 	assert j == f'["{u}"]'
 
 
 def test_big_unicode_encode():
-	u = '\U0001d120'
+	u = "\U0001d120"
 	assert sdjson.dumps(u) == '"\\ud834\\udd20"'
 	assert sdjson.dumps(u, ensure_ascii=False) == '"\U0001d120"'
 
 
 def test_big_unicode_decode():
-	u = 'z\U0001d120x'
+	u = "z\U0001d120x"
 	assert sdjson.loads('"' + u + '"') == u
 	assert sdjson.loads('"z\\ud834\\udd20x"') == u
 
@@ -70,11 +70,11 @@ def test_bytes_encode():
 
 def test_bytes_decode():
 	for encoding, bom in [
-		('utf-8', codecs.BOM_UTF8),
-		('utf-16be', codecs.BOM_UTF16_BE),
-		('utf-16le', codecs.BOM_UTF16_LE),
-		('utf-32be', codecs.BOM_UTF32_BE),
-		('utf-32le', codecs.BOM_UTF32_LE),
+		("utf-8", codecs.BOM_UTF8),
+		("utf-16be", codecs.BOM_UTF16_BE),
+		("utf-16le", codecs.BOM_UTF16_LE),
+		("utf-32be", codecs.BOM_UTF32_BE),
+		("utf-32le", codecs.BOM_UTF32_LE),
 		]:
 		data = ["a\xb5\u20ac\U0001d120"]
 		encoded = sdjson.dumps(data).encode(encoding)
@@ -86,14 +86,14 @@ def test_bytes_decode():
 	# consist of only a string, which can present a special case
 	# not covered by the encoding detection patterns specified in
 	# RFC-4627 for utf-16-le (XX 00 XX 00).
-	assert sdjson.loads('"\u2600"'.encode('utf-16-le')) == '\u2600'
+	assert sdjson.loads('"\u2600"'.encode("utf-16-le")) == "\u2600"
 	# Encoding detection for small (<4) bytes objects
 	# is implemented as a special case. RFC-7159 and ECMA-404
 	# allow single codepoint JSON documents which are only two
 	# bytes in utf-16 encodings w/o BOM.
-	assert sdjson.loads(b'5\x00') == 5
-	assert sdjson.loads(b'\x007') == 7
-	assert sdjson.loads(b'57') == 57
+	assert sdjson.loads(b"5\x00") == 5
+	assert sdjson.loads(b"\x007") == 7
+	assert sdjson.loads(b"57") == 57
 
 
 def test_object_pairs_hook_with_unicode():

@@ -1,6 +1,7 @@
 # stdlib
 import platform
 import re
+import sys
 
 # 3rd party
 import pytest  # type: ignore
@@ -41,7 +42,7 @@ JSONDOCS = [
 		# http://json.org/JSON_checker/test/fail15.json
 		'["Illegal backslash escape: \\x15"]',
 		# http://json.org/JSON_checker/test/fail16.json
-		'[\\naked]',
+		"[\\naked]",
 		# http://json.org/JSON_checker/test/fail17.json
 		'["Illegal backslash escape: \\017"]',
 		# http://json.org/JSON_checker/test/fail18.json
@@ -67,11 +68,11 @@ JSONDOCS = [
 		# http://json.org/JSON_checker/test/fail28.json
 		'["line\\\nbreak"]',
 		# http://json.org/JSON_checker/test/fail29.json
-		'[0e]',
+		"[0e]",
 		# http://json.org/JSON_checker/test/fail30.json
-		'[0e+]',
+		"[0e+]",
 		# http://json.org/JSON_checker/test/fail31.json
-		'[0e+-1]',
+		"[0e+-1]",
 		# http://json.org/JSON_checker/test/fail32.json
 		'{"Comma instead if closing brace": true,',
 		# http://json.org/JSON_checker/test/fail33.json
@@ -101,13 +102,6 @@ def test_failures():
 
 
 def test_non_string_keys_dict():
-	
-	
-	
-	
-	# stdlib
-	import sys
-
 	data = {'a': 1, (1, 2): 2}
 
 	# TODO:
@@ -123,24 +117,27 @@ def test_non_string_keys_dict():
 
 
 def test_not_serializable():
-	
-	
-	
-	
-	# stdlib
-	import sys
 	with pytest.raises(TypeError, match="Object of type [']*module[']* is not JSON serializable"):
 		sdjson.dumps(sys)
 
 
 pypy = platform.python_implementation() == "PyPy"
 
-unexpected_right_brace = "Unexpected '}'" if pypy else 'Expecting value'
-missing_colon = "No ':' found at" if pypy else "Expecting ':' delimiter"
-unexpected_colon = "Unexpected ':' when decoding array" if pypy else "Expecting ',' delimiter"
-property_name_string = "Key name must be string at char" if pypy else 'Expecting property name enclosed in double quotes'
-empty_string = "Unexpected '\x00'" if pypy else 'Expecting value'
-unterminated_array = "Unterminated array starting at" if pypy else "Expecting ',' delimiter"
+if pypy:
+	unexpected_right_brace = "Unexpected '}'"
+	missing_colon = "No ':' found at"
+	unexpected_colon = "Unexpected ':' when decoding array"
+	property_name_string = "Key name must be string at char"
+	empty_string = "Unexpected '\x00'"
+	unterminated_array = "Unterminated array starting at"
+
+else:
+	unexpected_right_brace = "Expecting value"
+	missing_colon = "Expecting ':' delimiter"
+	unexpected_colon = "Expecting ',' delimiter"
+	property_name_string = "Expecting property name enclosed in double quotes"
+	empty_string = "Expecting value"
+	unterminated_array = "Expecting ',' delimiter"
 
 
 def __test_invalid_input(data, msg, idx):
@@ -154,53 +151,53 @@ def __test_invalid_input(data, msg, idx):
 	assert err.value.lineno == 1
 	assert err.value.colno == idx + 1
 	if pypy:
-		assert re.match(rf'{msg}.*: line 1 column {idx + 1:d} \(char {idx:d}\)', str(err.value))
+		assert re.match(rf"{msg}.*: line 1 column {idx + 1:d} \(char {idx:d}\)", str(err.value))
 	else:
-		assert re.match(rf'{msg}: line 1 column {idx + 1:d} \(char {idx:d}\)', str(err.value))
+		assert re.match(rf"{msg}: line 1 column {idx + 1:d} \(char {idx:d}\)", str(err.value))
 
 
 @pytest.mark.parametrize("data, msg, idx", [
 			('', empty_string, 0),
 			('[', empty_string, 1),
-			('[42', unterminated_array, 1 if pypy else 3),
-			('[42,', empty_string, 4),
-			('["', 'Unterminated string starting at', 1),
-			('["spam', 'Unterminated string starting at', 1),
+			("[42", unterminated_array, 1 if pypy else 3),
+			("[42,", empty_string, 4),
+			('["', "Unterminated string starting at", 1),
+			('["spam', "Unterminated string starting at", 1),
 			('["spam"', unterminated_array, 1 if pypy else 7),
 			('["spam",', empty_string, 8),
 			('{', property_name_string, 1),
-			('{"', 'Unterminated string starting at', 1),
-			('{"spam', 'Unterminated string starting at', 1),
+			('{"', "Unterminated string starting at", 1),
+			('{"spam', "Unterminated string starting at", 1),
 			('{"spam"', missing_colon, 7),
 			('{"spam":', empty_string, 8),
 			('{"spam":42', "Unterminated object starting at" if pypy else "Expecting ',' delimiter", 1 if pypy else 10),
 			('{"spam":42,', property_name_string, 11),
-			('"', 'Unterminated string starting at', 0),
-			('"spam', 'Unterminated string starting at', 0),
+			('"', "Unterminated string starting at", 0),
+			('"spam', "Unterminated string starting at", 0),
 			])
 def test_truncated_input(data, msg, idx):
 	__test_invalid_input(data, msg, idx)
 
 
 @pytest.mark.parametrize("data, msg, idx", [
-			('[,', "Unexpected ','" if pypy else 'Expecting value', 1),
+			("[,", "Unexpected ','" if pypy else "Expecting value", 1),
 			('{"spam":[}', unexpected_right_brace, 9),
-			('[42:', unexpected_colon, 3),
+			("[42:", unexpected_colon, 3),
 			('[42 "spam"', "Unexpected '\"' when decoding array" if pypy else "Expecting ',' delimiter", 4),
-			('[42,]', "Unexpected ']'" if pypy else 'Expecting value', 4),
+			("[42,]", "Unexpected ']'" if pypy else "Expecting value", 4),
 			('{"spam":[42}', "Unexpected '}' when decoding array" if pypy else "Expecting ',' delimiter", 11),
-			('["]', 'Unterminated string starting at', 1),
+			('["]', "Unterminated string starting at", 1),
 			('["spam":', unexpected_colon, 7),
-			('["spam",]', "Unexpected ']'" if pypy else 'Expecting value', 8),
-			('{:', property_name_string, 1),
-			('{,', property_name_string, 1),
-			('{42', property_name_string, 1),
-			('[{]', property_name_string, 2),
+			('["spam",]', "Unexpected ']'" if pypy else "Expecting value", 8),
+			("{:", property_name_string, 1),
+			("{,", property_name_string, 1),
+			("{42", property_name_string, 1),
+			("[{]", property_name_string, 2),
 			('{"spam",', missing_colon, 7),
 			('{"spam"}', missing_colon, 7),
 			('[{"spam"]', missing_colon, 8),
 			('{"spam":}', unexpected_right_brace, 8),
-			('[{"spam":]', "Unexpected ']'" if pypy else 'Expecting value', 9),
+			('[{"spam":]', "Unexpected ']'" if pypy else "Expecting value", 9),
 			('{"spam":42 "ham"', "Unexpected '\"' when decoding object" if pypy else "Expecting ',' delimiter", 11),
 			('[{"spam":42]', "Unexpected ']' when decoding object" if pypy else "Expecting ',' delimiter", 11),
 			('{"spam":42,}', property_name_string, 11),
@@ -210,12 +207,12 @@ def test_unexpected_data(data, msg, idx):
 
 
 @pytest.mark.parametrize("data, msg, idx", [
-			('[]]', 'Extra data', 2),
-			('{}}', 'Extra data', 2),
-			('[],[]', 'Extra data', 2),
-			('{},{}', 'Extra data', 2),
-			('42,"spam"', 'Extra data', 2),
-			('"spam",42', 'Extra data', 6),
+			("[]]", "Extra data", 2),
+			("{}}", "Extra data", 2),
+			("[],[]", "Extra data", 2),
+			("{},{}", "Extra data", 2),
+			('42,"spam"', "Extra data", 2),
+			('"spam",42', "Extra data", 6),
 			])
 def test_extra_data(data, msg, idx):
 	__test_invalid_input(data, msg, idx)
@@ -223,9 +220,9 @@ def test_extra_data(data, msg, idx):
 
 @pytest.mark.parametrize("data, line, col, idx", [
 		('!', 1, 1, 0),
-		(' !', 1, 2, 1),
-		('\n!', 2, 1, 1),
-		('\n  \n\n     !', 4, 6, 10),
+		(" !", 1, 2, 1),
+		("\n!", 2, 1, 1),
+		("\n  \n\n     !", 4, 6, 10),
 		])
 def test_linecol(data, line, col, idx):
 
@@ -235,7 +232,7 @@ def test_linecol(data, line, col, idx):
 	if platform.python_implementation() == "PyPy":
 		match = "Unexpected '!'"
 	else:
-		match = 'Expecting value'
+		match = "Expecting value"
 
 	if pypy:
 		assert err.value.msg.startswith(match)  # Fix for varying messages between PyPy versions
@@ -245,6 +242,6 @@ def test_linecol(data, line, col, idx):
 	assert err.value.lineno == line
 	assert err.value.colno == col
 	if pypy:
-		assert re.match(rf'{match}.*: line {line} column {col:d} \(char {idx:d}\)', str(err.value))
+		assert re.match(rf"{match}.*: line {line} column {col:d} \(char {idx:d}\)", str(err.value))
 	else:
-		assert re.match(rf'{match}: line {line} column {col:d} \(char {idx:d}\)', str(err.value))
+		assert re.match(rf"{match}: line {line} column {col:d} \(char {idx:d}\)", str(err.value))

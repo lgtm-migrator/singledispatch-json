@@ -10,14 +10,14 @@ import sdjson
 
 def test_separators():
 	h = [
-			['blorpie'],
-			['whoops'],
+			["blorpie"],
+			["whoops"],
 			[],
-			'd-shtaeou',
-			'd-nthiouh',
-			'i-vhbjkhnth',
-			{'nifty': 87},
-			{'field': 'yes', 'morefield': False},
+			"d-shtaeou",
+			"d-nthiouh",
+			"i-vhbjkhnth",
+			{"nifty": 87},
+			{"field": "yes", "morefield": False},
 			]
 
 	expect = textwrap.dedent(
@@ -44,7 +44,7 @@ def test_separators():
 			)
 
 	d1 = sdjson.dumps(h)
-	d2 = sdjson.dumps(h, indent=2, sort_keys=True, separators=(' ,', ' : '))
+	d2 = sdjson.dumps(h, indent=2, sort_keys=True, separators=(" ,", " : "))
 
 	h1 = sdjson.loads(d1)
 	h2 = sdjson.loads(d2)
@@ -57,8 +57,8 @@ def test_separators():
 def test_illegal_separators():
 	h = {1: 2, 3: 4}
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b', ', ': '))
+		sdjson.dumps(h, separators=(b", ", ": "))
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(', ', b': '))
+		sdjson.dumps(h, separators=(", ", b": "))
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b', ', b': '))
+		sdjson.dumps(h, separators=(b", ", b": "))

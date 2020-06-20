@@ -143,8 +143,8 @@ def allow_unregister(func) -> Callable:
 
 	# build a dictionary mapping names to closure cells
 	closure = dict(zip(func.register.__code__.co_freevars, func.register.__closure__))
-	registry = closure['registry'].cell_contents
-	dispatch_cache = closure['dispatch_cache'].cell_contents
+	registry = closure["registry"].cell_contents
+	dispatch_cache = closure["dispatch_cache"].cell_contents
 
 	def unregister(cls):
 		del registry[cls]

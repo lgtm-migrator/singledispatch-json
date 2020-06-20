@@ -162,7 +162,7 @@ England""",
 	with TemporaryDirectory() as tmpdir:
 		tmpfile = pathlib.Path(tmpdir) / "output.json"
 
-		with open(tmpfile, "w") as fp:
+		with open(tmpfile, 'w') as fp:
 			sdjson.dump(cheese_shop, fp)
 
 		with open(tmpfile) as fp:

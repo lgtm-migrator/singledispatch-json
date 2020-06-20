@@ -29,9 +29,9 @@ class FloatNum(float, Enum):
 	tau = TAU
 
 
-INF = float('inf')
-NEG_INF = float('-inf')
-NAN = float('nan')
+INF = float("inf")
+NEG_INF = float("-inf")
+NAN = float("nan")
 
 
 class WierdNum(float, Enum):
@@ -48,7 +48,7 @@ def test_floats():
 
 
 def test_weird_floats():
-	for enum, expected in zip(WierdNum, ('Infinity', '-Infinity', 'NaN')):
+	for enum, expected in zip(WierdNum, ("Infinity", "-Infinity", "NaN")):
 		assert sdjson.dumps(enum) == expected
 		if not isnan(enum):
 			assert float(sdjson.dumps(enum)) == enum
@@ -70,7 +70,7 @@ def test_list():
 	assert sdjson.loads(sdjson.dumps(list(BigNum))) == list(BigNum)
 	assert sdjson.dumps(list(FloatNum)) == str([E, PI, TAU])
 	assert sdjson.loads(sdjson.dumps(list(FloatNum))) == list(FloatNum)
-	assert sdjson.dumps(list(WierdNum)) == '[Infinity, -Infinity, NaN]'
+	assert sdjson.dumps(list(WierdNum)) == "[Infinity, -Infinity, NaN]"
 	assert sdjson.loads(sdjson.dumps(list(WierdNum)))[:2] == list(WierdNum)[:2]
 	assert isnan(sdjson.loads(sdjson.dumps(list(WierdNum)))[2])
 
@@ -80,28 +80,28 @@ def test_dict_keys():
 	e, p, t = FloatNum
 	i, j, n = WierdNum
 	d = {
-			s: 'tiny',
-			b: 'large',
-			h: 'larger',
-			r: 'largest',
+			s: "tiny",
+			b: "large",
+			h: "larger",
+			r: "largest",
 			e: "Euler's number",
-			p: 'pi',
-			t: 'tau',
-			i: 'Infinity',
-			j: '-Infinity',
-			n: 'NaN',
+			p: "pi",
+			t: "tau",
+			i: "Infinity",
+			j: "-Infinity",
+			n: "NaN",
 			}
 	nd = sdjson.loads(sdjson.dumps(d))
-	assert nd[str(SMALL)] == 'tiny'
-	assert nd[str(BIG)] == 'large'
-	assert nd[str(HUGE)] == 'larger'
-	assert nd[str(REALLY_HUGE)] == 'largest'
+	assert nd[str(SMALL)] == "tiny"
+	assert nd[str(BIG)] == "large"
+	assert nd[str(HUGE)] == "larger"
+	assert nd[str(REALLY_HUGE)] == "largest"
 	assert nd[repr(E)] == "Euler's number"
-	assert nd[repr(PI)] == 'pi'
-	assert nd[repr(TAU)] == 'tau'
-	assert nd['Infinity'] == 'Infinity'
-	assert nd['-Infinity'] == '-Infinity'
-	assert nd['NaN'] == 'NaN'
+	assert nd[repr(PI)] == "pi"
+	assert nd[repr(TAU)] == "tau"
+	assert nd["Infinity"] == "Infinity"
+	assert nd["-Infinity"] == "-Infinity"
+	assert nd["NaN"] == "NaN"
 
 
 def test_dict_values():
@@ -118,13 +118,13 @@ def test_dict_values():
 			n=WierdNum.nan,
 			)
 	nd = sdjson.loads(sdjson.dumps(d))
-	assert nd['tiny'] == SMALL
-	assert nd['large'] == BIG
-	assert nd['larger'] == HUGE
-	assert nd['largest'] == REALLY_HUGE
+	assert nd["tiny"] == SMALL
+	assert nd["large"] == BIG
+	assert nd["larger"] == HUGE
+	assert nd["largest"] == REALLY_HUGE
 	assert nd['e'] == E
-	assert nd['pi'] == PI
-	assert nd['tau'] == TAU
+	assert nd["pi"] == PI
+	assert nd["tau"] == TAU
 	assert nd['i'] == INF
 	assert nd['j'] == NEG_INF
 	assert isnan(nd['n'])
