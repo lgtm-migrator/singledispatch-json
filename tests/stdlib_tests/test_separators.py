@@ -8,7 +8,7 @@ import pytest  # type: ignore
 import sdjson
 
 
-def test_separators():
+def test_separators() -> None:
 	h = [
 			["blorpie"],
 			["whoops"],
@@ -54,11 +54,11 @@ def test_separators():
 	assert d2 == expect
 
 
-def test_illegal_separators():
+def test_illegal_separators() -> None:
 	h = {1: 2, 3: 4}
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b", ", ": "))
+		sdjson.dumps(h, separators=(b", ", ": "))  # type: ignore
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(", ", b": "))
+		sdjson.dumps(h, separators=(", ", b": "))  # type: ignore
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b", ", b": "))
+		sdjson.dumps(h, separators=(b", ", b": "))  # type: ignore

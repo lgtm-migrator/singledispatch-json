@@ -10,7 +10,7 @@ from fractions import Fraction
 import sdjson
 
 
-def test_multiple_files():
+def test_multiple_files() -> None:
 
 	# this package
 	from .glossia import talon, thorn

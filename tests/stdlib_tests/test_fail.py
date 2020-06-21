@@ -87,7 +87,7 @@ SKIPS = {
 		}
 
 
-def test_failures():
+def test_failures() -> None:
 	for idx, doc in enumerate(JSONDOCS):
 		idx = idx + 1
 		if idx in SKIPS:
@@ -101,7 +101,7 @@ def test_failures():
 			pytest.fail(f"Expected failure for fail{idx}.json: {doc!r}")
 
 
-def test_non_string_keys_dict():
+def test_non_string_keys_dict() -> None:
 	data = {'a': 1, (1, 2): 2}
 
 	# TODO:
@@ -116,7 +116,7 @@ def test_non_string_keys_dict():
 		sdjson.dumps(data)
 
 
-def test_not_serializable():
+def test_not_serializable() -> None:
 	with pytest.raises(TypeError, match="Object of type [']*module[']* is not JSON serializable"):
 		sdjson.dumps(sys)
 

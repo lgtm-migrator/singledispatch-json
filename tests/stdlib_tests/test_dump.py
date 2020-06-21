@@ -9,18 +9,18 @@ import pytest  # type: ignore
 import sdjson
 
 
-def test_dump():
+def test_dump() -> None:
 	sio = StringIO()
 	sdjson.dump({}, sio)
 	assert sio.getvalue() == "{}"
 
 
-def test_dumps():
+def test_dumps() -> None:
 	assert sdjson.dumps({}) == "{}"
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Failing on PyPy3.6-7.1.1")
-def test_dump_skipkeys():
+def test_dump_skipkeys() -> None:
 	v = {b"invalid_key": False, "valid_key": True}
 	with pytest.raises(TypeError):
 		sdjson.dumps(v)
@@ -43,7 +43,7 @@ def test_encode_truefalse(data, expects):
 
 
 # Issue 16228: Crash on encoding resized list
-def test_encode_mutated():
+def test_encode_mutated() -> None:
 	a = [object()] * 10
 
 	def crasher(obj):
@@ -53,7 +53,7 @@ def test_encode_mutated():
 
 
 # Issue 24094
-def test_encode_evil_dict():
+def test_encode_evil_dict() -> None:
 
 	class D(dict):
 

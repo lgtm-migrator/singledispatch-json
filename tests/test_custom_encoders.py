@@ -14,7 +14,7 @@ import pytz
 import sdjson
 
 
-def test_decimal_float():
+def test_decimal_float() -> None:
 	# Create and register a custom encoder for Decimal that turns it into a float
 	@sdjson.encoders.register(Decimal)
 	def encode_decimal_float(obj):
@@ -26,7 +26,7 @@ def test_decimal_float():
 	sdjson.encoders.unregister(Decimal)
 
 
-def test_decimal_str():
+def test_decimal_str() -> None:
 	# Create and register a custom encoder for Decimal that turns it into a str
 	@sdjson.encoders.register(Decimal)
 	def encode_decimal_str(obj):
@@ -38,7 +38,7 @@ def test_decimal_str():
 	sdjson.encoders.unregister(Decimal)
 
 
-def test_fraction_float():
+def test_fraction_float() -> None:
 	# Create and register a custom encoder for Fraction that turns it into a float
 	@sdjson.encoders.register(Fraction)
 	def encode_fraction_float(obj):
@@ -54,7 +54,7 @@ def test_fraction_float():
 	sdjson.encoders.unregister(Fraction)
 
 
-def test_fraction_str():
+def test_fraction_str() -> None:
 	# Create and register a custom encoder for Fraction that turns it into a str
 	@sdjson.encoders.register(Fraction)
 	def encode_fraction_str(obj):
@@ -70,7 +70,7 @@ def test_fraction_str():
 	sdjson.encoders.unregister(Fraction)
 
 
-def test_datetime_float():
+def test_datetime_float() -> None:
 	# Create and register a custom encoder for datetime that turns it into a float
 	@sdjson.encoders.register(datetime)
 	def encode_datetime_float(obj):
@@ -82,7 +82,7 @@ def test_datetime_float():
 	sdjson.encoders.unregister(datetime)
 
 
-def test_datetime_str():
+def test_datetime_str() -> None:
 	# Create and register a custom encoder for datetime that turns it into a str
 	@sdjson.encoders.register(datetime)
 	def encode_datetime_str(obj):
@@ -94,7 +94,7 @@ def test_datetime_str():
 	sdjson.encoders.unregister(datetime)
 
 
-def test_datetime_tuple():
+def test_datetime_tuple() -> None:
 	# Create and register a custom encoder for datetime that turns it into a timetuple
 	@sdjson.encoders.register(datetime)
 	def encode_datetime_tuple(obj):
@@ -106,7 +106,7 @@ def test_datetime_tuple():
 	sdjson.encoders.unregister(datetime)
 
 
-def test_timedelta_float():
+def test_timedelta_float() -> None:
 	# Create and register a custom encoder for timedelta that turns it into a float
 	@sdjson.encoders.register(timedelta)
 	def encode_timedelta_float(obj):
@@ -121,7 +121,7 @@ def test_timedelta_float():
 	sdjson.encoders.unregister(timedelta)
 
 
-# def test_date_float():
+# def test_date_float() -> None:
 # 	# Create and register a custom encoder for date that turns it into a float
 # 	@sdjson.encoders.register(date)
 # 	def encode_date_float(obj):
@@ -133,7 +133,7 @@ def test_timedelta_float():
 # 	sdjson.encoders.unregister(date)
 
 
-def test_date_str():
+def test_date_str() -> None:
 	# Create and register a custom encoder for date that turns it into a str
 	@sdjson.encoders.register(date)
 	def encode_date_str(obj):
@@ -145,7 +145,7 @@ def test_date_str():
 	sdjson.encoders.unregister(date)
 
 
-def test_date_tuple():
+def test_date_tuple() -> None:
 	# Create and register a custom encoder for date that turns it into a timetuple
 	@sdjson.encoders.register(date)
 	def encode_date_tuple(obj):
@@ -157,7 +157,7 @@ def test_date_tuple():
 	sdjson.encoders.unregister(date)
 
 
-def test_time_float():
+def test_time_float() -> None:
 	# Create and register a custom encoder for time that turns it into a float
 	@sdjson.encoders.register(time)
 	def encode_date_float(obj):
@@ -172,7 +172,7 @@ def test_time_float():
 # Create and register a custom encoder for date that turns it into a float
 
 
-def test_time_str():
+def test_time_str() -> None:
 	# Create and register a custom encoder for time that turns it into a str
 	@sdjson.encoders.register(time)
 	def encode_time_str(obj):
@@ -184,7 +184,7 @@ def test_time_str():
 	sdjson.encoders.unregister(time)
 
 
-def test_time_tuple():
+def test_time_tuple() -> None:
 	# Create and register a custom encoder for time that turns it into a timetuple
 	@sdjson.encoders.register(time)
 	def encode_time_tuple(obj):

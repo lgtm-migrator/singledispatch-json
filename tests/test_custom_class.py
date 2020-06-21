@@ -119,7 +119,7 @@ class Shop(CustomClassBase):
 				)
 
 
-def test_custom_class():
+def test_custom_class() -> None:
 	# Create and register the custom encoders
 	# In this example we create three separate encoders even though all three classes
 	#  actually share a common subclass. In real usage they might not be.

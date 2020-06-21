@@ -1,4 +1,6 @@
 # 3rd party
+from typing import Dict, List
+
 import pytest  # type: ignore
 
 # this package
@@ -9,46 +11,52 @@ class JSONTestObject:
 	pass
 
 
-def test_listrecursion():
-	x = []
+def test_listrecursion() -> None:
+	x: List[List] = []
 	x.append(x)
+
 	try:
 		sdjson.dumps(x)
 	except ValueError:
 		pass
 	else:
 		pytest.fail("didn't raise ValueError on list recursion")
+
 	x = []
 	y = [x]
 	x.append(y)
+
 	try:
 		sdjson.dumps(x)
 	except ValueError:
 		pass
 	else:
 		pytest.fail("didn't raise ValueError on alternating list recursion")
+
 	y = []
 	x = [y, y]
 	# ensure that the marker is cleared
 	sdjson.dumps(x)
 
 
-def test_dictrecursion():
-	x = {}
+def test_dictrecursion() -> None:
+	x: Dict[str, Dict] = {}
 	x["test"] = x
+
 	try:
 		sdjson.dumps(x)
 	except ValueError:
 		pass
 	else:
 		pytest.fail("didn't raise ValueError on dict recursion")
+
 	x = {}
 	y = {'a': x, 'b': x}
 	# ensure that the marker is cleared
 	sdjson.dumps(x)
 
 
-def test_defaultrecursion():
+def test_defaultrecursion() -> None:
 
 	class RecursiveJSONEncoder(sdjson.JSONEncoder):
 		recurse = False
@@ -72,7 +80,7 @@ def test_defaultrecursion():
 		pytest.fail("didn't raise ValueError on default recursion")
 
 
-def test_highly_nested_objects_decoding():
+def test_highly_nested_objects_decoding() -> None:
 	# test that loading highly-nested objects doesn't segfault when C
 	# accelerations are used. See #12017
 	with pytest.raises(RecursionError):
@@ -83,18 +91,22 @@ def test_highly_nested_objects_decoding():
 		sdjson.loads('[' * 100000 + '1' + ']' * 100000)
 
 
-def test_highly_nested_objects_encoding():
+def test_highly_nested_objects_encoding() -> None:
 	# See #12051
+	l: List[List]
+	d: Dict[str, Dict]
 	l, d = [], {}
+
 	for x in range(100000):
 		l, d = [l], {'k': d}
+
 	with pytest.raises(RecursionError):
 		sdjson.dumps(l)
 	with pytest.raises(RecursionError):
 		sdjson.dumps(d)
 
 
-def test_endless_recursion():
+def test_endless_recursion() -> None:
 	# See #12051
 	class EndlessJSONEncoder(sdjson.JSONEncoder):
 

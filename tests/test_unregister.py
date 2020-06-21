@@ -8,7 +8,7 @@ import pytest  # type: ignore
 import sdjson
 
 
-def test_unregister():
+def test_unregister() -> None:
 	# Create and register a custom encoder for Decimal that turns it into a string
 	@sdjson.encoders.register(Decimal)
 	def encode_str(obj):

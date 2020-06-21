@@ -24,7 +24,7 @@ def write_then_read(obj):
 			return sdjson.load(fp)
 
 
-def test_bools():
+def test_bools() -> None:
 	assert write_then_read(True) is True
 	assert str(write_then_read(True)) == "True"  # Double check with string
 
@@ -32,12 +32,12 @@ def test_bools():
 	assert str(write_then_read(False)) == "False"  # Double check with string
 
 
-def test_none():
+def test_none() -> None:
 	assert write_then_read(None) is None
 	assert str(write_then_read(None)) == "None"  # Double check with string
 
 
-def test_int():
+def test_int() -> None:
 	assert write_then_read(1) == 1
 	assert write_then_read(1234) == 1234
 	assert write_then_read(12340000000) == 12340000000
@@ -46,7 +46,7 @@ def test_int():
 	assert write_then_read(-12340000000) == -12340000000
 
 
-def test_float():
+def test_float() -> None:
 	assert write_then_read(1.0) == 1.0
 	assert write_then_read(1234.0) == 1234.0
 	assert write_then_read(12340000000.0) == 12340000000.0
@@ -62,14 +62,14 @@ def test_float():
 	assert write_then_read(-12340000000.005) == -12340000000.005
 
 
-def test_string():
+def test_string() -> None:
 	for string in ["egg and bacon", "egg sausage and bacon", "egg and spam", "egg bacon and spam"]:
 		print(string)
 		assert write_then_read(string) == string
 
 
 @pytest.mark.xfail
-def test_dict_failure():
+def test_dict_failure() -> None:
 	"""
 	This test will fail because the boolean dictionary keys get read back in a lowercase strings
 	"""
@@ -78,18 +78,18 @@ def test_dict_failure():
 	assert write_then_read({2: 3.0, 4.0: 5, False: 1, 6: True}) == {2: 3.0, 4.0: 5, False: 1, 6: True}
 
 
-def test_dict():
+def test_dict() -> None:
 	data = {"True": True, "False": False, "String": "spam", "Integer": 1, "Float": 2.5}
 	assert write_then_read(data) == data
 
 
-def test_list():
+def test_list() -> None:
 	data = [True, False, 1, 2.5, "spam"]
 	assert write_then_read(data) == data
 
 
 @pytest.mark.xfail
-def test_tuple_failure():
+def test_tuple_failure() -> None:
 	"""
 	This test will fail because the tuple gets loaded back in as a list
 	"""
@@ -97,5 +97,5 @@ def test_tuple_failure():
 	assert write_then_read((True, False, 1, 2.5, "spam")) == (True, False, 1, 2.5, "spam")
 
 
-def test_tuple_success():
+def test_tuple_success() -> None:
 	assert write_then_read((True, False, 1, 2.5, "spam")) == [True, False, 1, 2.5, "spam"]

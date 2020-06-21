@@ -168,13 +168,18 @@ class JSONEncoder(json.JSONEncoder):
 
 @sphinxify_json_docstring()
 @append_docstring_from(json.JSONDecoder)
-class JSONDecoder:
+class JSONDecoder(json.JSONDecoder):
 	object_hook: Callable[[Dict[str, Any]], Any]
 	parse_float: Callable[[str], Any]
 	parse_int: Callable[[str], Any]
 	parse_constant = ...  # Callable[[str], Any]
 	strict: bool
 	object_pairs_hook: Callable[[List[Tuple[str, Any]]], Any]
+	parse_object: Callable[[str], Any]
+	parse_array: Callable[[str], Any]
+	parse_string: Callable[[str], Any]
+	memo: Dict
+	scan_once: Any
 
 	def __init__(
 		self,

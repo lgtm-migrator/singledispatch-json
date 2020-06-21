@@ -12,63 +12,63 @@ import sdjson
 # is supported as input, not bytes).
 
 
-def test_encoding3():
+def test_encoding3() -> None:
 	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps(u)
 	assert j == '"\\u03b1\\u03a9"'
 
 
-def test_encoding4():
+def test_encoding4() -> None:
 	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps([u])
 	assert j == '["\\u03b1\\u03a9"]'
 
 
-def test_encoding5():
+def test_encoding5() -> None:
 	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps(u, ensure_ascii=False)
 	assert j == f'"{u}"'
 
 
-def test_encoding6():
+def test_encoding6() -> None:
 	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
 	j = sdjson.dumps([u], ensure_ascii=False)
 	assert j == f'["{u}"]'
 
 
-def test_big_unicode_encode():
+def test_big_unicode_encode() -> None:
 	u = "\U0001d120"
 	assert sdjson.dumps(u) == '"\\ud834\\udd20"'
 	assert sdjson.dumps(u, ensure_ascii=False) == '"\U0001d120"'
 
 
-def test_big_unicode_decode():
+def test_big_unicode_decode() -> None:
 	u = "z\U0001d120x"
 	assert sdjson.loads('"' + u + '"') == u
 	assert sdjson.loads('"z\\ud834\\udd20x"') == u
 
 
-def test_unicode_decode():
+def test_unicode_decode() -> None:
 	for i in range(0, 0xd7ff):
 		u = chr(i)
 		s = f'"\\u{i:04x}"'
 		assert sdjson.loads(s) == u
 
 
-def test_unicode_preservation():
+def test_unicode_preservation() -> None:
 	assert type(sdjson.loads('""')) == str
 	assert type(sdjson.loads('"a"')) == str
 	assert type(sdjson.loads('["a"]')[0]) == str
 
 
-def test_bytes_encode():
+def test_bytes_encode() -> None:
 	with pytest.raises(TypeError):
 		sdjson.dumps(b"hi")
 	with pytest.raises(TypeError):
 		sdjson.dumps([b"hi"])
 
 
-def test_bytes_decode():
+def test_bytes_decode() -> None:
 	for encoding, bom in [
 		("utf-8", codecs.BOM_UTF8),
 		("utf-16be", codecs.BOM_UTF16_BE),
@@ -96,7 +96,7 @@ def test_bytes_decode():
 	assert sdjson.loads(b"57") == 57
 
 
-def test_object_pairs_hook_with_unicode():
+def test_object_pairs_hook_with_unicode() -> None:
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
 	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4), ("qrt", 5), ("pad", 6), ("hoy", 7)]
 	assert sdjson.loads(s) == eval(s)

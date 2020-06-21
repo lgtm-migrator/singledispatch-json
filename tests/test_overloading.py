@@ -5,7 +5,7 @@ from decimal import Decimal
 import sdjson
 
 
-def test_overloading():
+def test_overloading() -> None:
 
 	# Create and register a custom encoder
 	@sdjson.encoders.register(Decimal)
@@ -23,7 +23,7 @@ def test_overloading():
 	# Test that we get the expected output from the second encoder
 	assert sdjson.dumps(Decimal(2)) == '"Result from second registration"'
 
-	print(sdjson.encoders.registry.items())
+	print(sdjson.encoders.registry.items())  # type: ignore
 
 	# Cleanup
 	sdjson.encoders.unregister(Decimal)

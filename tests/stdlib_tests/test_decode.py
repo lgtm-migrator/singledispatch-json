@@ -11,25 +11,25 @@ import pytest  # type: ignore
 import sdjson
 
 
-def test_decimal():
+def test_decimal() -> None:
 	rval = sdjson.loads("1.1", parse_float=decimal.Decimal)
 	assert isinstance(rval, decimal.Decimal)
 	assert rval == decimal.Decimal("1.1")
 
 
-def test_float():
+def test_float() -> None:
 	rval = sdjson.loads('1', parse_int=float)
 	assert isinstance(rval, float)
 	assert rval == 1.0
 
 
-def test_empty_objects():
+def test_empty_objects() -> None:
 	assert sdjson.loads("{}") == {}
 	assert sdjson.loads("[]") == []
 	assert sdjson.loads('""') == ''
 
 
-def test_object_pairs_hook():
+def test_object_pairs_hook() -> None:
 	s = '{"xkd":1, "kcw":2, "art":3, "hxm":4, "qrt":5, "pad":6, "hoy":7}'
 	p = [("xkd", 1), ("kcw", 2), ("art", 3), ("hxm", 4), ("qrt", 5), ("pad", 6), ("hoy", 7)]
 	assert sdjson.loads(s) == eval(s)
@@ -45,7 +45,7 @@ def test_object_pairs_hook():
 	assert sdjson.loads('{"empty": {}}', object_pairs_hook=OrderedDict) == OrderedDict([("empty", OrderedDict())])
 
 
-def test_decoder_optimizations():
+def test_decoder_optimizations() -> None:
 	# Several optimizations were made that skip over calls to
 	# the whitespace regex, so this test is designed to try and
 	# exercise the uncommon cases. The array cases are already covered.
@@ -61,36 +61,36 @@ def check_keys_reuse(source, loads):
 
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Strange behaviour with PyPy")
-def test_keys_reuse():
+def test_keys_reuse() -> None:
 	s = '[{"a_key": 1, "b_\xe9": 2}, {"a_key": 3, "b_\xe9": 4}]'
 	check_keys_reuse(s, sdjson.loads)
-	decoder = sdjson.json.decoder.JSONDecoder()
+	decoder = sdjson.JSONDecoder()
 	check_keys_reuse(s, decoder.decode)
 	assert not decoder.memo
 
 
-def test_extra_data():
+def test_extra_data() -> None:
 	s = "[1, 2, 3]5"
 	msg = "Extra data"
 	with pytest.raises(sdjson.JSONDecodeError, match=msg):
 		sdjson.loads(s)
 
 
-def test_invalid_escape():
+def test_invalid_escape() -> None:
 	s = '["abc\\y"]'
 	msg = "escape"
 	with pytest.raises(sdjson.JSONDecodeError, match=msg):
 		sdjson.loads(s)
 
 
-def test_invalid_input_type():
+def test_invalid_input_type() -> None:
 	msg = "the JSON object must be str"
 	for value in [1, 3.14, [], {}, None]:
 		with pytest.raises(TypeError, match=msg):
 			sdjson.loads(value)
 
 
-def test_string_with_utf8_bom():
+def test_string_with_utf8_bom() -> None:
 
 	# stdlib
 	import sys
@@ -115,7 +115,7 @@ def test_string_with_utf8_bom():
 	assert sdjson.load(StringIO(bom_in_str)) == "\ufeff"
 
 
-def test_negative_index():
+def test_negative_index() -> None:
 	d = sdjson.JSONDecoder()
 	with pytest.raises(ValueError):
 		d.raw_decode('a' * 42, -50000)

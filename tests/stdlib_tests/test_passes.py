@@ -2,7 +2,7 @@
 import sdjson
 
 
-def test_parse_pass_1():
+def test_parse_pass_1() -> None:
 	# from http://json.org/JSON_checker/test/pass1.json
 	JSON = r'''
     [
@@ -71,7 +71,7 @@ def test_parse_pass_1():
 	assert res == sdjson.loads(out)
 
 
-def test_parse_pass_2():
+def test_parse_pass_2() -> None:
 	# from http://json.org/JSON_checker/test/pass2.json
 	JSON = r'''
     [[[[[[[[[[[[[[[[[[["Not too deep"]]]]]]]]]]]]]]]]]]]
@@ -83,7 +83,7 @@ def test_parse_pass_2():
 	assert res == sdjson.loads(out)
 
 
-def test_parse_pass_3():
+def test_parse_pass_3() -> None:
 	# from http://json.org/JSON_checker/test/pass3.json
 	JSON = r'''
     {

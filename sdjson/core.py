@@ -102,7 +102,7 @@ TODO: This module does not currently support custom decoders, but might in the f
 # stdlib
 import json
 from functools import singledispatch
-from typing import IO, Any, Callable, Iterator, Optional, Tuple, Type, Union
+from typing import Dict, IO, Any, Callable, Iterator, Optional, Tuple, Type, Union
 
 # 3rd party
 from domdf_python_tools.doctools import append_docstring_from, is_documented_by, make_sphinx_links
@@ -176,6 +176,7 @@ def sphinxify_json_docstring() -> Callable:
 class _Encoders:
 	register: Callable
 	unregister: Callable
+	registry: Dict  # TODO
 
 
 encoders = _Encoders

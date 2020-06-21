@@ -40,14 +40,14 @@ class WierdNum(float, Enum):
 	nan = NAN
 
 
-def test_floats():
+def test_floats() -> None:
 	for enum in FloatNum:
 		assert sdjson.dumps(enum) == repr(enum.value)
 		assert float(sdjson.dumps(enum)) == enum
 		assert sdjson.loads(sdjson.dumps(enum)) == enum
 
 
-def test_weird_floats():
+def test_weird_floats() -> None:
 	for enum, expected in zip(WierdNum, ("Infinity", "-Infinity", "NaN")):
 		assert sdjson.dumps(enum) == expected
 		if not isnan(enum):
@@ -58,14 +58,14 @@ def test_weird_floats():
 			assert isnan(sdjson.loads(sdjson.dumps(enum)))
 
 
-def test_ints():
+def test_ints() -> None:
 	for enum in BigNum:
 		assert sdjson.dumps(enum) == str(enum.value)
 		assert int(sdjson.dumps(enum)) == enum
 		assert sdjson.loads(sdjson.dumps(enum)) == enum
 
 
-def test_list():
+def test_list() -> None:
 	assert sdjson.dumps(list(BigNum)) == str([SMALL, BIG, HUGE, REALLY_HUGE])
 	assert sdjson.loads(sdjson.dumps(list(BigNum))) == list(BigNum)
 	assert sdjson.dumps(list(FloatNum)) == str([E, PI, TAU])
@@ -75,10 +75,22 @@ def test_list():
 	assert isnan(sdjson.loads(sdjson.dumps(list(WierdNum)))[2])
 
 
-def test_dict_keys():
-	s, b, h, r = BigNum
-	e, p, t = FloatNum
-	i, j, n = WierdNum
+def test_dict_keys() -> None:
+	s: int
+	b: int
+	h: int
+	r: int
+	e: float
+	p: float
+	t: float
+	i: float
+	j: float
+	n: float
+
+	s, b, h, r = BigNum  # type: ignore
+	e, p, t = FloatNum  # type: ignore
+	i, j, n = WierdNum  # type: ignore
+
 	d = {
 			s: "tiny",
 			b: "large",
@@ -91,7 +103,9 @@ def test_dict_keys():
 			j: "-Infinity",
 			n: "NaN",
 			}
+
 	nd = sdjson.loads(sdjson.dumps(d))
+
 	assert nd[str(SMALL)] == "tiny"
 	assert nd[str(BIG)] == "large"
 	assert nd[str(HUGE)] == "larger"
@@ -104,7 +118,7 @@ def test_dict_keys():
 	assert nd["NaN"] == "NaN"
 
 
-def test_dict_values():
+def test_dict_values() -> None:
 	d = dict(
 			tiny=BigNum.small,
 			large=BigNum.big,

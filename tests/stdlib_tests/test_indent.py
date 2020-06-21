@@ -6,7 +6,7 @@ from io import StringIO
 import sdjson
 
 
-def test_indent():
+def test_indent() -> None:
 	h = [
 			["blorpie"],
 			["whoops"],
@@ -60,7 +60,7 @@ def test_indent():
 	assert d5 == d3
 
 
-def test_indent0():
+def test_indent0() -> None:
 	h = {3: 1}
 
 	def check(indent, expected):
