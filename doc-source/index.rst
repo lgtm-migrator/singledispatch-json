@@ -10,7 +10,7 @@ sdjson
 
 Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -32,7 +32,7 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 .. |docs| image:: https://img.shields.io/readthedocs/singledispatch-json/latest?logo=read-the-docs
 	:target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
-	
+
 .. |docs_check| image:: https://github.com/domdfcoding/singledispatch-json/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/singledispatch-json/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
@@ -65,7 +65,7 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 	:target: https://pypi.org/project/sdjson/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/sdjson
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/sdjson?logo=python&logoColor=white
 	:target: https://pypi.org/project/sdjson/
 	:alt: PyPI - Supported Python Versions
 
@@ -78,16 +78,16 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 	:alt: PyPI - Wheel
 
 .. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/sdjson?logo=anaconda
-	:alt: Conda - Package Version
 	:target: https://anaconda.org/domdfcoding/sdjson
+	:alt: Conda - Package Version
 
 .. |conda-platform| image:: https://img.shields.io/conda/pn/domdfcoding/sdjson?label=conda%7Cplatform
-	:alt: Conda - Platform
 	:target: https://anaconda.org/domdfcoding/sdjson
+	:alt: Conda - Platform
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/singledispatch-json
-	:alt: License
 	:target: https://github.com/domdfcoding/singledispatch-json/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/singledispatch-json
 	:alt: GitHub top language
@@ -120,7 +120,7 @@ Installation
 
 		.. prompt:: bash
 
-			pip install sdjson
+			python3 -m pip install sdjson --user
 
 	.. tab:: from Anaconda
 
@@ -141,7 +141,7 @@ Installation
 
 		.. prompt:: bash
 
-			pip install git+https://github.com/domdfcoding/singledispatch-json@master
+			python3 -m pip install git+https://github.com/domdfcoding/singledispatch-json@master --user
 
 .. end installation
 
