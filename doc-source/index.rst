@@ -27,7 +27,7 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |requires|
+	  - |license| |language| |requires| |pre_commit|
 
 .. |docs| image:: https://img.shields.io/readthedocs/singledispatch-json/latest?logo=read-the-docs
 	:target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
@@ -102,6 +102,10 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
 	:alt: Maintenance
+
+.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+	:target: https://github.com/pre-commit/pre-commit
+	:alt: pre-commit
 
 .. end shields
 
