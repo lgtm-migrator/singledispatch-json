@@ -1,6 +1,7 @@
-# 3rd party
+# stdlib
 from typing import Dict, List
 
+# 3rd party
 import pytest  # type: ignore
 
 # this package
