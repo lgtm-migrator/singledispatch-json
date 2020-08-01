@@ -45,8 +45,8 @@ pypi_name = "sdjson"
 import_name = "sdjson"
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 short_desc = "Custom JSON Encoder for Python utilising functools.singledispatch to support custom encoders for both Python's built-in classes and user-created classes, without as much legwork."
-__author__ = author = "Dominic Davis-Foster"
-author_email = "dominic@davis-foster.co.uk"
+__author__ = author = 'Dominic Davis-Foster'
+author_email = 'dominic@davis-foster.co.uk'
 github_username = "domdfcoding"
 web = github_url = "https://github.com/domdfcoding/singledispatch-json"
 repo_root = pathlib.Path(__file__).parent
