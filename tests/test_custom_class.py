@@ -74,7 +74,7 @@ class Shop(CustomClassBase):
 			self,
 			name,
 			address,
-			open=True,
+			is_open=True,
 			staff=None,
 			customers=None,
 			current_stock=None,
@@ -84,7 +84,7 @@ class Shop(CustomClassBase):
 
 		self.name = str(name)
 		self.address = str(address)
-		self.open = bool(open)
+		self.is_open = bool(is_open)
 		self.music = bool(music)
 		self.dancing = bool(dancing)
 
@@ -104,13 +104,13 @@ class Shop(CustomClassBase):
 			self.current_stock = []
 
 	def __repr__(self):
-		return f"{self.name} ({'Open' if self.open else 'closed'})"
+		return f"{self.name} ({'Open' if self.is_open else 'closed'})"
 
 	def __dict__(self):
 		return dict(
 				name=self.name,
 				address=self.address,
-				open=self.open,
+				is_open=self.is_open,
 				music=self.music,
 				dancing=self.dancing,
 				staff=self.staff,
@@ -153,7 +153,7 @@ England""",
 
 	expected_json = (
 			'{"name": "The National Cheese Emporium", "address": "12 Some Street\\n'
-			'Some Town\\nEngland", "open": true, "music": false, "dancing": false, '
+			'Some Town\\nEngland", "is_open": true, "music": false, "dancing": false, '
 			'"staff": [{"name": "Mr Wensleydale", "actor": "Michael Palin", "armed": false}], '
 			'"customers": [{"name": "The Customer", "actor": "John Cleese", "armed": false}], '
 			'"current_stock": [{"name": "Camembert", "properties": ["Very runny"]}]}'
