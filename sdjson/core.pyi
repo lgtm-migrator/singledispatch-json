@@ -208,7 +208,7 @@ JSONDecodeError = json.JSONDecodeError
 class _CustomEncoder(JSONEncoder):
 
 	def default(self, obj):
-		for type_, handler in encoders.registry.items():
+		for type_, handler in encoders.registry.items():  # type: ignore
 			if isinstance(obj, type_) and type_ is not object:
 				return handler(obj)
 		return super().default(obj)

@@ -4,28 +4,29 @@ Test custom encoder for a custom class
 
 # stdlib
 import pathlib
+from abc import ABC
 from tempfile import TemporaryDirectory
 
 # this package
 import sdjson
 
 
-class CustomClassBase:
+class CustomClassBase(ABC):
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.__repr__()
 
 	def __iter__(self):
-		yield from self.__dict__().items()
+		yield from self.__dict__.items()
 
 	def __getstate__(self):
-		return self.__dict__()
+		return self.__dict__
 
 	def __setstate__(self, state):
-		self.__init__(**state)
+		self.__init__(**state)  # type: ignore
 
 	def __copy__(self):
-		return self.__class__(**self.__dict__())
+		return self.__class__(**self.__dict__)  # type: ignore
 
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()
@@ -38,9 +39,10 @@ class Character(CustomClassBase):
 		self.actor = str(actor)
 		self.armed = bool(armed)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"Character: {self.name} ({self.actor})"
 
+	@property
 	def __dict__(self):
 		return dict(name=self.name, actor=self.actor, armed=self.armed)
 
@@ -55,9 +57,10 @@ class Cheese(CustomClassBase):
 		else:
 			self.properties = []
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"Cheese({self.name})"
 
+	@property
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -103,9 +106,10 @@ class Shop(CustomClassBase):
 		else:
 			self.current_stock = []
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"{self.name} ({'Open' if self.is_open else 'closed'})"
 
+	@property
 	def __dict__(self):
 		return dict(
 				name=self.name,
