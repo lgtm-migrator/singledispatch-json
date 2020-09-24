@@ -29,52 +29,53 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 	* - Other
 	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://img.shields.io/readthedocs/singledispatch-json/latest?logo=read-the-docs
-	:target: https://singledispatch-json.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+.. |docs| rtfd-shield::
+	:project: singledispatch-json
+	:alt: Documentation Build Status
 
-.. |docs_check| image:: https://github.com/domdfcoding/singledispatch-json/workflows/Docs%20Check/badge.svg
-	:target: https://github.com/domdfcoding/singledispatch-json/actions?query=workflow%3A%22Docs+Check%22
+.. |docs_check| actions-shield::
+	:workflow: Docs Check
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/singledispatch-json/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/singledispatch-json
+.. |travis| travis-shield::
+	:travis-site: com
 	:alt: Travis Build Status
 
-.. |actions_windows| image:: https://github.com/domdfcoding/singledispatch-json/workflows/Windows%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/singledispatch-json/actions?query=workflow%3A%22Windows+Tests%22
+.. |actions_windows| actions-shield::
+	:workflow: Windows Tests
 	:alt: Windows Tests Status
 
-.. |actions_macos| image:: https://github.com/domdfcoding/singledispatch-json/workflows/macOS%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/singledispatch-json/actions?query=workflow%3A%22macOS+Tests%22
+.. |actions_macos| actions-shield::
+	:workflow: macOS Tests
 	:alt: macOS Tests Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/singledispatch-json/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/singledispatch-json/requirements/?branch=master
+.. |requires| requires-io-shield::
 	:alt: Requirements Status
 
-.. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/singledispatch-json/master?logo=coveralls
-	:target: https://coveralls.io/github/domdfcoding/singledispatch-json?branch=master
+.. |coveralls| coveralls-shield::
 	:alt: Coverage
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/singledispatch-json?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/singledispatch-json
+.. |codefactor| codefactor-shield::
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/sdjson
-	:target: https://pypi.org/project/sdjson/
+.. |pypi-version| pypi-shield::
+	:project: sdjson
+	:version:
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/sdjson?logo=python&logoColor=white
-	:target: https://pypi.org/project/sdjson/
+.. |supported-versions| pypi-shield::
+	:project: sdjson
+	:py-versions:
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/sdjson
-	:target: https://pypi.org/project/sdjson/
+.. |supported-implementations| pypi-shield::
+	:project: sdjson
+	:implementations:
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/sdjson
-	:target: https://pypi.org/project/sdjson/
+.. |wheel| pypi-shield::
+	:project: sdjson
+	:wheel:
 	:alt: PyPI - Wheel
 
 .. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/sdjson?logo=anaconda
@@ -85,26 +86,26 @@ Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Pyth
 	:target: https://anaconda.org/domdfcoding/sdjson
 	:alt: Conda - Platform
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/singledispatch-json
-	:target: https://github.com/domdfcoding/singledispatch-json/blob/master/LICENSE
+.. |license| github-shield::
+	:license:
 	:alt: License
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/singledispatch-json
+.. |language| github-shield::
+	:top-language:
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/singledispatch-json/v0.2.6
-	:target: https://github.com/domdfcoding/singledispatch-json/pulse
+.. |commits-since| github-shield::
+	:commits-since: v0.2.6
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/singledispatch-json
-	:target: https://github.com/domdfcoding/singledispatch-json/commit/master
+.. |commits-latest| github-shield::
+	:last-commit:
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2020
+.. |maintained| maintained-shield:: 2020
 	:alt: Maintenance
 
-.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
-	:target: https://github.com/pre-commit/pre-commit
+.. |pre_commit| pre-commit-shield::
 	:alt: pre-commit
 
 .. end shields
@@ -118,34 +119,11 @@ Installation
 
 .. start installation
 
-.. tabs::
-
-	.. tab:: from PyPI
-
-		.. prompt:: bash
-
-			python3 -m pip install sdjson --user
-
-	.. tab:: from Anaconda
-
-		First add the required channels
-
-		.. prompt:: bash
-
-			conda config --add channels http://conda.anaconda.org/domdfcoding
-			conda config --add channels http://conda.anaconda.org/conda-forge
-
-		Then install
-
-		.. prompt:: bash
-
-			conda install sdjson
-
-	.. tab:: from GitHub
-
-		.. prompt:: bash
-
-			python3 -m pip install git+https://github.com/domdfcoding/singledispatch-json@master --user
+.. installation:: sdjson
+	:pypi:
+	:github:
+	:anaconda:
+	:conda-channels: domdfcoding, conda-forge
 
 .. end installation
 
