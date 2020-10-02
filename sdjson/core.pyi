@@ -38,7 +38,10 @@
 # stdlib
 import json
 from functools import singledispatch
-from typing import IO, Any, Callable, Dict, Iterator, List, Optional, Protocol, Tuple, Type, TypeVar, Union
+from typing import (
+	IO, Any, Callable, Dict, Iterator, List, Mapping, Optional, overload, Protocol, Tuple, Type, TypeVar,
+	Union,
+	)
 
 # 3rd party
 from domdf_python_tools.doctools import append_docstring_from, is_documented_by
@@ -52,31 +55,63 @@ __email__: str
 
 _T_co = TypeVar("_T_co", covariant=True)
 _LoadsString = Union[str, bytes]
+_T = TypeVar("_T")
+
+
+class SingleDispatch(Protocol):
+	"""
+	:class:`~typing.Protocol` representing a function decorated with :func:`functools.singledispatch`.
+	"""
+
+	@overload
+	def register(self, cls: Any) -> Callable[[Callable[..., _T]], Callable[..., _T]]: ...
+
+	@overload
+	def register(self, cls: Any, func: Callable[..., _T]) -> Callable[..., _T]: ...
+
+	def dispatch(self, cls: Any) -> Callable[..., _T]: ...
+
+	def unregister(self, cls: Type) -> Any: ...
+
+	registry: Mapping[Any, Callable[..., _T]]
+
+	def _clear_cache(self) -> None: ...
+
+	def __call__(self, *args: Any, **kwargs: Any) -> _T: ...
+
 
 
 class SupportsRead(Protocol[_T_co]):
 	def read(self, __length: int = ...) -> _T_co: ...
 
 
-def allow_unregister(func) -> Callable: ...
+def allow_unregister(func: SingleDispatch) -> SingleDispatch: ...
 
 
 def sphinxify_json_docstring() -> Callable: ...
 
 
-@allow_unregister
-@singledispatch
 class _Encoders:
-	register: Callable
-	unregister: Callable
+	_registry: SingleDispatch
+	_protocol_registry: Mapping[Any, Callable[..., _T]]
+	registry: Mapping[Any, Callable[..., _T]]
+
+	@overload
+	def register(self, cls: Any) -> Callable[[Callable[..., _T]], Callable[..., _T]]: ...
+
+	@overload
+	def register(self, cls: Any, func: Callable[..., _T]) -> Callable[..., _T]: ...
+
+	def dispatch(self, cls: Any) -> Callable[..., _T]: ...
+
+	def unregister(self, cls: Type) -> Any: ...
 
 
-encoders = _Encoders
-register_encoder = _Encoders.register  # type: ignore
-unregister_encoder = _Encoders.unregister  # type: ignore
-
-
+encoders = _Encoders()
+register_encoder = encoders.register  # type: ignore
+unregister_encoder = encoders.unregister  # type: ignore
 def dump(
+
 		obj: Any,
 		 fp: IO[str],
 		 *,

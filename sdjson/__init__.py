@@ -63,7 +63,7 @@ different one it is not necessary to call this function: the
 the given class.
 
 
-TODO: This module does not currently support custom decoders, but might in the future.
+.. TODO:: This module does not currently support custom decoders, but might in the future.
 """
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -75,7 +75,7 @@ TODO: This module does not currently support custom decoders, but might in the f
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU Lesser General Public License for more details.
 #
 #  You should have received a copy of the GNU Lesser General Public License
@@ -126,6 +126,7 @@ __copyright__ = "2020 Dominic Davis-Foster"
 __license__ = "LGPLv3+"
 __version__ = "0.2.6"
 __email__ = "dominic@davis-foster.co.uk"
+
 # this package
 from sdjson.core import (
 		JSONDecodeError,

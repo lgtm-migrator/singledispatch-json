@@ -101,11 +101,19 @@ TODO: This module does not currently support custom decoders, but might in the f
 
 # stdlib
 import json
+import sys
 from functools import singledispatch
-from typing import IO, Any, Callable, Dict, Iterator, Optional, Tuple, Type, Union
+from typing import IO, Any, Callable, Iterator, Optional, Tuple, Type, TypeVar, Union
 
 # 3rd party
 from domdf_python_tools.doctools import append_docstring_from, is_documented_by, make_sphinx_links
+
+if sys.version_info < (3, 8):  # pragma: no cover (>=py38)
+	# 3rd party
+	from typing_extensions import _ProtocolMeta  # type: ignore
+else:  # pragma: no cover (<py38)
+	# stdlib
+	from typing import _ProtocolMeta  # type: ignore
 
 __all__ = [
 		"load",
@@ -134,12 +142,12 @@ def allow_unregister(func) -> Callable:
 	"""
 	Decorator to allow removal of custom encoders with ``<sdjson.encoders.unregister(<type>)``,
 	where <type> is the custom type you wish to remove the encoder for.
-
-	From https://stackoverflow.com/a/25951784/3092681
-	Copyright © 2014 Martijn Pieters
-	https://stackoverflow.com/users/100297/martijn-pieters
-	Licensed under CC BY-SA 4.0
 	"""
+
+	# From https://stackoverflow.com/a/25951784/3092681
+	# Copyright © 2014 Martijn Pieters
+	# https://stackoverflow.com/users/100297/martijn-pieters
+	# Licensed under CC BY-SA 4.0
 
 	# build a dictionary mapping names to closure cells
 	closure = dict(zip(func.register.__code__.co_freevars, func.register.__closure__))
@@ -171,17 +179,91 @@ def sphinxify_json_docstring() -> Callable:
 	return wrapper
 
 
-@allow_unregister
-@singledispatch
 class _Encoders:
-	register: Callable
-	unregister: Callable
-	registry: Dict  # TODO
+
+	def __init__(self):
+		self._registry = allow_unregister(singledispatch(lambda x: None))
+		self._protocol_registry = {}
+		self.registry = self._registry.registry
+
+	def register(self, cls: Type, func: Optional[Callable] = None) -> Callable:
+		"""
+		Registers a new handler for the given type.
+
+		Can be used as a decorator or a regular function:
+
+		.. code-block:: python
+
+			@register_encoder(bytes)
+			def bytes_encoder(obj):
+				return obj.decode("UTF-8")
+
+			def int_encoder(obj):
+				return int(obj)
+
+			register_encoder(int, int_encoder)
 
 
-encoders = _Encoders
-register_encoder = _Encoders.register  # type: ignore
-unregister_encoder = _Encoders.unregister  # type: ignore
+		:param cls:
+		:param func:
+		"""
+
+		if func is None:
+			return lambda f: self.register(cls, f)
+
+		if isinstance(cls, _ProtocolMeta):
+			if getattr(cls, "_is_runtime_protocol", False):
+				self._protocol_registry[cls] = func
+			else:
+				raise TypeError("Protocols must be @runtime_checkable")
+			return func
+		else:
+			return self._registry.register(cls, func)
+
+	def dispatch(self, cls: object) -> Optional[Callable]:
+		"""
+		Returns the best available implementation for the given object.
+
+		:param cls:
+		"""
+
+		if object in self.registry:
+			self.unregister(object)
+
+		handler = self._registry.dispatch(type(cls))
+		if handler is not None:
+			return handler
+		else:
+			for protocol, handler in self._protocol_registry.items():
+				if isinstance(cls, protocol):
+					return handler
+
+		return None
+
+	def unregister(self, cls: Type):
+		"""
+		Unregister the handler for the given type.
+
+		.. code-block:: python
+
+			unregister_encoder(int)
+
+		:param cls:
+
+		:raise KeyError: if no handler is found.
+		"""
+
+		if cls in self.registry:
+			self._registry.unregister(cls)
+		elif cls in self._protocol_registry:
+			del self._protocol_registry[cls]
+		else:
+			raise KeyError
+
+
+encoders = _Encoders()
+register_encoder = encoders.register  # type: ignore
+unregister_encoder = encoders.unregister  # type: ignore
 
 
 @sphinxify_json_docstring()
@@ -314,9 +396,10 @@ JSONDecodeError = json.JSONDecodeError
 class _CustomEncoder(JSONEncoder):
 
 	def default(self, obj):
-		for type_, handler in encoders.registry.items():
-			if isinstance(obj, type_) and type_ is not object:
-				return handler(obj)
+		handler = encoders.dispatch(obj)
+		if handler is not None:
+			return handler(obj)
+
 		return super().default(obj)
 
 

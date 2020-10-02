@@ -8,7 +8,8 @@ sdjson
 
 .. end short_desc
 
-Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/ and Python's ``json`` module.
+Based on https://treyhunner.com/2013/09/singledispatch-json-serializer/
+and Python's :mod:`json` module.
 
 .. start shields
 
