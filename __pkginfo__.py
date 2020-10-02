@@ -39,7 +39,7 @@ __copyright__ = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.2.6"
+__version__ = "0.3.0"
 modname = "sdjson"
 pypi_name = "sdjson"
 import_name = "sdjson"
