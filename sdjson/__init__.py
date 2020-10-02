@@ -1,7 +1,7 @@
 #  !/usr/bin/env python
 #
 #  __init__.py
-#  Scroll down for license info
+#
 """
 JSON encoder utilising functools.singledispatch to support custom encoders
 for both Python's built-in classes and user-created classes, without as much legwork.
@@ -9,58 +9,66 @@ for both Python's built-in classes and user-created classes, without as much leg
 
 Creating and registering a custom encoder is as easy as:
 
->>> import sdjson
->>>
->>> @sdjson.encoders.register(MyClass)
->>> def encode_myclass(obj):
-...     return dict(obj)
->>>
+.. code-block:: python
+
+	>>> import sdjson
+	>>>
+	>>> @sdjson.register_encoder(MyClass)
+	>>> def encode_myclass(obj):
+	...     return dict(obj)
+	>>>
 
 In this case, ``MyClass`` can be made JSON-serializable simply by calling
-:class:`dict <python:dict>` on it. If your class requires more complicated logic
+:class:`dict` on it. If your class requires more complicated logic
 to make it JSON-serializable, do that here.
 
 Then, to dump the object to a string:
 
->>> class_instance = MyClass()
->>> print(sdjson.dumps(class_instance))
-'{"menu": ["egg and bacon", "egg sausage and bacon", "egg and spam", "egg bacon and spam"],
-"today\'s special": "Lobster Thermidor au Crevette with a Mornay sauce served in a Provencale
-manner with shallots and aubergines garnished with truffle pate, brandy and with a fried egg
-on top and spam."}'
->>>
+.. code-block:: python
+
+	>>> class_instance = MyClass()
+	>>> print(sdjson.dumps(class_instance))
+	'{"menu": ["egg and bacon", "egg sausage and bacon", "egg and spam", "egg bacon and spam"],
+	"today\'s special": "Lobster Thermidor au Crevette with a Mornay sauce served in a Provencale
+	manner with shallots and aubergines garnished with truffle pate, brandy and with a fried egg
+	on top and spam."}'
+	>>>
 
 Or to dump to a file:
 
->>> with open("spam.json", "w") as fp:
-...     sdjson.dumps(class_instance, fp)
-...
->>>
+.. code-block:: python
 
-``sdjson`` also provides access to :func:`load <python:json.load>`,
-:func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
-:class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
-from the :mod:`~python:json` module, allowing you to use ``sdjson`` as a drop-in replacement
-for :mod:`~python:json`.
+	>>> with open("spam.json", "w") as fp:
+	...     sdjson.dumps(class_instance, fp)
+	...
+	>>>
 
-If you wish to dump an object without using the custom encoders, you can pass
-a different :class:`~python:json.JSONEncoder` subclass, or indeed
-:class:`~python:json.JSONEncoder` itself to get the stock functionality.
+``sdjson`` also provides access to :func:`~json.load`, :func:`~json.loads`, :class:`~json.JSONDecoder`,
+:class:`~json.JSONDecodeError`, and :class:`~json.JSONEncoder` from the :mod:`json` module,
+allowing you to use ``sdjson`` as a drop-in replacement for :mod:`json`.
 
->>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
->>>
+If you wish to dump an object without using the custom encoders, you can pass a different
+:class:`~json.JSONEncoder` subclass, or indeed :class:`~json.JSONEncoder`
+itself to get the stock functionality.
 
-|
+.. code-block:: python
 
-When you've finished, if you want to unregister the encoder you can call:
+	>>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
+	>>>
 
->>> sdjson.encoders.unregister(MyClass)
->>>
+-----------
+
+When you've finished, if you want to unregister the encoder you can run:
+
+.. code-block:: python
+
+	>>> sdjson.unregister_encoder(MyClass)
+	>>>
 
 to remove the encoder for ``MyClass``. If you want to replace the encoder with a
 different one it is not necessary to call this function: the
-``@sdjson.encoders.register`` decorator will replace any existing decorator for
-the given class.
+:func:`@sdjson.register_encoder <sdjson.register_encoder>`
+decorator will replace any existing decorator for the given class.
 
 
 .. TODO:: This module does not currently support custom decoders, but might in the future.
@@ -140,3 +148,9 @@ from sdjson.core import (
 		register_encoder,
 		unregister_encoder
 		)
+
+JSONEncoder.__module__ = "sdjson"
+dump.__module__ = "sdjson"
+dumps.__module__ = "sdjson"
+load.__module__ = "sdjson"
+loads.__module__ = "sdjson"

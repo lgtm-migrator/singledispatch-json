@@ -1,6 +1,6 @@
 #  !/usr/bin/env python
 #
-#  __init__.pyi
+#  core.pyi
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

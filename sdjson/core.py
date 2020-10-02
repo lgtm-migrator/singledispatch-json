@@ -1,69 +1,9 @@
-#  !/usr/bin/env python
+#!/usr/bin/env python
 #
-#  __init__.pyi
-#  Scroll down for license info
+#  core.py
+#
 """
-JSON encoder utilising functools.singledispatch to support custom encoders
-for both Python's built-in classes and user-created classes, without as much legwork.
-
-
-Creating and registering a custom encoder is as easy as:
-
->>> import sdjson
->>>
->>> @sdjson.encoders.register(MyClass)
->>> def encode_myclass(obj):
-...     return dict(obj)
->>>
-
-In this case, ``MyClass`` can be made JSON-serializable simply by calling
-:class:`dict <python:dict>` on it. If your class requires more complicated logic
-to make it JSON-serializable, do that here.
-
-Then, to dump the object to a string:
-
->>> class_instance = MyClass()
->>> print(sdjson.dumps(class_instance))
-'{"menu": ["egg and bacon", "egg sausage and bacon", "egg and spam", "egg bacon and spam"],
-"today\'s special": "Lobster Thermidor au Crevette with a Mornay sauce served in a Provencale
-manner with shallots and aubergines garnished with truffle pate, brandy and with a fried egg
-on top and spam."}'
->>>
-
-Or to dump to a file:
-
->>> with open("spam.json", "w") as fp:
-...     sdjson.dumps(class_instance, fp)
-...
->>>
-
-``sdjson`` also provides access to :func:`load <python:json.load>`,
-:func:`loads <python:json.loads>`, :class:`~python:json.JSONDecoder`,
-:class:`~python:json.JSONDecodeError`, and :class:`~python:json.JSONEncoder`
-from the :mod:`~python:json` module, allowing you to use ``sdjson`` as a drop-in replacement
-for :mod:`~python:json`.
-
-If you wish to dump an object without using the custom encoders, you can pass
-a different :class:`~python:json.JSONEncoder` subclass, or indeed
-:class:`~python:json.JSONEncoder` itself to get the stock functionality.
-
->>> sdjson.dumps(class_instance, cls=sdjson.JSONEncoder)
->>>
-
-|
-
-When you've finished, if you want to unregister the encoder you can call:
-
->>> sdjson.encoders.unregister(MyClass)
->>>
-
-to remove the encoder for ``MyClass``. If you want to replace the encoder with a
-different one it is not necessary to call this function: the
-``@sdjson.encoders.register`` decorator will replace any existing decorator for
-the given class.
-
-
-TODO: This module does not currently support custom decoders, but might in the future.
+The actual functionality.
 """
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -164,15 +104,15 @@ def allow_unregister(func) -> Callable:
 
 def sphinxify_json_docstring() -> Callable:
 	"""
-	Turn references in the docstring to :class:`~python:json.JSONEncoder` into proper links.
+	Turn references in the docstring to :class:`~json.JSONEncoder` into proper links.
 	"""
 
 	def wrapper(target):
 		# To save having the `sphinxify_docstring` decorator too
 		target.__doc__ = make_sphinx_links(target.__doc__)
 
-		target.__doc__ = target.__doc__.replace("``JSONEncoder``", ":class:`~python:json.JSONEncoder`")
-		target.__doc__ = target.__doc__.replace("``.default()``", ":meth:`~python:json.JSONEncoder.default`")
+		target.__doc__ = target.__doc__.replace("``JSONEncoder``", ":class:`~json.JSONEncoder`")
+		target.__doc__ = target.__doc__.replace("``.default()``", ":meth:`~json.JSONEncoder.default`")
 
 		return target
 
@@ -328,7 +268,7 @@ def dumps(
 @append_docstring_from(json.load)
 def load(*args, **kwargs):
 	"""
-	This is just the :func:`load <python:json.load>` function from Python's :mod:`~python:json` module.
+	This is just the :func:`~json.load` function from Python's :mod:`json` module.
 	"""
 	return json.load(*args, **kwargs)
 
@@ -337,7 +277,7 @@ def load(*args, **kwargs):
 @append_docstring_from(json.loads)
 def loads(*args, **kwargs):
 	"""
-	This is just the :func:`loads <python:json.loads>` function from Python's :mod:`~python:json` module.
+	This is just the :func:`~json.loads` function from Python's :mod:`json` module.
 	"""
 	return json.loads(*args, **kwargs)
 
@@ -346,7 +286,7 @@ def loads(*args, **kwargs):
 @append_docstring_from(json.JSONEncoder)
 class JSONEncoder(json.JSONEncoder):
 	"""
-	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
+	This is just the :class:`~json.JSONEncoder` class from Python's :mod:`json` module.
 	"""
 
 	def __init__(self, *args, **kwargs):
@@ -372,7 +312,7 @@ class JSONEncoder(json.JSONEncoder):
 @append_docstring_from(json.JSONDecoder)
 class JSONDecoder(json.JSONDecoder):
 	"""
-	This is just the :class:`~python:json.JSONEncoder` class from Python's :mod:`~python:json` module.
+	This is just the :class:`~json.JSONEncoder` class from Python's :mod:`json` module.
 	"""
 
 	def __init__(self, *args, **kwargs):
