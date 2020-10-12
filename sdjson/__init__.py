@@ -107,14 +107,6 @@ decorator will replace any existing decorator for the given class.
 #  Apache 2.0 Licensed
 #
 
-# stdlib
-import json
-from functools import singledispatch
-from typing import Any, Callable, Optional, Tuple, Type, Union
-
-# 3rd party
-from domdf_python_tools.doctools import append_docstring_from, is_documented_by, make_sphinx_links
-
 __all__ = [
 		"load",
 		"loads",
