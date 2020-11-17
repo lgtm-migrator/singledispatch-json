@@ -3,7 +3,7 @@ import codecs
 from collections import OrderedDict
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
 import sdjson

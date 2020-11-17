@@ -108,8 +108,8 @@ class _Encoders:
 
 
 encoders = _Encoders()
-register_encoder = encoders.register  # type: ignore
-unregister_encoder = encoders.unregister  # type: ignore
+register_encoder = encoders.register
+unregister_encoder = encoders.unregister
 def dump(
 
 		obj: Any,
@@ -207,7 +207,7 @@ class JSONDecoder(json.JSONDecoder):
 	object_hook: Callable[[Dict[str, Any]], Any]
 	parse_float: Callable[[str], Any]
 	parse_int: Callable[[str], Any]
-	parse_constant = ...  # Callable[[str], Any]
+	parse_constant: Callable[[str], Any] = ...
 	strict: bool
 	object_pairs_hook: Callable[[List[Tuple[str, Any]]], Any]
 	parse_object: Callable[[str], Any]
@@ -243,7 +243,7 @@ JSONDecodeError = json.JSONDecodeError
 class _CustomEncoder(JSONEncoder):
 
 	def default(self, obj):
-		for type_, handler in encoders.registry.items():  # type: ignore
+		for type_, handler in encoders.registry.items():
 			if isinstance(obj, type_) and type_ is not object:
 				return handler(obj)
 		return super().default(obj)

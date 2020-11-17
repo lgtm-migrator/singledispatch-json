@@ -2,7 +2,7 @@
 from typing import Dict, List
 
 # 3rd party
-import pytest  # type: ignore
+import pytest
 
 # this package
 import sdjson
