@@ -4,11 +4,12 @@
 set -e -x
 
 if [ "$TRAVIS_PYTHON_VERSION" == 3.6 ]; then
-  if [ -z "$TRAVIS_TAG" ] && [ "$TRAVIS_COMMIT_MESSAGE" == "Bump Version*" ]; then
+  if [ -z "$TRAVIS_TAG" ] && [ "$TRAVIS_COMMIT_MESSAGE" == "Bump version*" ]; then
     echo "Deferring building conda package because this is release"
   else
 
-    python3 ./make_conda_recipe.py || exit 1
+    python3 -m pip install repo_helper || exit 1
+    python3 -m repo_helper make-recipe || exit 1
 
     # Switch to miniconda
     source "/home/travis/miniconda/etc/profile.d/conda.sh"
