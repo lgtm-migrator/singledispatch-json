@@ -3,11 +3,13 @@ Create several custom encoders and test that they work
 """
 
 # stdlib
+import collections
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from fractions import Fraction
 
 # 3rd party
+import pytest
 import pytz
 
 # this package
@@ -194,3 +196,26 @@ def test_time_tuple() -> None:
 
 	# Cleanup
 	sdjson.encoders.unregister(time)
+
+
+@pytest.mark.xfail(reason="Not implemented in CPython yet.")
+def test_named_tuple() -> None:
+	# Ref: https://bugs.python.org/issue30343
+	#      https://github.com/python/cpython/pull/1558
+
+	Student = collections.namedtuple("Student", "name, age, teacher")
+
+	try:
+		@sdjson.encoders.register(Student)
+		def encode_student(obj):
+			return {
+					"name": obj.name,
+					"age": obj.age,
+					"teacher": obj.teacher,
+					}
+
+		assert sdjson.dumps(Student("Alice", 12, "Sue")) == '{"name": "Alice", "age": 12, "teacher": "Sue"}'
+
+	finally:
+		# Cleanup
+		sdjson.encoders.unregister(Student)

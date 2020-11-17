@@ -1,0 +1,1 @@
+dict_items([(<class 'decimal.Decimal'>, <function test_overloading.<locals>.encoder_2 at 0x...>)])
