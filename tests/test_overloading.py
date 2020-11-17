@@ -2,11 +2,12 @@
 import re
 from decimal import Decimal
 
-# this package
+# 3rd party
 from domdf_python_tools.testing import check_file_regression
-
-import sdjson
 from pytest_regressions.file_regression import FileRegressionFixture
+
+# this package
+import sdjson
 
 
 def test_overloading(file_regression: FileRegressionFixture) -> None:

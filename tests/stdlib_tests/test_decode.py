@@ -61,7 +61,7 @@ def check_keys_reuse(source, loads):
 
 @pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Strange behaviour with PyPy")
 def test_keys_reuse() -> None:
-	s = '[{"a_key": 1, "b_\xe9": 2}, {"a_key": 3, "b_\xe9": 4}]'
+	s = '[{"a_key": 1, "b_é": 2}, {"a_key": 3, "b_é": 4}]'
 	check_keys_reuse(s, sdjson.loads)
 	decoder = sdjson.JSONDecoder()
 	check_keys_reuse(s, decoder.decode)
@@ -110,8 +110,8 @@ def test_string_with_utf8_bom() -> None:
 
 	# make sure that the BOM is not detected in the middle of a string
 	bom_in_str = '"{}"'.format(''.encode("utf-8-sig").decode("utf-8"))
-	assert sdjson.loads(bom_in_str) == "\ufeff"
-	assert sdjson.load(StringIO(bom_in_str)) == "\ufeff"
+	assert sdjson.loads(bom_in_str) == '\ufeff'
+	assert sdjson.load(StringIO(bom_in_str)) == '\ufeff'
 
 
 def test_negative_index() -> None:

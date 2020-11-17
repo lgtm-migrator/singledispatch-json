@@ -13,37 +13,37 @@ import sdjson
 
 
 def test_encoding3() -> None:
-	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
+	u = "αΩ"
 	j = sdjson.dumps(u)
 	assert j == '"\\u03b1\\u03a9"'
 
 
 def test_encoding4() -> None:
-	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
+	u = "αΩ"
 	j = sdjson.dumps([u])
 	assert j == '["\\u03b1\\u03a9"]'
 
 
 def test_encoding5() -> None:
-	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
+	u = "αΩ"
 	j = sdjson.dumps(u, ensure_ascii=False)
 	assert j == f'"{u}"'
 
 
 def test_encoding6() -> None:
-	u = "\N{GREEK SMALL LETTER ALPHA}\N{GREEK CAPITAL LETTER OMEGA}"
+	u = "αΩ"
 	j = sdjson.dumps([u], ensure_ascii=False)
 	assert j == f'["{u}"]'
 
 
 def test_big_unicode_encode() -> None:
-	u = "\U0001d120"
+	u = '𝄠'
 	assert sdjson.dumps(u) == '"\\ud834\\udd20"'
-	assert sdjson.dumps(u, ensure_ascii=False) == '"\U0001d120"'
+	assert sdjson.dumps(u, ensure_ascii=False) == '"𝄠"'
 
 
 def test_big_unicode_decode() -> None:
-	u = "z\U0001d120x"
+	u = "z𝄠x"
 	assert sdjson.loads('"' + u + '"') == u
 	assert sdjson.loads('"z\\ud834\\udd20x"') == u
 
@@ -76,7 +76,7 @@ def test_bytes_decode() -> None:
 		("utf-32be", codecs.BOM_UTF32_BE),
 		("utf-32le", codecs.BOM_UTF32_LE),
 		]:
-		data = ["a\xb5\u20ac\U0001d120"]
+		data = ["aµ€𝄠"]
 		encoded = sdjson.dumps(data).encode(encoding)
 		assert sdjson.loads(bom + encoded) == data
 		assert sdjson.loads(encoded) == data
@@ -86,7 +86,7 @@ def test_bytes_decode() -> None:
 	# consist of only a string, which can present a special case
 	# not covered by the encoding detection patterns specified in
 	# RFC-4627 for utf-16-le (XX 00 XX 00).
-	assert sdjson.loads('"\u2600"'.encode("utf-16-le")) == "\u2600"
+	assert sdjson.loads('"☀"'.encode("utf-16-le")) == '☀'
 	# Encoding detection for small (<4) bytes objects
 	# is implemented as a special case. RFC-7159 and ECMA-404
 	# allow single codepoint JSON documents which are only two

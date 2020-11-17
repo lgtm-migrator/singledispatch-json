@@ -206,6 +206,7 @@ def test_named_tuple() -> None:
 	Student = collections.namedtuple("Student", "name, age, teacher")
 
 	try:
+
 		@sdjson.encoders.register(Student)
 		def encode_student(obj):
 			return {

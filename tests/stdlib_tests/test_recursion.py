@@ -67,7 +67,7 @@ def test_defaultrecursion() -> None:
 				if self.recurse:
 					return [JSONTestObject]
 				else:
-					return 'JSONTestObject'
+					return "JSONTestObject"
 			return sdjson.JSONEncoder.default(o)
 
 	enc = RecursiveJSONEncoder()
@@ -112,7 +112,9 @@ def test_endless_recursion() -> None:
 	class EndlessJSONEncoder(sdjson.JSONEncoder):
 
 		def default(self, o):
-			"""If check_circular is False, this will keep adding another list."""
+			"""
+			If check_circular is False, this will keep adding another list.
+			"""
 			return [o]
 
 	with pytest.raises(RecursionError):

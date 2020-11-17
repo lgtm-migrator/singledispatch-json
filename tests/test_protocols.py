@@ -9,12 +9,14 @@ from typing_extensions import Protocol, runtime_checkable
 # this package
 import sdjson
 
-T_co = TypeVar('T_co', covariant=True)  # Any type covariant containers.
+T_co = TypeVar("T_co", covariant=True)  # Any type covariant containers.
 
 
 @runtime_checkable
 class SupportsInt(Protocol):
-	"""An ABC with one abstract method __int__."""
+	"""
+	An ABC with one abstract method __int__.
+	"""
 
 	@abstractmethod
 	def __int__(self) -> int:
@@ -23,7 +25,9 @@ class SupportsInt(Protocol):
 
 @runtime_checkable
 class SupportsFloat(Protocol):
-	"""An ABC with one abstract method __float__."""
+	"""
+	An ABC with one abstract method __float__.
+	"""
 
 	@abstractmethod
 	def __float__(self) -> float:
@@ -32,7 +36,9 @@ class SupportsFloat(Protocol):
 
 @runtime_checkable
 class SupportsBytes(Protocol):
-	"""An ABC with one abstract method __bytes__."""
+	"""
+	An ABC with one abstract method __bytes__.
+	"""
 
 	@abstractmethod
 	def __bytes__(self) -> bytes:
