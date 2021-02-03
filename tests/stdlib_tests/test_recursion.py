@@ -68,7 +68,7 @@ def test_defaultrecursion() -> None:
 					return [JSONTestObject]
 				else:
 					return "JSONTestObject"
-			return sdjson.JSONEncoder.default(o)
+			return sdjson.JSONEncoder.default(self, o)
 
 	enc = RecursiveJSONEncoder()
 	assert enc.encode(JSONTestObject) == '"JSONTestObject"'

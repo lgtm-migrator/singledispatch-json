@@ -85,9 +85,10 @@ def test_invalid_escape() -> None:
 
 def test_invalid_input_type() -> None:
 	msg = "the JSON object must be str"
+
 	for value in [1, 3.14, [], {}, None]:
 		with pytest.raises(TypeError, match=msg):
-			sdjson.loads(value)
+			sdjson.loads(value)  # type: ignore
 
 
 def test_string_with_utf8_bom() -> None:
