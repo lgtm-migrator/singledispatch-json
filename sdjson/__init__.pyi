@@ -1,6 +1,6 @@
 #  !/usr/bin/env python
 #
-#  core.pyi
+#  __init__.pyi
 #
 #  Copyright © 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -58,7 +58,6 @@ from typing_extensions import Protocol
 
 __author__: str
 __copyright__: str
-
 __license__: str
 __version__: str
 __email__: str
