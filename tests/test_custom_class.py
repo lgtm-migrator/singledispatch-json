@@ -3,9 +3,10 @@ Test custom encoder for a custom class
 """
 
 # stdlib
-import pathlib
 from abc import ABC
-from tempfile import TemporaryDirectory
+
+# 3rd party
+from domdf_python_tools.paths import TemporaryPathPlus
 
 # this package
 import sdjson
@@ -163,8 +164,8 @@ England""",
 			'"current_stock": [{"name": "Camembert", "properties": ["Very runny"]}]}'
 			)
 
-	with TemporaryDirectory() as tmpdir:
-		tmpfile = pathlib.Path(tmpdir) / "output.json"
+	with TemporaryPathPlus() as tmpdir:
+		tmpfile = tmpdir / "output.json"
 
 		with open(tmpfile, 'w') as fp:
 			sdjson.dump(cheese_shop, fp)
