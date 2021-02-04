@@ -10,7 +10,6 @@ license: 'LGPLv3+'
 short_desc: "Custom JSON Encoder for Python utilising functools.singledispatch to support custom encoders for both Python's built-in classes and user-created classes, without as much legwork."
 
 conda_channels:
- - domdfcoding
  - conda-forge
 
 python_deploy_version: 3.6
@@ -24,7 +23,6 @@ python_versions:
  - "3.10-dev"
  - "pypy3"
 
-# travis secure password for PyPI
 
 # directory that contains tests
 tests_dir: "tests"
@@ -34,3 +32,5 @@ classifiers:
  - 'Intended Audience :: Developers'
  - 'Topic :: Software Development :: Libraries :: Python Modules'
  - "Topic :: Utilities"
+
+min_coverage: 100
