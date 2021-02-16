@@ -167,10 +167,10 @@ England""",
 	with TemporaryPathPlus() as tmpdir:
 		tmpfile = tmpdir / "output.json"
 
-		with open(tmpfile, 'w') as fp:
+		with open(tmpfile, 'w', encoding="UTF-8") as fp:
 			sdjson.dump(cheese_shop, fp)
 
-		with open(tmpfile) as fp:
+		with open(tmpfile, encoding="UTF-8") as fp:
 			assert fp.read() == expected_json
 
 	assert sdjson.dumps(cheese_shop) == expected_json

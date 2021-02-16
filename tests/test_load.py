@@ -16,10 +16,10 @@ import sdjson
 def write_then_read(obj, tmpdir: PathPlus):
 	tmpfile = tmpdir / "output.json"
 
-	with open(tmpfile, 'w') as fp:
+	with open(tmpfile, 'w', encoding="UTF-8") as fp:
 		sdjson.dump(obj, fp)
 
-	with open(tmpfile) as fp:
+	with open(tmpfile, encoding="UTF-8") as fp:
 		return sdjson.load(fp)
 
 
