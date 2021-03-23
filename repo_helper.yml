@@ -30,4 +30,7 @@ classifiers:
  - 'Topic :: Software Development :: Libraries :: Python Modules'
  - "Topic :: Utilities"
 
-min_coverage: 100
+keywords:
+ - json
+ - singledispatch
+ - serialize
