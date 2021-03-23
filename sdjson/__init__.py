@@ -139,7 +139,7 @@ __all__ = [
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020 Dominic Davis-Foster"
 __license__ = "LGPLv3+"
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __email__ = "dominic@davis-foster.co.uk"
 
 # TODO: perhaps add a limit on number of decimal places for floats etc, like with pandas' jsons
