@@ -21,11 +21,8 @@ python_versions:
  - 3.8
  - 3.9
  - "3.10-dev"
- - "pypy3"
-
-
-# directory that contains tests
-tests_dir: "tests"
+ - pypy36
+ - pypy37
 
 classifiers:
  - 'Development Status :: 4 - Beta'
