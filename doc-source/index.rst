@@ -128,9 +128,6 @@ and Python's :mod:`json` module.
 .. end shields
 
 
-
-|
-
 Installation
 -------------
 
@@ -145,6 +142,12 @@ Installation
 .. end installation
 
 
+Contents
+------------
+
+.. html-section::
+
+
 .. toctree::
 	:hidden:
 
@@ -152,16 +155,16 @@ Installation
 
 .. toctree::
 	:maxdepth: 3
-	:caption: Documentation
 
 	API Reference<docs>
-
-.. toctree::
-	:maxdepth: 3
-	:caption: Contributing
-
 	contributing
 	Source
+	license
+
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: sdjson
 
 
 .. sidebar-links::

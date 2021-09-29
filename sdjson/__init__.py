@@ -58,6 +58,8 @@ itself to get the stock functionality.
 
 -----------
 
+.. latex:clearpage::
+
 When you've finished, if you want to unregister the encoder you can run:
 
 .. code-block:: python
@@ -341,7 +343,7 @@ def dumps(
 @append_docstring_from(json.load)
 def load(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
 	"""
-	This is just the :func:`~json.load` function from Python's :mod:`json` module.
+	Alias of :func:`json.load`.
 	"""
 
 	return json.load(*args, **kwargs)
@@ -351,7 +353,7 @@ def load(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
 @append_docstring_from(json.loads)
 def loads(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
 	"""
-	This is just the :func:`~json.loads` function from Python's :mod:`json` module.
+	Alias of :func:`json.loads`.
 	"""
 
 	return json.loads(*args, **kwargs)
@@ -361,7 +363,9 @@ def loads(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
 @append_docstring_from(json.JSONEncoder)
 class JSONEncoder(json.JSONEncoder):
 	"""
-	This is just the :class:`~json.JSONEncoder` class from Python's :mod:`json` module.
+	Alias of :class:`json.JSONEncoder`.
+
+	.. autosummary-widths:: 33/100
 	"""
 
 	def __init__(self, *args, **kwargs):
@@ -391,7 +395,9 @@ class JSONEncoder(json.JSONEncoder):
 @append_docstring_from(json.JSONDecoder)
 class JSONDecoder(json.JSONDecoder):  # pragma: no cover (!CPython)  # TODO
 	"""
-	This is just the :class:`~json.JSONEncoder` class from Python's :mod:`json` module.
+	Alias of :class:`json.JSONDecoder`.
+
+	.. autosummary-widths:: 35/100
 	"""
 
 	def __init__(self, *args, **kwargs):

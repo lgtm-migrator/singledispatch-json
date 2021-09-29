@@ -12,6 +12,7 @@ short_desc: "Custom JSON Encoder for Python utilising functools.singledispatch t
 use_whey: True
 python_deploy_version: 3.6
 min_coverage: 100
+standalone_contrib_guide: true
 
 conda_channels:
  - conda-forge
@@ -36,3 +37,11 @@ keywords:
  - json
  - singledispatch
  - serialize
+
+extra_sphinx_extensions:
+ - sphinx_toolbox_experimental.html_section
+ - sphinx_toolbox_experimental.autosummary_widths
+
+sphinx_conf_epilogue:
+ - nitpicky = True
+ - autosummary_widths_builders = ["latex"]
