@@ -73,11 +73,10 @@ def test_failures() -> None:
 def test_non_string_keys_dict() -> None:
 	data = {'a': 1, (1, 2): 2}
 
-	# TODO:
-	if platform.python_implementation() == "PyPy":
-		match_string = r"key \(1, 2\) is not a string"
-	elif sys.version_info[:2] > (3, 6):
+	if sys.version_info[:2] > (3, 6):
 		match_string = "keys must be str, int, float, bool or None, not tuple"
+	elif platform.python_implementation() == "PyPy":
+		match_string = r"key \(1, 2\) is not a string"
 	else:
 		match_string = "keys must be a string"
 
