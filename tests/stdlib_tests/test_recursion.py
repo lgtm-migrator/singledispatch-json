@@ -3,7 +3,7 @@ from typing import Dict, List
 
 # 3rd party
 import pytest
-from coincidence import not_pypy
+from coincidence.selectors import not_pypy
 
 # this package
 import sdjson

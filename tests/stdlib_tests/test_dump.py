@@ -4,6 +4,7 @@ from io import StringIO
 
 # 3rd party
 import pytest
+from coincidence.selectors import not_pypy
 
 # this package
 import sdjson
@@ -19,7 +20,7 @@ def test_dumps() -> None:
 	assert sdjson.dumps({}) == "{}"
 
 
-@pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Failing on PyPy3.6-7.1.1")
+@not_pypy(reason="Failing on PyPy3.6-7.1.1")
 def test_dump_skipkeys() -> None:
 	v = {b"invalid_key": False, "valid_key": True}
 	with pytest.raises(TypeError):

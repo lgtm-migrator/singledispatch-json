@@ -27,7 +27,7 @@ class CustomClassBase(ABC):
 		self.__init__(**state)  # type: ignore
 
 	def __copy__(self):
-		return self.__class__(**self.__dict__)  # type: ignore
+		return self.__class__(**self.__dict__)
 
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()

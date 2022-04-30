@@ -5,6 +5,7 @@ import sys
 
 # 3rd party
 import pytest
+from domdf_python_tools.compat import PYPY
 
 # this package
 import sdjson
@@ -75,7 +76,7 @@ def test_non_string_keys_dict() -> None:
 
 	if sys.version_info[:2] > (3, 6):
 		match_string = "keys must be str, int, float, bool or None, not tuple"
-	elif platform.python_implementation() == "PyPy":
+	elif PYPY:
 		match_string = r"key \(1, 2\) is not a string"
 	else:
 		match_string = "keys must be a string"
@@ -89,9 +90,7 @@ def test_not_serializable() -> None:
 		sdjson.dumps(sys)
 
 
-pypy = platform.python_implementation() == "PyPy"
-
-if pypy:
+if PYPY:
 	unexpected_right_brace = "Unexpected '}'"
 	missing_colon = "No ':' found at"
 	unexpected_colon = "Unexpected ':' when decoding array"
@@ -111,14 +110,17 @@ else:
 def __test_invalid_input(data, msg, idx):
 	with pytest.raises(sdjson.JSONDecodeError) as err:
 		sdjson.loads(data)
-	if pypy:
+
+	if PYPY:
 		assert err.value.msg.startswith(msg)  # Fix for varying messages between PyPy versions
 	else:
 		assert err.value.msg == msg
+
 	assert err.value.pos == idx
 	assert err.value.lineno == 1
 	assert err.value.colno == idx + 1
-	if pypy:
+
+	if PYPY:
 		assert re.match(rf"{msg}.*: line 1 column {idx + 1:d} \(char {idx:d}\)", str(err.value))
 	else:
 		assert re.match(rf"{msg}: line 1 column {idx + 1:d} \(char {idx:d}\)", str(err.value))
@@ -129,11 +131,11 @@ def __test_invalid_input(data, msg, idx):
 		[
 				('', empty_string, 0),
 				('[', empty_string, 1),
-				("[42", unterminated_array, 1 if pypy else 3),
+				("[42", unterminated_array, 1 if PYPY else 3),
 				("[42,", empty_string, 4),
 				('["', "Unterminated string starting at", 1),
 				('["spam', "Unterminated string starting at", 1),
-				('["spam"', unterminated_array, 1 if pypy else 7),
+				('["spam"', unterminated_array, 1 if PYPY else 7),
 				('["spam",', empty_string, 8),
 				('{', property_name_string, 1),
 				('{"', "Unterminated string starting at", 1),
@@ -142,8 +144,8 @@ def __test_invalid_input(data, msg, idx):
 				('{"spam":', empty_string, 8),
 				(
 						'{"spam":42',
-						"Unterminated object starting at" if pypy else "Expecting ',' delimiter",
-						1 if pypy else 10
+						"Unterminated object starting at" if PYPY else "Expecting ',' delimiter",
+						1 if PYPY else 10
 						),
 				('{"spam":42,', property_name_string, 11),
 				('"', "Unterminated string starting at", 0),
@@ -157,15 +159,15 @@ def test_truncated_input(data, msg, idx):
 @pytest.mark.parametrize(
 		"data, msg, idx",
 		[
-				("[,", "Unexpected ','" if pypy else "Expecting value", 1),
+				("[,", "Unexpected ','" if PYPY else "Expecting value", 1),
 				('{"spam":[}', unexpected_right_brace, 9),
 				("[42:", unexpected_colon, 3),
-				('[42 "spam"', "Unexpected '\"' when decoding array" if pypy else "Expecting ',' delimiter", 4),
-				("[42,]", "Unexpected ']'" if pypy else "Expecting value", 4),
-				('{"spam":[42}', "Unexpected '}' when decoding array" if pypy else "Expecting ',' delimiter", 11),
+				('[42 "spam"', "Unexpected '\"' when decoding array" if PYPY else "Expecting ',' delimiter", 4),
+				("[42,]", "Unexpected ']'" if PYPY else "Expecting value", 4),
+				('{"spam":[42}', "Unexpected '}' when decoding array" if PYPY else "Expecting ',' delimiter", 11),
 				('["]', "Unterminated string starting at", 1),
 				('["spam":', unexpected_colon, 7),
-				('["spam",]', "Unexpected ']'" if pypy else "Expecting value", 8),
+				('["spam",]', "Unexpected ']'" if PYPY else "Expecting value", 8),
 				("{:", property_name_string, 1),
 				("{,", property_name_string, 1),
 				("{42", property_name_string, 1),
@@ -174,13 +176,13 @@ def test_truncated_input(data, msg, idx):
 				('{"spam"}', missing_colon, 7),
 				('[{"spam"]', missing_colon, 8),
 				('{"spam":}', unexpected_right_brace, 8),
-				('[{"spam":]', "Unexpected ']'" if pypy else "Expecting value", 9),
+				('[{"spam":]', "Unexpected ']'" if PYPY else "Expecting value", 9),
 				(
 						'{"spam":42 "ham"',
-						"Unexpected '\"' when decoding object" if pypy else "Expecting ',' delimiter",
+						"Unexpected '\"' when decoding object" if PYPY else "Expecting ',' delimiter",
 						11
 						),
-				('[{"spam":42]', "Unexpected ']' when decoding object" if pypy else "Expecting ',' delimiter", 11),
+				('[{"spam":42]', "Unexpected ']' when decoding object" if PYPY else "Expecting ',' delimiter", 11),
 				('{"spam":42,}', property_name_string, 11),
 				]
 		)
@@ -216,19 +218,20 @@ def test_linecol(data, line, col, idx):
 	with pytest.raises(sdjson.JSONDecodeError) as err:
 		sdjson.loads(data)
 
-	if platform.python_implementation() == "PyPy":
+	if PYPY:
 		match = "Unexpected '!'"
 	else:
 		match = "Expecting value"
 
-	if pypy:
+	if PYPY:
 		assert err.value.msg.startswith(match)  # Fix for varying messages between PyPy versions
 	else:
 		assert err.value.msg == match
 	assert err.value.pos == idx
 	assert err.value.lineno == line
 	assert err.value.colno == col
-	if pypy:
+
+	if PYPY:
 		assert re.match(rf"{match}.*: line {line} column {col:d} \(char {idx:d}\)", str(err.value))
 	else:
 		assert re.match(rf"{match}: line {line} column {col:d} \(char {idx:d}\)", str(err.value))

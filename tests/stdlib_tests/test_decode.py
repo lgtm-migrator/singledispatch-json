@@ -7,6 +7,8 @@ from io import StringIO
 
 # 3rd party
 import pytest
+from coincidence.selectors import not_pypy
+from domdf_python_tools.compat import PYPY
 
 # this package
 import sdjson
@@ -60,7 +62,7 @@ def check_keys_reuse(source, loads):
 	assert b == d
 
 
-@pytest.mark.skipif(platform.python_implementation() == "PyPy", reason="Strange behaviour with PyPy")
+@not_pypy(reason="Strange behaviour with PyPy")
 def test_keys_reuse() -> None:
 	s = '[{"a_key": 1, "b_é": 2}, {"a_key": 3, "b_é": 4}]'
 	check_keys_reuse(s, sdjson.loads)
@@ -119,7 +121,7 @@ def test_string_with_utf8_bom() -> None:
 def test_negative_index() -> None:
 	d = sdjson.JSONDecoder()
 
-	if platform.python_implementation() == "PyPy":
+	if PYPY:
 		match = re.escape("Expecting value: line 1 column -49999 (char -50000)")
 	else:
 		match = "idx cannot be negative"
