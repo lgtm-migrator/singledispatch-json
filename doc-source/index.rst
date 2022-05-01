@@ -167,12 +167,6 @@ Contents
 	:pypi: sdjson
 
 
-.. sidebar-links::
-	:caption: Links
-	:github:
-	:pypi: sdjson
-
-
 .. start links
 
 .. only:: html
