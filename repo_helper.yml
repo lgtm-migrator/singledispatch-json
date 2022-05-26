@@ -41,9 +41,7 @@ keywords:
  - serialize
 
 extra_sphinx_extensions:
- - sphinx_toolbox_experimental.html_section
- - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox.more_autosummary.column_widths
 
 sphinx_conf_epilogue:
  - nitpicky = True
- - autosummary_widths_builders = ["latex"]

@@ -295,6 +295,9 @@ def dump(obj: Any, fp: IO, **kwargs: Any):  # TODO
 		fp.write(chunk)
 
 
+dump.__doc__ += "\n.. latex:clearpage::\n"
+
+
 @sphinxify_json_docstring()
 @append_docstring_from(json.dumps)
 def dumps(
@@ -365,7 +368,7 @@ class JSONEncoder(json.JSONEncoder):
 	"""
 	Alias of :class:`json.JSONEncoder`.
 
-	.. autosummary-widths:: 33/100
+	.. autosummary-widths:: 31/100
 	"""
 
 	def __init__(self, *args, **kwargs):
