@@ -143,7 +143,7 @@ __all__ = [
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2020-2021 Dominic Davis-Foster"
-__license__ = "MIT+"
+__license__ = "MIT"
 __version__ = "0.3.1"
 __email__ = "dominic@davis-foster.co.uk"
 
