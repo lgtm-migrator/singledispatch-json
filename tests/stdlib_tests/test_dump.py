@@ -1,5 +1,4 @@
 # stdlib
-import platform
 from io import StringIO
 
 # 3rd party

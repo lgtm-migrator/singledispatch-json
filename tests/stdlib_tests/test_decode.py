@@ -1,6 +1,5 @@
 # stdlib
 import decimal
-import platform
 import re
 from collections import OrderedDict
 from io import StringIO
@@ -90,7 +89,7 @@ def test_invalid_input_type() -> None:
 
 	for value in [1, 3.14, [], {}, None]:
 		with pytest.raises(TypeError, match=msg):
-			sdjson.loads(value)  # type: ignore
+			sdjson.loads(value)  # type: ignore[arg-type]
 
 
 def test_string_with_utf8_bom() -> None:

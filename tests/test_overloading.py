@@ -37,5 +37,5 @@ def test_overloading(file_regression: FileRegressionFixture) -> None:
 		sdjson.encoders.unregister(Decimal)
 
 
-def remove_memaddr(string):
+def remove_memaddr(string: str) -> str:
 	return re.sub("at 0x(.*)>", "at 0x...>", string)

@@ -57,8 +57,8 @@ def test_separators() -> None:
 def test_illegal_separators() -> None:
 	h = {1: 2, 3: 4}
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b", ", ": "))  # type: ignore
+		sdjson.dumps(h, separators=(b", ", ": "))  # type: ignore[arg-type]
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(", ", b": "))  # type: ignore
+		sdjson.dumps(h, separators=(", ", b": "))  # type: ignore[arg-type]
 	with pytest.raises(TypeError):
-		sdjson.dumps(h, separators=(b", ", b": "))  # type: ignore
+		sdjson.dumps(h, separators=(b", ", b": "))  # type: ignore[arg-type]

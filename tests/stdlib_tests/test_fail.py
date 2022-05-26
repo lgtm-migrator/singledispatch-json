@@ -1,5 +1,4 @@
 # stdlib
-import platform
 import re
 import sys
 
