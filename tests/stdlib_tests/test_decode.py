@@ -3,6 +3,7 @@ import decimal
 import re
 from collections import OrderedDict
 from io import StringIO
+from typing import Callable
 
 # 3rd party
 import pytest
@@ -54,7 +55,7 @@ def test_decoder_optimizations() -> None:
 	assert rval == {"key": "value", 'k': 'v'}
 
 
-def check_keys_reuse(source, loads):
+def check_keys_reuse(source: str, loads: Callable) -> None:
 	rval = loads(source)
 	(a, b), (c, d) = sorted(rval[0]), sorted(rval[1])
 	assert a == c
@@ -62,7 +63,7 @@ def check_keys_reuse(source, loads):
 
 
 @not_pypy(reason="Strange behaviour with PyPy")
-def test_keys_reuse() -> None:
+def test_keys_reuse():
 	s = '[{"a_key": 1, "b_é": 2}, {"a_key": 3, "b_é": 4}]'
 	check_keys_reuse(s, sdjson.loads)
 	decoder = sdjson.JSONDecoder()
@@ -70,7 +71,7 @@ def test_keys_reuse() -> None:
 	assert not decoder.memo
 
 
-def test_extra_data() -> None:
+def test_extra_data():
 	s = "[1, 2, 3]5"
 	msg = "Extra data"
 	with pytest.raises(sdjson.JSONDecodeError, match=msg):

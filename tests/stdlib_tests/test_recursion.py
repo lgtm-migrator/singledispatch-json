@@ -63,7 +63,7 @@ def test_defaultrecursion() -> None:
 	class RecursiveJSONEncoder(sdjson.JSONEncoder):
 		recurse = False
 
-		def default(self, o):
+		def default(self, o: object):
 			if o is JSONTestObject:
 				if self.recurse:
 					return [JSONTestObject]
@@ -114,7 +114,7 @@ def test_endless_recursion() -> None:
 	# See #12051
 	class EndlessJSONEncoder(sdjson.JSONEncoder):
 
-		def default(self, o):
+		def default(self, o: object) -> List:
 			"""
 			If check_circular is False, this will keep adding another list.
 			"""

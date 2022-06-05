@@ -24,7 +24,7 @@ class CustomClassBase(ABC):
 		return self.__dict__
 
 	def __setstate__(self, state):
-		self.__init__(**state)  # type: ignore
+		self.__init__(**state)  # type: ignore[misc]
 
 	def __copy__(self):
 		return self.__class__(**self.__dict__)

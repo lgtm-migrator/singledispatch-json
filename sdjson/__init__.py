@@ -153,7 +153,7 @@ json.decoder.JSONDecoder.__module__ = "json"
 json.encoder.JSONEncoder.__module__ = "json"
 
 
-def allow_unregister(func) -> Callable:
+def allow_unregister(func) -> Callable:  # noqa: MAN001
 	"""
 	Decorator to allow removal of custom encoders with ``<sdjson.encoders.unregister(<type>)``,
 	where <type> is the custom type you wish to remove the encoder for.
@@ -169,7 +169,7 @@ def allow_unregister(func) -> Callable:
 	registry = closure["registry"].cell_contents
 	dispatch_cache = closure["dispatch_cache"].cell_contents
 
-	def unregister(cls):
+	def unregister(cls) -> None:
 		del registry[cls]
 		dispatch_cache.clear()
 
@@ -182,7 +182,7 @@ def sphinxify_json_docstring() -> Callable:
 	Turn references in the docstring to :class:`~json.JSONEncoder` into proper links.
 	"""
 
-	def wrapper(target):
+	def wrapper(target):  # noqa: MAN001,MAN002
 		# To save having the `sphinxify_docstring` decorator too
 		target.__doc__ = make_sphinx_links(target.__doc__)
 
@@ -255,7 +255,7 @@ class _Encoders:
 
 		return None
 
-	def unregister(self, cls: Type):
+	def unregister(self, cls: Type) -> None:
 		"""
 		Unregister the handler for the given type.
 
@@ -283,7 +283,7 @@ unregister_encoder = encoders.unregister
 
 @sphinxify_json_docstring()
 @append_docstring_from(json.dump)
-def dump(obj: Any, fp: IO, **kwargs: Any):  # TODO
+def dump(obj: Any, fp: IO, **kwargs: Any):  # TODO  # noqa: MAN001,MAN002
 	"""
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
@@ -313,7 +313,7 @@ def dumps(
 		default: Optional[Callable[[Any], Any]] = None,
 		sort_keys: bool = False,
 		**kwargs: Any,
-		):
+		) -> str:
 	"""
 	Serialize custom Python classes to JSON.
 	Custom classes can be registered using the ``@encoders.register(<type>)`` decorator.
@@ -344,7 +344,7 @@ def dumps(
 #  modifying the original docstrings.
 @sphinxify_json_docstring()
 @append_docstring_from(json.load)
-def load(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
+def load(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO  # noqa: MAN001,MAN002
 	"""
 	Alias of :func:`json.load`.
 	"""
@@ -354,7 +354,7 @@ def load(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
 
 @sphinxify_json_docstring()
 @append_docstring_from(json.loads)
-def loads(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO
+def loads(*args, **kwargs):  # pragma: no cover (!CPython)  # TODO  # noqa: MAN001,MAN002
 	"""
 	Alias of :func:`json.loads`.
 	"""
@@ -408,12 +408,12 @@ class JSONDecoder(json.JSONDecoder):  # pragma: no cover (!CPython)  # TODO
 
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONDecoder.decode)
-	def decode(self, *args, **kwargs):  # noqa: D102
+	def decode(self, *args, **kwargs):  # noqa: MAN002,D102
 		return super().decode(*args, **kwargs)
 
 	@sphinxify_json_docstring()
 	@is_documented_by(json.JSONDecoder.raw_decode)
-	def raw_decode(self, *args, **kwargs):  # noqa: D102
+	def raw_decode(self, *args, **kwargs):  # noqa: MAN002,D102
 		return super().raw_decode(*args, **kwargs)
 
 
@@ -423,7 +423,7 @@ JSONDecodeError = json.JSONDecodeError
 # Custom encoder for sdjson
 class _CustomEncoder(JSONEncoder):
 
-	def default(self, obj):
+	def default(self, obj):  # noqa: MAN001,MAN002
 		handler = encoders.dispatch(obj)
 		if handler is not None:
 			return handler(obj)

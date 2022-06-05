@@ -1,6 +1,7 @@
 # stdlib
 import textwrap
 from io import StringIO
+from typing import Optional
 
 # this package
 import sdjson
@@ -63,7 +64,7 @@ def test_indent() -> None:
 def test_indent0() -> None:
 	h = {3: 1}
 
-	def check(indent, expected):
+	def check(indent: Optional[int], expected: str) -> None:
 		d1 = sdjson.dumps(h, indent=indent)
 		assert d1 == expected
 

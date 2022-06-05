@@ -1,5 +1,6 @@
 # stdlib
 from io import StringIO
+from typing import Set
 
 # 3rd party
 import pytest
@@ -38,22 +39,22 @@ def test_dump_skipkeys() -> None:
 				({2: 3.0, 4.0: 5, False: 1, 6: True}, '{"false": 1, "2": 3.0, "4.0": 5, "6": true}'),
 				]
 		)
-def test_encode_truefalse(data, expects):
+def test_encode_truefalse(data: Set, expects: str):
 	assert sdjson.dumps(data, sort_keys=True) == expects
 
 
 # Issue 16228: Crash on encoding resized list
-def test_encode_mutated() -> None:
+def test_encode_mutated():
 	a = [object()] * 10
 
-	def crasher(obj):
+	def crasher(obj) -> None:
 		del a[-1]
 
 	assert sdjson.dumps(a, default=crasher) == "[null, null, null, null, null]"
 
 
 # Issue 24094
-def test_encode_evil_dict() -> None:
+def test_encode_evil_dict():
 
 	class D(dict):
 
@@ -62,7 +63,7 @@ def test_encode_evil_dict() -> None:
 
 	class X:
 
-		def __hash__(self):
+		def __hash__(self) -> int:
 			del L[0]
 			return 1337
 

@@ -106,7 +106,7 @@ else:
 	unterminated_array = "Expecting ',' delimiter"
 
 
-def __test_invalid_input(data, msg, idx):
+def __test_invalid_input(data: str, msg: str, idx: int) -> None:
 	with pytest.raises(sdjson.JSONDecodeError) as err:
 		sdjson.loads(data)
 
@@ -151,7 +151,7 @@ def __test_invalid_input(data, msg, idx):
 				('"spam', "Unterminated string starting at", 0),
 				]
 		)
-def test_truncated_input(data, msg, idx):
+def test_truncated_input(data: str, msg: str, idx: int):
 	__test_invalid_input(data, msg, idx)
 
 
@@ -185,7 +185,7 @@ def test_truncated_input(data, msg, idx):
 				('{"spam":42,}', property_name_string, 11),
 				]
 		)
-def test_unexpected_data(data, msg, idx):
+def test_unexpected_data(data: str, msg: str, idx: int):
 	__test_invalid_input(data, msg, idx)
 
 
@@ -200,7 +200,7 @@ def test_unexpected_data(data, msg, idx):
 				('"spam",42', "Extra data", 6),
 				]
 		)
-def test_extra_data(data, msg, idx):
+def test_extra_data(data: str, msg: str, idx: int):
 	__test_invalid_input(data, msg, idx)
 
 
@@ -212,7 +212,7 @@ def test_extra_data(data, msg, idx):
 				("\n  \n\n     !", 4, 6, 10),
 				]
 		)
-def test_linecol(data, line, col, idx):
+def test_linecol(data: str, line: int, col: int, idx: int):
 
 	with pytest.raises(sdjson.JSONDecodeError) as err:
 		sdjson.loads(data)

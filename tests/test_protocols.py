@@ -56,17 +56,17 @@ def test_protocols() -> None:
 
 	class Integer:
 
-		def __int__(self):
+		def __int__(self) -> int:
 			return 42
 
 	class Float:
 
-		def __float__(self):
+		def __float__(self) -> float:
 			return 42.0
 
 	class Bytes:
 
-		def __bytes__(self):
+		def __bytes__(self) -> bytes:
 			return b"42"
 
 	with pytest.raises(TypeError, match="Object of type '?Integer'? is not JSON serializable"):
